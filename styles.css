@@ -110,14 +110,14 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 }
 .project-card {
   display: flex; flex-direction: column;
-  background: var(--surface); border: 3px solid var(--outline); border-radius: 18px;
+  background: var(--surface); border: 3px solid var(--ink); border-radius: 18px;
   box-shadow: 6px 6px 0 0 var(--shadow);
   overflow: hidden; text-decoration: none; color: inherit;
   transition: transform 0.12s, box-shadow 0.12s;
 }
 .project-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 0 var(--shadow); }
 .project-card .thumb {
-  aspect-ratio: 16 / 10; border-bottom: 3px solid var(--outline);
+  aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
   display: flex; align-items: center; justify-content: center;
   font-family: "VT323", monospace; font-size: 1.8rem; text-align: center; padding: 1rem;
 }
@@ -129,7 +129,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .project-card .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
 .tag {
   font-size: 0.68rem; color: var(--ink); background: var(--accent-soft);
-  border: 1.5px solid var(--outline); padding: 0.2rem 0.55rem; border-radius: 100px; font-weight: 700;
+  border: 1.5px solid var(--ink); padding: 0.2rem 0.55rem; border-radius: 100px; font-weight: 700;
 }
 .tag.alt { background: var(--accent-2-soft); }
 .project-card h3 { font-size: 1.5rem; font-family: "Space Mono", monospace; font-weight: 700; line-height: 1.3; }
@@ -149,7 +149,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .skills { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.75rem; }
 .skills span {
   font-size: 0.82rem; padding: 0.4rem 0.9rem; border-radius: 100px;
-  border: 2px solid var(--outline); color: var(--ink); background: var(--surface);
+  border: 2px solid var(--ink); color: var(--ink); background: var(--surface);
   box-shadow: 2px 2px 0 0 var(--shadow);
 }
 
@@ -177,7 +177,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 
 .overview-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2.5rem;
-  margin-top: 2rem; padding: 1.75rem; background: var(--surface); border: 3px solid var(--outline);
+  margin-top: 2rem; padding: 1.75rem; background: var(--surface); border: 3px solid var(--ink);
   border-radius: 16px; box-shadow: 5px 5px 0 0 var(--shadow);
 }
 .overview-grid .item .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 700; }
@@ -199,7 +199,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 .stat-row { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.5rem; }
 .stat {
-  flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--outline);
+  flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--ink);
   border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--shadow);
 }
 .stat .num { font-family: "VT323", monospace; font-size: 2.1rem; color: var(--accent); }
@@ -207,7 +207,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.25rem; }
 @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
 .card-mini {
-  background: var(--surface); border: 2.5px solid var(--outline); border-radius: 14px; padding: 1.4rem;
+  background: var(--surface); border: 2.5px solid var(--ink); border-radius: 14px; padding: 1.4rem;
   box-shadow: 3px 3px 0 0 var(--shadow);
 }
 .card-mini h4 { font-family: "VT323", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
