@@ -72,7 +72,6 @@ nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 
 
 /* ---------- hero ---------- */
 .hero { padding: 4.5rem 0 3.5rem; }
-.hero .wrap { max-width: 1400px; }
 .hero .eyebrow {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-size: 0.85rem; color: var(--ink); background: var(--green-soft);
