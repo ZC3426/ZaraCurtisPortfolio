@@ -14,6 +14,7 @@
   --green-soft: #d3f0e2;
   --outline: #1f7a4d;
   --forest: #163d2b;
+  --shadow: #a8a29a;
   --max: 1080px;
 }
 
@@ -45,8 +46,8 @@ h1, h2, h3, h4 {
 
 /* ---------- comic building blocks ---------- */
 .comic-border { border: 3px solid var(--outline); border-radius: 16px; }
-.comic-shadow { box-shadow: 5px 5px 0 0 var(--outline); }
-.comic-shadow-sm { box-shadow: 3px 3px 0 0 var(--outline); }
+.comic-shadow { box-shadow: 5px 5px 0 0 var(--shadow); }
+.comic-shadow-sm { box-shadow: 3px 3px 0 0 var(--shadow); }
 
 /* ---------- nav ---------- */
 header.site-nav {
@@ -65,17 +66,17 @@ nav.links a { text-decoration: none; font-size: 0.9rem; color: var(--ink-soft); 
 nav.links a:hover, nav.links a.active { color: var(--ink); font-weight: 700; }
 nav.links a.cta {
   color: var(--ink); background: var(--yellow); padding: 0.5rem 1.1rem;
-  border: 2.5px solid var(--outline); border-radius: 100px; box-shadow: 3px 3px 0 0 var(--outline);
+  border: 2.5px solid var(--outline); border-radius: 100px; box-shadow: 3px 3px 0 0 var(--shadow);
   font-weight: 700; transition: transform 0.1s, box-shadow 0.1s;
 }
-nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--outline); }
+nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
 
 /* ---------- hero ---------- */
 .hero { padding: 4.5rem 0 3.5rem; }
 .hero .eyebrow {
   display: inline-flex; align-items: center; gap: 0.5rem;
   font-size: 0.85rem; color: var(--ink); background: var(--green-soft);
-  border: 2.5px solid var(--outline); box-shadow: 3px 3px 0 0 var(--outline);
+  border: 2.5px solid var(--outline); box-shadow: 3px 3px 0 0 var(--shadow);
   padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; font-weight: 700;
 }
 .hero h1 { font-size: clamp(2rem, 6.5vw, 3.8rem); max-width: 44ch; }
@@ -87,11 +88,11 @@ nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 
   padding: 0.75rem 1.4rem; border-radius: 100px; font-size: 0.92rem; font-weight: 700;
   font-family: "Space Mono", monospace;
   text-decoration: none; border: 2.5px solid var(--outline);
-  box-shadow: 4px 4px 0 0 var(--outline);
+  box-shadow: 4px 4px 0 0 var(--shadow);
   transition: transform 0.1s, box-shadow 0.1s;
 }
-.btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 var(--outline); }
-.btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 0 var(--outline); }
+.btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 0 var(--shadow); }
+.btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 0 var(--shadow); }
 .btn.primary { background: var(--yellow); color: var(--ink); }
 .btn.ghost { background: var(--surface); color: var(--ink); }
 
@@ -110,11 +111,11 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .project-card {
   display: flex; flex-direction: column;
   background: var(--surface); border: 3px solid var(--outline); border-radius: 18px;
-  box-shadow: 6px 6px 0 0 var(--outline);
+  box-shadow: 6px 6px 0 0 var(--shadow);
   overflow: hidden; text-decoration: none; color: inherit;
   transition: transform 0.12s, box-shadow 0.12s;
 }
-.project-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 0 var(--outline); }
+.project-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 0 var(--shadow); }
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--outline);
   display: flex; align-items: center; justify-content: center;
@@ -149,13 +150,13 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .skills span {
   font-size: 0.82rem; padding: 0.4rem 0.9rem; border-radius: 100px;
   border: 2px solid var(--outline); color: var(--ink); background: var(--surface);
-  box-shadow: 2px 2px 0 0 var(--outline);
+  box-shadow: 2px 2px 0 0 var(--shadow);
 }
 
 /* ---------- contact ---------- */
 .contact-box {
   background: var(--forest); color: var(--bg); border-radius: 22px;
-  border: 3px solid var(--outline); box-shadow: 6px 6px 0 0 var(--outline);
+  border: 3px solid var(--outline); box-shadow: 6px 6px 0 0 var(--shadow);
   padding: 3.25rem 2.25rem; text-align: center;
 }
 .contact-box h2 { color: var(--bg); font-size: clamp(1.9rem, 5vw, 2.7rem); }
@@ -177,7 +178,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .overview-grid {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2.5rem;
   margin-top: 2rem; padding: 1.75rem; background: var(--surface); border: 3px solid var(--outline);
-  border-radius: 16px; box-shadow: 5px 5px 0 0 var(--outline);
+  border-radius: 16px; box-shadow: 5px 5px 0 0 var(--shadow);
 }
 .overview-grid .item .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 700; }
 .overview-grid .item .value { margin-top: 0.3rem; font-size: 0.98rem; }
@@ -194,12 +195,12 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .cs-section blockquote {
   margin-top: 1.25rem; padding: 1rem 1.5rem; border: 2.5px solid var(--outline); border-left-width: 6px;
   background: var(--yellow-soft); border-radius: 0 12px 12px 0; font-style: italic; color: var(--ink);
-  box-shadow: 4px 4px 0 0 var(--outline);
+  box-shadow: 4px 4px 0 0 var(--shadow);
 }
 .stat-row { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.5rem; }
 .stat {
   flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--outline);
-  border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--outline);
+  border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--shadow);
 }
 .stat .num { font-family: "VT323", monospace; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
@@ -207,7 +208,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
 .card-mini {
   background: var(--surface); border: 2.5px solid var(--outline); border-radius: 14px; padding: 1.4rem;
-  box-shadow: 3px 3px 0 0 var(--outline);
+  box-shadow: 3px 3px 0 0 var(--shadow);
 }
 .card-mini h4 { font-family: "VT323", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
 .card-mini .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
