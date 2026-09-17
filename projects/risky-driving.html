@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Risky Driving Research — Zara Curtis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap row">
+    <a class="brand" href="../index.html">Zara Curtis</a>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About Me</a>
+      <a href="../case-studies.html" class="active">Case studies</a>
+      <a href="https://www.linkedin.com/in/zaracurtis" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:Zaracurtis@gmail.com" class="cta">Contact me</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="cs-hero">
+    <div class="wrap">
+      <a class="back" href="../case-studies.html">← All case studies</a>
+      <h1>Using Telematics to Analyse the Impact of Social Context on Driver Behaviour</h1>
+
+      <div class="overview-grid">
+        <div class="item"><div class="label">Project type</div><div class="value">UX Research / Behavioural Research</div></div>
+        <div class="item"><div class="label">Role</div><div class="value">Lead Researcher — behavioural analysis, insight synthesis, UX concept &amp; intervention design</div></div>
+        <div class="item"><div class="label">Duration</div><div class="value">9 months</div></div>
+        <div class="item"><div class="label">Context</div><div class="value">University of Exeter</div></div>
+        <div class="item"><div class="label">Methods</div><div class="value">Naturalistic data analysis, survey design, mixed-effects modelling</div></div>
+        <div class="item"><div class="label">Tools</div><div class="value">Telematics app (DriveScore), Qualtrics, R</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Problem</span>
+      <h2>Designing for safer driving through social context</h2>
+      <div class="stat-row">
+        <div class="stat"><div class="num">129,000+</div><div class="desc">total casualties from risky driving in the UK</div></div>
+        <div class="stat"><div class="num">~30,000</div><div class="desc">face death or serious injury</div></div>
+      </div>
+      <p>Many existing interventions rely on assumptions about <em>who</em> takes risks (e.g. "young drivers") rather than <em>how</em> social context actually shapes behaviour. Much of the existing evidence also relies on self-reports, crash statistics, or simulations, which don't reflect everyday driving.</p>
+      <p><strong>Goal:</strong> understand how social context (passengers), age, and sex influence real-world driving behaviour, and translate those insights into design opportunities for safer driving experiences.</p>
+
+      <h3>Research goals</h3>
+      <ul>
+        <li>Identify how risky driving behaviours vary by age and sex.</li>
+        <li>Understand how the presence of passengers changes driving behaviour.</li>
+        <li>Test whether common assumptions about "young risky drivers" hold up in real-world data.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Method</span>
+      <h2>Passive telematics over self-report</h2>
+      <p>To prioritise ecological validity, I used passive telematics data instead of self-reports. A smartphone telematics app automatically recorded speed, harsh braking, acceleration, harsh cornering, phone distraction, and speeding, alongside a daily contextual survey capturing passenger presence, passenger age/sex, and trip purpose.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="num">33</div><div class="desc">UK drivers, aged 19–69</div></div>
+        <div class="stat"><div class="num">~14 days</div><div class="desc">of real-world driving data per participant</div></div>
+      </div>
+      <p>I analysed the data with Linear Mixed Models (changes in speed) and Generalised Linear Mixed Models (frequency of risky events), controlling for distance, driving experience, and repeated measures.</p>
+
+      <h3>Hypotheses</h3>
+      <div class="two-col">
+        <div class="card-mini">
+          <h4>H1 — Younger drivers are riskier</h4>
+          <p style="margin-top:0.5rem;">Based on crash statistics and lower driving experience predicting higher risk-taking and sensation-seeking. UX relevance: many insurance and safety products implicitly categorise younger users as "high risk" — this tested whether that holds.</p>
+        </div>
+        <div class="card-mini">
+          <h4>H2 — Passengers increase risk for male drivers</h4>
+          <p style="margin-top:0.5rem;">Prior research suggests social signalling and peer presence amplify speed increases and competitive driving in male drivers. UX relevance: in-car feedback could adapt when passengers are present.</p>
+        </div>
+        <div class="card-mini">
+          <h4>H3 — Passengers increase risk for younger drivers</h4>
+          <p style="margin-top:0.5rem;">Crash and simulation data often show higher collision risk for young drivers with passengers, underpinning policies like graduated driver licensing. This tested whether age-based restrictions align with actual behaviour.</p>
+        </div>
+      </div>
+      <p>Prior evidence often comes from observational studies (where participants know they're monitored), simulations (where there's no real risk), or crash data (which misses risks that don't result in crashes) — important limitations when designing real interventions.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Findings</span>
+      <h2>The data challenged the assumptions</h2>
+      <div class="two-col">
+        <div class="card-mini">
+          <h4>H1 &amp; H3: not proven</h4>
+          <p style="margin-top:0.5rem;">Risky events actually <em>increased</em> with age, and passengers didn't increase risk for young drivers — contrary to expectations. Possible causes: younger drivers are more likely to be on telematics-based insurance that financially penalises risky driving, and Gen Z may simply have a lower overall appetite for risk.</p>
+        </div>
+        <div class="card-mini">
+          <h4>H2: proven</h4>
+          <p style="margin-top:0.5rem;">Male drivers drove faster with more passengers; female drivers drove slower with more passengers — a pattern that held across age groups.</p>
+        </div>
+      </div>
+
+      <h3>UX &amp; design insights</h3>
+      <ul>
+        <li><strong>Design systems change behaviour.</strong> Many young drivers are already subject to telematics-based insurance monitoring, meaning design was already shaping behaviour — just not always transparently.</li>
+        <li><strong>Behaviour change isn't equal.</strong> The same situation (having a passenger) produced opposite behaviours by gender — a strong signal that one-size-fits-all safety design doesn't work.</li>
+        <li><strong>People optimise around what's measured.</strong> Speed changed with passengers, but recorded "risky events" didn't always follow — raising the question: are we measuring safety, or training users to game the system?</li>
+      </ul>
+      <blockquote>The problem reframed: not "how do we stop risky drivers?" but "how might we design safety systems that account for social pressure, behavioural incentives, and human adaptation, without relying on fear or punishment?"</blockquote>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Limitations &amp; next steps</span>
+      <h2>What I'd explore next</h2>
+      <ul>
+        <li>The relatively small sample size may have limited the ability to detect real differences, particularly for H1 and H3.</li>
+        <li>Participants may have adjusted their natural behaviour as they got used to being passively monitored and logging their day.</li>
+        <li>If monitoring salience genuinely improves young drivers' behaviour, an app for new/learner drivers built around that principle could be worth exploring.</li>
+        <li>If drivers are avoiding punishment rather than driving safely for its own sake, they may still take risks they can "get away with" — future design should target underlying motivation, not just penalty-avoidance.</li>
+        <li>Since men account for the vast majority of driving deaths and injuries, understanding <em>why</em> passengers affect male and female drivers so differently deserves further study.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Reflections</span>
+      <h2>Risk as a product of systems, not traits</h2>
+      <p>I thoroughly enjoyed researching, planning, and executing this project. The real behavioural data showed that risk is often a product of systems, incentives, and social context rather than individual traits. Recognising this shifted my thinking from designing "corrective" solutions toward designing supportive, context-aware interventions that meet users where they are — understanding the underlying mechanisms at play, rather than trying to "fix" the user, to build systems that genuinely improve people's lives.</p>
+    </div>
+  </section>
+
+  <div class="wrap cs-nav-footer">
+    <a class="btn ghost" href="neurodivergence-in-schools.html">← Reframing Neurodivergence</a>
+    <a class="btn primary" href="../case-studies.html">All case studies →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    © <span id="year"></span> Zara Curtis. Based in the UK &amp; Ireland.
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>
