@@ -115,7 +115,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   overflow: hidden; text-decoration: none; color: inherit;
   transition: transform 0.12s, box-shadow 0.12s;
 }
-.project-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 0 var(--shadow); }
+.project-card:hover { transform: translate(-6px, -6px); box-shadow: 13px 13px 0 0 var(--shadow); }
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
   display: flex; align-items: center; justify-content: center;
@@ -217,3 +217,18 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 0;
   border-top: 3px solid var(--outline); flex-wrap: wrap; gap: 1rem;
 }
+
+/* ---------- image galleries ---------- */
+.shot-row { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; align-items: flex-start; }
+.shot-row.cols-2 .shot { flex: 1 1 320px; }
+.shot-row.cols-3 .shot { flex: 1 1 220px; }
+.shot {
+  background: var(--surface); border: 3px solid var(--ink); border-radius: 14px;
+  box-shadow: 5px 5px 0 0 var(--shadow); overflow: hidden;
+}
+.shot img { width: 100%; height: auto; display: block; }
+.shot figcaption {
+  padding: 0.7rem 1rem; font-size: 0.82rem; color: var(--ink-soft);
+  border-top: 2px solid var(--ink);
+}
+.shot.wide { flex-basis: 100%; }
