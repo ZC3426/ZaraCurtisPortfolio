@@ -26,6 +26,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Gome Pixel";
+  src: url("assets/fonts/GomePixel.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
@@ -44,8 +52,8 @@ a { color: inherit; }
 img { max-width: 100%; display: block; }
 
 h1, h2, h3, h4 {
-  font-family: "Chonky Bits", monospace;
-  font-weight: 700;
+  font-family: "Gome Pixel", monospace;
+  font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.1;
 }
@@ -68,7 +76,7 @@ header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.9rem 0;
 }
-.brand { font-family: "Chonky Bits", monospace; font-weight: 700; font-size: 1.9rem; text-decoration: none; }
+.brand { font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; text-decoration: none; }
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; color: var(--ink-soft); transition: color 0.15s; }
 nav.links a:hover, nav.links a.active { color: var(--ink); font-weight: 700; }
@@ -127,7 +135,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
   display: flex; align-items: center; justify-content: center;
-  font-family: "Chonky Bits", monospace; font-weight: 700; font-size: 1.8rem; text-align: center; padding: 1rem;
+  font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.8rem; text-align: center; padding: 1rem;
 }
 .thumb.tone-1 { background: var(--accent); color: #fff; }
 .thumb.tone-2 { background: var(--accent-2); color: #fff; }
@@ -153,7 +161,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
 .about-body p { color: var(--ink-soft); margin-bottom: 1rem; max-width: 68ch; }
 .skills-block { margin-top: 2rem; }
-.skills-block h4 { font-family: "Chonky Bits", monospace; font-size: 1.4rem; margin-bottom: 0.75rem; }
+.skills-block h4 { font-family: "Gome Pixel", monospace; font-size: 1.4rem; margin-bottom: 0.75rem; }
 .skills { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.75rem; }
 .skills span {
   font-size: 0.82rem; padding: 0.4rem 0.9rem; border-radius: 100px;
@@ -196,7 +204,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .cs-section:last-of-type { border-bottom: none; }
 .cs-section h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); }
 .cs-section .kicker { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); font-weight: 700; }
-.cs-section h3 { font-family: "Chonky Bits", monospace; font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+.cs-section h3 { font-family: "Gome Pixel", monospace; font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
 .cs-section p { color: var(--ink-soft); margin-top: 0.85rem; max-width: 72ch; }
 .cs-section ul { margin-top: 0.85rem; padding-left: 1.2rem; color: var(--ink-soft); }
 .cs-section ul li { margin-bottom: 0.5rem; max-width: 72ch; }
@@ -210,7 +218,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--ink);
   border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--shadow);
 }
-.stat .num { font-family: "Chonky Bits", monospace; font-weight: 700; font-size: 2.1rem; color: var(--accent); }
+.stat .num { font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.25rem; }
 @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
@@ -218,7 +226,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: var(--surface); border: 2.5px solid var(--ink); border-radius: 14px; padding: 1.4rem;
   box-shadow: 3px 3px 0 0 var(--shadow);
 }
-.card-mini h4 { font-family: "Chonky Bits", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
+.card-mini h4 { font-family: "Gome Pixel", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
 .card-mini .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
 
 .cs-nav-footer {
