@@ -164,7 +164,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* ---------- work grid: 2x2 ---------- */
 .work-list {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.75rem;
 }
 .project-card {
   display: flex; flex-direction: column;
