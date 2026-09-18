@@ -76,7 +76,8 @@ header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.9rem 0;
 }
-.brand { font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; text-decoration: none; }
+.brand img { width: 34px; height: 34px; object-fit: contain; }
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; color: var(--ink-soft); transition: color 0.15s; }
 nav.links a:hover, nav.links a.active { color: var(--ink); font-weight: 700; }
@@ -141,22 +142,6 @@ nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 
 section { padding: 4rem 0; }
 section.alt { background: var(--surface); border-top: 3px solid var(--outline); border-bottom: 3px solid var(--outline); }
 
-#work { position: relative; overflow: hidden; }
-#work > .wrap { position: relative; z-index: 2; }
-.doodles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
-.doodle { position: absolute; width: 90px; opacity: 0.9; }
-.d-station { top: 3%; left: 0.5%; width: 60px; transform: rotate(-8deg); }
-.d-ufo { top: 27%; left: 0.5%; width: 75px; transform: rotate(4deg); }
-.d-rocket { top: 52%; left: 0.5%; width: 60px; transform: rotate(10deg); }
-.d-crates { top: 76%; left: 1%; width: 65px; transform: rotate(5deg); }
-.d-planet-face { top: 3%; right: 1%; width: 70px; transform: rotate(6deg); }
-.d-stick-figure { top: 24%; right: 1.5%; width: 45px; transform: rotate(-4deg); }
-.d-planet-ring { top: 46%; right: 0.5%; width: 60px; transform: rotate(-10deg); }
-.d-hiya { top: 68%; right: 1%; width: 80px; transform: rotate(-6deg); }
-.d-mystery { top: 88%; right: 2%; width: 55px; transform: rotate(6deg); }
-@media (max-width: 900px) {
-  .doodle { display: none; }
-}
 .section-head { margin-bottom: 2.5rem; max-width: 60ch; }
 .section-head .kicker { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; }
 .section-head h2 { font-size: clamp(2rem, 4vw, 2.7rem); margin-top: 0.4rem; }
