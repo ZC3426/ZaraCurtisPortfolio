@@ -88,12 +88,24 @@ nav.links a.cta {
 nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
 
 /* ---------- hero ---------- */
-.hero { padding: 4.5rem 0 3.5rem; }
-.hero .eyebrow {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.85rem; color: var(--ink); background: var(--green-soft);
-  border: 2.5px solid var(--outline); box-shadow: 3px 3px 0 0 var(--shadow);
-  padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; font-weight: 700;
+.hero {
+  position: relative; overflow: hidden;
+  background-color: var(--bg); background-image: none;
+  padding: 4.5rem 0 3.5rem;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("assets/backgrounds/landscape.png");
+  background-size: cover; background-position: center bottom; background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0.55;
+}
+.hero > .wrap { position: relative; z-index: 1; }
+.hero-textbox {
+  display: inline-block; background: rgba(255, 252, 243, 0.82);
+  border: 3px solid var(--ink); border-radius: 16px;
+  box-shadow: 5px 5px 0 0 var(--shadow);
+  padding: 1.5rem 1.75rem;
 }
 .hero h1 { font-size: clamp(2rem, 6.5vw, 3.8rem); max-width: 44ch; }
 .hero p.lede { margin-top: 1.4rem; font-size: 1.1rem; color: var(--ink-soft); max-width: 52ch; }
