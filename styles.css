@@ -156,7 +156,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .section-head p { margin-top: 0.85rem; color: var(--ink-soft); }
 
 /* ---------- plain page header (About, Case studies index) ---------- */
-.page-hero { position: relative; overflow: hidden; background-color: var(--bg); padding: 3.5rem 0 2.5rem; }
+.page-hero { position: relative; overflow: hidden; background-color: var(--bg); padding: 3.5rem 0 2.5rem; border-bottom: 3px solid var(--outline); }
 .page-hero::before {
   content: ""; position: absolute; inset: 0;
   background-size: cover; background-position: center; background-repeat: no-repeat;
@@ -168,14 +168,24 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
   margin-bottom: 0.75rem;
 }
-.page-hero h1 { color: var(--ink-soft); font-size: clamp(2rem, 5vw, 3rem); }
+.page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); }
 .page-hero p.lede { margin-top: 1rem; color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem; }
+
+.title-box {
+  display: inline-block; max-width: 100%; margin-top: 0.5rem;
+  background: rgba(255, 252, 243, 0.88);
+  border: 1.5px solid var(--ink); border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(34, 31, 26, 0.15);
+  padding: 1rem 1.4rem;
+}
+.title-box h1 { margin: 0; }
 
 .page-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
 .page-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
 .page-hero.bg-country::before {
   background-image: url("assets/backgrounds/pages/country.png"); image-rendering: pixelated;
 }
+.page-hero.bg-sunset::before { background-image: url("assets/backgrounds/pages/sunset.jpg"); }
 
 /* case-study hero shares the same art-band treatment */
 .cs-hero { position: relative; overflow: hidden; background-color: var(--bg); }
@@ -197,8 +207,8 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .cs-hero.bg-ocean::before {
   background-image: url("assets/backgrounds/pages/ocean.jpg"); image-rendering: pixelated;
 }
-.cs-hero.bg-send::before {
-  background-image: url("assets/backgrounds/pages/send-tileset.png"); image-rendering: pixelated;
+.cs-hero.bg-temple::before {
+  background-image: url("assets/backgrounds/pages/temple.jpg"); image-rendering: pixelated;
 }
 
 /* ---------- work grid: 2x2 ---------- */
@@ -243,10 +253,10 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 /* ---------- carousel ---------- */
 .carousel {
   display: flex; align-items: center; gap: 1.25rem;
-  max-width: 100%; margin: 0 auto;
+  width: 100%; margin: 2.5rem 0 0; padding: 0;
 }
-.carousel-viewport { flex: 1; overflow: hidden; }
-.carousel-track { display: flex; gap: 1.5rem; transition: transform 0.4s ease; }
+.carousel-viewport { flex: 1; overflow-x: hidden; overflow-y: visible; }
+.carousel-track { display: flex; gap: 1.5rem; padding: 12px 0 18px; transition: transform 0.4s ease; }
 .carousel-slide { flex: 0 0 calc(50% - 0.75rem); }
 @media (max-width: 700px) {
   .carousel-slide { flex: 0 0 85%; }
