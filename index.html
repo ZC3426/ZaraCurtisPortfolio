@@ -149,28 +149,35 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script>
 (function () {
+  var viewport = document.querySelector('.carousel-viewport');
   var track = document.querySelector('.carousel-track');
   if (!track) return;
-  var slides = track.children;
+  var slides = Array.prototype.slice.call(track.children);
   var dots = document.querySelectorAll('.carousel-dots .dot');
   var index = 0;
 
   function update() {
-    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    var gap = parseFloat(getComputedStyle(track).gap) || 0;
+    var step = slides[0].getBoundingClientRect().width + gap;
+    var maxScroll = Math.max(0, track.scrollWidth - viewport.clientWidth);
+    var translate = Math.min(index * step, maxScroll);
+    track.style.transform = 'translateX(-' + translate + 'px)';
     dots.forEach(function (d, i) { d.classList.toggle('active', i === index); });
   }
 
   document.querySelector('.carousel-arrow.prev').addEventListener('click', function () {
-    index = (index - 1 + slides.length) % slides.length;
+    index = Math.max(0, index - 1);
     update();
   });
   document.querySelector('.carousel-arrow.next').addEventListener('click', function () {
-    index = (index + 1) % slides.length;
+    index = Math.min(slides.length - 1, index + 1);
     update();
   });
   dots.forEach(function (d, i) {
     d.addEventListener('click', function () { index = i; update(); });
   });
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 

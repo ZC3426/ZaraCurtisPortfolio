@@ -73,7 +73,7 @@ header.site-nav {
   backdrop-filter: blur(6px);
   border-bottom: 3px solid var(--outline);
 }
-header.site-nav .wrap { max-width: none; padding: 0 2rem; }
+header.site-nav .wrap { max-width: none; padding: 0 3rem; }
 header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.9rem 0;
@@ -174,9 +174,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .page-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
 .page-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
 .page-hero.bg-country::before {
-  background-image: url("assets/backgrounds/pages/country.png");
-  background-size: auto 220px; background-repeat: repeat-x; background-position: top;
-  image-rendering: pixelated;
+  background-image: url("assets/backgrounds/pages/country.png"); image-rendering: pixelated;
 }
 
 /* case-study hero shares the same art-band treatment */
@@ -190,9 +188,17 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .cs-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
 .cs-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
 .cs-hero.bg-country::before {
-  background-image: url("assets/backgrounds/pages/country.png");
-  background-size: auto 220px; background-repeat: repeat-x; background-position: top;
-  image-rendering: pixelated;
+  background-image: url("assets/backgrounds/pages/country.png"); image-rendering: pixelated;
+}
+.cs-hero.bg-village-field::before {
+  background-image: url("assets/backgrounds/pages/village-field.jpg"); image-rendering: pixelated;
+  background-position: bottom;
+}
+.cs-hero.bg-ocean::before {
+  background-image: url("assets/backgrounds/pages/ocean.jpg"); image-rendering: pixelated;
+}
+.cs-hero.bg-send::before {
+  background-image: url("assets/backgrounds/pages/send-tileset.png"); image-rendering: pixelated;
 }
 
 /* ---------- work grid: 2x2 ---------- */
@@ -237,11 +243,14 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 /* ---------- carousel ---------- */
 .carousel {
   display: flex; align-items: center; gap: 1.25rem;
-  max-width: 640px; margin: 0 auto;
+  max-width: 100%; margin: 0 auto;
 }
 .carousel-viewport { flex: 1; overflow: hidden; }
-.carousel-track { display: flex; transition: transform 0.4s ease; }
-.carousel-slide { flex: 0 0 100%; max-width: 100%; }
+.carousel-track { display: flex; gap: 1.5rem; transition: transform 0.4s ease; }
+.carousel-slide { flex: 0 0 calc(50% - 0.75rem); }
+@media (max-width: 700px) {
+  .carousel-slide { flex: 0 0 85%; }
+}
 .carousel-arrow {
   flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
   background: #fff; border: 2.5px solid var(--ink); box-shadow: 3px 3px 0 0 var(--shadow);
@@ -323,7 +332,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .overview-grid .item .value { margin-top: 0.3rem; font-size: 0.98rem; }
 @media (max-width: 640px) { .overview-grid { grid-template-columns: 1fr; } }
 
-.cs-section { padding: 2.75rem 0; border-bottom: 3px dashed var(--outline); }
+.cs-section { padding: 3.25rem 0; border-bottom: 3px dashed var(--outline); }
 .cs-section:last-of-type { border-bottom: none; }
 .cs-section h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); }
 .cs-section .kicker { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); font-weight: 700; }
@@ -336,14 +345,14 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: var(--yellow-soft); border-radius: 0 12px 12px 0; font-style: italic; color: var(--ink);
   box-shadow: 4px 4px 0 0 var(--shadow);
 }
-.stat-row { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.5rem; }
+.stat-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; }
 .stat {
   flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--ink);
   border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--shadow);
 }
 .stat .num { font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.25rem; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-top: 1.5rem; }
 @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
 .card-mini {
   background: var(--surface); border: 2.5px solid var(--ink); border-radius: 14px; padding: 1.4rem;
