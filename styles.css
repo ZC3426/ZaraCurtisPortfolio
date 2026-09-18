@@ -102,12 +102,24 @@ nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 
 }
 .hero > .wrap { position: relative; z-index: 1; }
 .hero-textbox {
-  display: inline-block; background: rgba(255, 252, 243, 0.82);
-  border: 3px solid var(--ink); border-radius: 16px;
+  position: relative;
+  display: block; width: fit-content; max-width: 100%; margin-left: auto;
+  background: rgba(255, 252, 243, 0.82);
+  border: 1.5px solid var(--ink); border-radius: 24px;
   box-shadow: 5px 5px 0 0 var(--shadow);
   padding: 1.5rem 1.75rem;
 }
-.hero h1 { font-size: clamp(2rem, 6.5vw, 3.8rem); max-width: 44ch; }
+.hero-textbox::before {
+  content: ""; position: absolute; bottom: -22px; right: 48px;
+  width: 0; height: 0; border: 16px solid transparent;
+  border-top-color: var(--ink); border-bottom: 0;
+}
+.hero-textbox::after {
+  content: ""; position: absolute; bottom: -18px; right: 53px;
+  width: 0; height: 0; border: 12px solid transparent;
+  border-top-color: rgba(255, 252, 243, 0.98); border-bottom: 0;
+}
+.hero h1 { font-size: clamp(2rem, 6.5vw, 3.8rem); max-width: 30ch; }
 .hero p.lede { margin-top: 1.4rem; font-size: 1.1rem; color: var(--ink-soft); max-width: 52ch; }
 .hero .actions { margin-top: 2.1rem; display: flex; gap: 1rem; flex-wrap: wrap; }
 
@@ -127,6 +139,19 @@ nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 
 /* ---------- section shell ---------- */
 section { padding: 4rem 0; }
 section.alt { background: var(--surface); border-top: 3px solid var(--outline); border-bottom: 3px solid var(--outline); }
+
+#work { position: relative; overflow: hidden; }
+#work > .wrap { position: relative; z-index: 2; }
+.doodles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.doodle { position: absolute; width: 90px; opacity: 0.9; }
+.d-station { top: 4%; left: 0.5%; width: 65px; transform: rotate(-8deg); }
+.d-crates { bottom: 4%; left: 1%; width: 70px; transform: rotate(5deg); }
+.d-planet-face { top: 4%; right: 1%; width: 75px; transform: rotate(6deg); }
+.d-planet-ring { bottom: 30%; right: 0.5%; width: 65px; transform: rotate(-10deg); }
+.d-ufo { top: 47%; left: 0.5%; width: 80px; transform: rotate(4deg); }
+@media (max-width: 900px) {
+  .doodle { display: none; }
+}
 .section-head { margin-bottom: 2.5rem; max-width: 60ch; }
 .section-head .kicker { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; }
 .section-head h2 { font-size: clamp(2rem, 4vw, 2.7rem); margin-top: 0.4rem; }
