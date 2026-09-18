@@ -87,12 +87,20 @@ nav.links a.cta {
   font-weight: 700; transition: transform 0.1s, box-shadow 0.1s;
 }
 nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
+nav.links a.nav-btn {
+  color: var(--ink); background: var(--green-soft); padding: 0.5rem 1.1rem;
+  border: 2.5px solid var(--outline); border-radius: 100px; box-shadow: 3px 3px 0 0 var(--shadow);
+  font-weight: 700; transition: transform 0.1s, box-shadow 0.1s;
+}
+nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
+  transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow);
+}
 
 /* ---------- hero ---------- */
 .hero {
   position: relative; overflow: hidden;
   background-color: var(--bg); background-image: none;
-  padding: 4.5rem 0 3.5rem;
+  padding: 3.5rem 0 4.5rem;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0;
@@ -104,22 +112,20 @@ nav.links a.cta:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 
 .hero > .wrap { position: relative; z-index: 1; }
 .hero-textbox {
   position: relative;
-  display: inline-block; max-width: 100%; margin-top: 1.5rem;
+  display: inline-block; max-width: 100%; margin-top: 4rem;
   opacity: 0.9;
-  background: rgba(255, 252, 243, 0.82);
-  border: 1.5px solid var(--ink); border-radius: 24px;
-  box-shadow: 5px 5px 0 0 var(--shadow);
+  background: rgba(255, 252, 243, 0.88);
+  border: 1.5px solid var(--ink); border-radius: 28px;
+  box-shadow: 0 12px 28px rgba(34, 31, 26, 0.18);
   padding: 1.5rem 1.75rem;
 }
-.hero-textbox::before {
-  content: ""; position: absolute; bottom: -22px; left: 48px;
-  width: 0; height: 0; border: 16px solid transparent;
-  border-top-color: var(--ink); border-bottom: 0;
-}
 .hero-textbox::after {
-  content: ""; position: absolute; bottom: -18px; left: 53px;
-  width: 0; height: 0; border: 12px solid transparent;
-  border-top-color: rgba(255, 252, 243, 0.98); border-bottom: 0;
+  content: ""; position: absolute; bottom: -11px; left: 32px;
+  width: 24px; height: 24px;
+  background: rgba(255, 252, 243, 0.88);
+  border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
+  border-radius: 0 0 8px 0;
+  transform: rotate(45deg);
 }
 .hero h1 { font-size: clamp(2rem, 6.5vw, 3.8rem); max-width: 44ch; }
 .hero p.lede { margin-top: 1.4rem; font-size: 1.1rem; color: var(--ink-soft); max-width: 52ch; }
@@ -146,6 +152,16 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .section-head .kicker { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; }
 .section-head h2 { font-size: clamp(2rem, 4vw, 2.7rem); margin-top: 0.4rem; }
 .section-head p { margin-top: 0.85rem; color: var(--ink-soft); }
+
+/* ---------- plain page header (About, Case studies index) ---------- */
+.page-hero { padding: 3.5rem 0 2.5rem; }
+.page-hero .eyebrow {
+  display: inline-block; font-size: 0.85rem; text-transform: uppercase;
+  letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+.page-hero h1 { color: var(--ink-soft); font-size: clamp(2rem, 5vw, 3rem); }
+.page-hero p.lede { margin-top: 1rem; color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem; }
 
 /* ---------- work grid: 2x2 ---------- */
 .work-list {
@@ -188,7 +204,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* ---------- about ---------- */
 .about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-.about-body p { color: var(--ink-soft); margin-bottom: 1rem; max-width: 68ch; }
+.about-body p { color: var(--ink-soft); margin-bottom: 1rem; }
 .skills-block { margin-top: 2rem; }
 .skills-block h4 { font-family: "Gome Pixel", monospace; font-size: 1.4rem; margin-bottom: 0.75rem; }
 .skills { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.75rem; }
@@ -212,6 +228,25 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .contact-box .btn.ghost:hover { box-shadow: 2px 2px 0 0 var(--bg); }
 
 footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-soft); font-size: 0.85rem; }
+
+/* ---------- mountain art band ---------- */
+.mountain-band {
+  position: relative; height: 280px; overflow: hidden;
+  border-top: 3px solid var(--outline); border-bottom: 3px solid var(--outline);
+}
+.mountain-band .layer {
+  position: absolute; left: 0; bottom: 0; width: 100%; height: 100%;
+  background-repeat: repeat-x; background-position: bottom left;
+  image-rendering: pixelated;
+}
+.mountain-band .layer-sky { background-image: url("assets/backgrounds/mountains/parallax-mountain-bg.png"); background-size: cover; background-repeat: no-repeat; background-position: center; }
+.mountain-band .layer-far { background-image: url("assets/backgrounds/mountains/parallax-mountain-montain-far.png"); background-size: auto 68%; }
+.mountain-band .layer-mountains { background-image: url("assets/backgrounds/mountains/parallax-mountain-mountains.png"); background-size: auto 52%; }
+.mountain-band .layer-trees { background-image: url("assets/backgrounds/mountains/parallax-mountain-trees.png"); background-size: auto 28%; }
+.mountain-band .layer-fg-trees { background-image: url("assets/backgrounds/mountains/parallax-mountain-foreground-trees.png"); background-size: auto 42%; }
+@media (max-width: 700px) {
+  .mountain-band { height: 180px; }
+}
 
 /* ---------- case study page ---------- */
 .cs-hero { padding: 3.25rem 0 2.5rem; border-bottom: 3px solid var(--outline); }
