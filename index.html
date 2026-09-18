@@ -44,31 +44,58 @@
         <h2>Selected work</h2>
       </div>
 
-      <div class="work-list">
+      <div class="carousel">
+        <button type="button" class="carousel-arrow prev" aria-label="Previous project">←</button>
+        <div class="carousel-viewport">
+          <div class="carousel-track">
 
-        <a class="project-card" href="projects/sketchscroll.html">
-          <div class="thumb cover"><img src="assets/sketchscroll/dashboard-desktop.jpg" alt="Sketchscroll dashboard cover" width="1600" height="899" loading="lazy" /></div>
-          <div class="info">
-            <h3>Sketchscroll: A Psychologically Informed Solution to Brainrot Using AI</h3>
-            <p class="desc">User Research, Persona, Development, Wireframing, Prototyping, Usability Testing.</p>
-            <div class="arrow">Read case study →</div>
+            <a class="project-card carousel-slide" href="projects/sketchscroll.html">
+              <div class="thumb cover"><img src="assets/sketchscroll/dashboard-desktop.jpg" alt="Sketchscroll dashboard cover" width="1600" height="899" loading="lazy" /></div>
+              <div class="info">
+                <h3>Sketchscroll: A Psychologically Informed Solution to Brainrot Using AI</h3>
+                <p class="desc">User Research, Persona, Development, Wireframing, Prototyping, Usability Testing.</p>
+                <div class="arrow">Read case study →</div>
+              </div>
+            </a>
+
+            <a class="project-card carousel-slide" href="projects/equil.html">
+              <div class="thumb cover"><img src="assets/equil/final-desktop.jpg" alt="Equil dashboard cover" width="1600" height="980" loading="lazy" /></div>
+              <div class="info">
+                <h3>Equil: Closing the Financial Literacy Gap with Research-Informed Design</h3>
+                <p class="desc">An equitable financial literacy tool designed with and for young women.</p>
+                <div class="arrow">Read case study →</div>
+              </div>
+            </a>
+
+            <a class="project-card carousel-slide" href="projects/neurodivergence-in-schools.html">
+              <div class="thumb tone-3">Reframing Neurodivergence In Schools</div>
+              <div class="info">
+                <h3>A Systems-Thinking Approach to Reducing Student Exclusions</h3>
+                <p class="desc">UX Artefact Translation, Inclusive Design Thinking, Service Interventions.</p>
+                <div class="arrow">Read case study →</div>
+              </div>
+            </a>
+
+            <a class="project-card carousel-slide" href="projects/risky-driving.html">
+              <div class="thumb tone-4">Risky Driving Research</div>
+              <div class="info">
+                <h3>Social Influences and Risky Driving</h3>
+                <p class="desc">Using telematics to analyse how social context shapes driver behaviour.</p>
+                <div class="arrow">Read case study →</div>
+              </div>
+            </a>
+
           </div>
-        </a>
-
-        <a class="project-card" href="projects/equil.html">
-          <div class="thumb cover"><img src="assets/equil/final-desktop.jpg" alt="Equil dashboard cover" width="1600" height="980" loading="lazy" /></div>
-          <div class="info">
-            <h3>Equil: Closing the Financial Literacy Gap with Research-Informed Design</h3>
-            <p class="desc">An equitable financial literacy tool designed with and for young women.</p>
-            <div class="arrow">Read case study →</div>
-          </div>
-        </a>
-
+        </div>
+        <button type="button" class="carousel-arrow next" aria-label="Next project">→</button>
       </div>
 
-      <p style="margin-top: 2.5rem; text-align: center;">
-        <a class="btn ghost" href="case-studies.html">See more case studies →</a>
-      </p>
+      <div class="carousel-dots">
+        <button type="button" class="dot active" data-slide="0" aria-label="Go to slide 1"></button>
+        <button type="button" class="dot" data-slide="1" aria-label="Go to slide 2"></button>
+        <button type="button" class="dot" data-slide="2" aria-label="Go to slide 3"></button>
+        <button type="button" class="dot" data-slide="3" aria-label="Go to slide 4"></button>
+      </div>
     </div>
   </section>
 
@@ -120,6 +147,32 @@
 </footer>
 
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+(function () {
+  var track = document.querySelector('.carousel-track');
+  if (!track) return;
+  var slides = track.children;
+  var dots = document.querySelectorAll('.carousel-dots .dot');
+  var index = 0;
+
+  function update() {
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    dots.forEach(function (d, i) { d.classList.toggle('active', i === index); });
+  }
+
+  document.querySelector('.carousel-arrow.prev').addEventListener('click', function () {
+    index = (index - 1 + slides.length) % slides.length;
+    update();
+  });
+  document.querySelector('.carousel-arrow.next').addEventListener('click', function () {
+    index = (index + 1) % slides.length;
+    update();
+  });
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { index = i; update(); });
+  });
+})();
+</script>
 
 </body>
 </html>

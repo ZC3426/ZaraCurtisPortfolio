@@ -12,6 +12,7 @@
   --yellow-soft: #fff0bf;
   --green: #52b788;
   --green-soft: #d3f0e2;
+  --card-bg: #e7f4ea;
   --outline: #1f7a4d;
   --forest: #163d2b;
   --shadow: #a8a29a;
@@ -72,6 +73,7 @@ header.site-nav {
   backdrop-filter: blur(6px);
   border-bottom: 3px solid var(--outline);
 }
+header.site-nav .wrap { max-width: none; padding: 0 2rem; }
 header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0.9rem 0;
@@ -109,7 +111,7 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
   image-rendering: pixelated;
   opacity: 0.55;
 }
-.hero > .wrap { position: relative; z-index: 1; }
+.hero > .wrap { position: relative; z-index: 1; max-width: none; padding: 0 3rem; }
 .hero-textbox {
   position: relative;
   display: inline-block; max-width: 100%; margin-top: 4rem;
@@ -154,7 +156,13 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .section-head p { margin-top: 0.85rem; color: var(--ink-soft); }
 
 /* ---------- plain page header (About, Case studies index) ---------- */
-.page-hero { padding: 3.5rem 0 2.5rem; }
+.page-hero { position: relative; overflow: hidden; background-color: var(--bg); padding: 3.5rem 0 2.5rem; }
+.page-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  opacity: 0.4;
+}
+.page-hero > .wrap { position: relative; z-index: 1; }
 .page-hero .eyebrow {
   display: inline-block; font-size: 0.85rem; text-transform: uppercase;
   letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
@@ -163,13 +171,37 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .page-hero h1 { color: var(--ink-soft); font-size: clamp(2rem, 5vw, 3rem); }
 .page-hero p.lede { margin-top: 1rem; color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem; }
 
+.page-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
+.page-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
+.page-hero.bg-country::before {
+  background-image: url("assets/backgrounds/pages/country.png");
+  background-size: auto 220px; background-repeat: repeat-x; background-position: top;
+  image-rendering: pixelated;
+}
+
+/* case-study hero shares the same art-band treatment */
+.cs-hero { position: relative; overflow: hidden; background-color: var(--bg); }
+.cs-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  opacity: 0.4;
+}
+.cs-hero > .wrap { position: relative; z-index: 1; }
+.cs-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
+.cs-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
+.cs-hero.bg-country::before {
+  background-image: url("assets/backgrounds/pages/country.png");
+  background-size: auto 220px; background-repeat: repeat-x; background-position: top;
+  image-rendering: pixelated;
+}
+
 /* ---------- work grid: 2x2 ---------- */
 .work-list {
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.75rem;
 }
 .project-card {
   display: flex; flex-direction: column;
-  background: var(--surface); border: 3px solid var(--ink); border-radius: 18px;
+  background: var(--card-bg); border: 3px solid var(--ink); border-radius: 18px;
   box-shadow: 6px 6px 0 0 var(--shadow);
   overflow: hidden; text-decoration: none; color: inherit;
   transition: transform 0.12s, box-shadow 0.12s;
@@ -200,6 +232,33 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 @media (max-width: 760px) {
   .work-list { grid-template-columns: 1fr; }
+}
+
+/* ---------- carousel ---------- */
+.carousel {
+  display: flex; align-items: center; gap: 1.25rem;
+  max-width: 640px; margin: 0 auto;
+}
+.carousel-viewport { flex: 1; overflow: hidden; }
+.carousel-track { display: flex; transition: transform 0.4s ease; }
+.carousel-slide { flex: 0 0 100%; max-width: 100%; }
+.carousel-arrow {
+  flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%;
+  background: #fff; border: 2.5px solid var(--ink); box-shadow: 3px 3px 0 0 var(--shadow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 700; color: var(--ink); cursor: pointer; padding: 0;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.carousel-arrow:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
+.carousel-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.75rem; }
+.carousel-dots .dot {
+  width: 12px; height: 12px; border-radius: 50%; background: var(--surface);
+  border: 2px solid var(--ink); cursor: pointer; padding: 0;
+}
+.carousel-dots .dot.active { background: var(--outline); }
+@media (max-width: 640px) {
+  .carousel { max-width: 100%; gap: 0.6rem; }
+  .carousel-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
 }
 
 /* ---------- about ---------- */
