@@ -21,24 +21,24 @@
 }
 
 html[data-theme="business"] {
-  --bg: #f6f6f4;
-  --surface: #ffffff;
-  --ink: #262a27;
-  --ink-soft: #6b7269;
-  --line: #e2e4df;
-  --accent: #3f6b52;
-  --accent-soft: #e4ece7;
-  --accent-2: #a97155;
-  --accent-2-soft: #f2e6de;
-  --yellow: #c9a15a;
-  --yellow-soft: #f6ecd9;
-  --green: #5c8368;
-  --green-soft: #e9f0eb;
-  --card-bg: #ffffff;
-  --outline: #dfe3dd;
-  --forest: #232b26;
-  --shadow: rgba(38, 43, 39, 0.14);
-  --grey-light: #9aa39c;
+  --bg: #f4f0e4;
+  --surface: #fbf8ef;
+  --ink: #332c1f;
+  --ink-soft: #7a7057;
+  --line: #d8cead;
+  --accent: #52734f;
+  --accent-soft: #e1e8d6;
+  --accent-2: #9c6b3e;
+  --accent-2-soft: #ecdcc0;
+  --yellow: #c08a34;
+  --yellow-soft: #f2dfae;
+  --green: #6f8c53;
+  --green-soft: #e6ecd8;
+  --card-bg: #fbf8ef;
+  --outline: #cdbf94;
+  --forest: #33402a;
+  --shadow: rgba(64, 52, 25, 0.18);
+  --grey-light: #a99a72;
 }
 
 @font-face {
@@ -529,36 +529,36 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
 [data-theme="business"] .shot .label, [data-theme="business"] .stat .num,
 [data-theme="business"] .style-toggle {
-  font-family: "Manrope", "Inter", -apple-system, sans-serif;
+  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 }
 [data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
 [data-theme="business"] .brand {
-  font-weight: 800; letter-spacing: -0.01em;
+  font-weight: 800; letter-spacing: -0.02em;
 }
 [data-theme="business"] .project-card h3, [data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
 [data-theme="business"] .skills-block h4 {
-  font-weight: 700; letter-spacing: -0.005em;
+  font-weight: 700; letter-spacing: -0.01em;
 }
 
 [data-theme="business"] body {
-  background-image: radial-gradient(circle at 1px 1px, rgba(38, 43, 39, 0.07) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, rgba(64, 52, 25, 0.09) 1px, transparent 0);
 }
 
 /* textured art bands: dial back to a muted, neutral backing */
 [data-theme="business"] .hero::before,
 [data-theme="business"] .page-hero::before,
 [data-theme="business"] .cs-hero::before {
-  filter: grayscale(0.6) brightness(1.1) saturate(0.7);
-  opacity: 0.16;
+  filter: grayscale(0.35) sepia(0.2) saturate(0.85) brightness(1.05);
+  opacity: 0.2;
 }
 [data-theme="business"] .mountain-band .layer {
-  filter: grayscale(0.65) brightness(1.15) saturate(0.6);
-  opacity: 0.55;
+  filter: grayscale(0.4) sepia(0.2) saturate(0.75) brightness(1.1);
+  opacity: 0.6;
 }
 
 /* ---- nav ---- */
 [data-theme="business"] header.site-nav {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(251, 248, 239, 0.92);
   border-bottom: 1px solid var(--outline);
 }
 [data-theme="business"] nav.links a.cta,
