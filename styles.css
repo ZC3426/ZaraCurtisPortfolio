@@ -259,27 +259,20 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* ---------- carousel ---------- */
 .carousel {
-  display: flex; align-items: center; justify-content: center; gap: 1.25rem;
-  width: 100%; margin: 2.5rem 0 0; padding: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+  width: 100%; margin: 2.5rem 0 0; padding: 0 1.5rem;
 }
 .carousel-viewport {
-  flex: 0 0 auto; box-sizing: content-box; width: calc(2 * 420px + 1.5rem);
-  padding: 0 64px; overflow-x: hidden; overflow-y: visible;
+  flex: 1 1 auto; box-sizing: content-box; overflow-x: hidden; overflow-y: visible;
 }
-.carousel-track { display: flex; gap: 1.5rem; padding: 12px 0 18px; transition: transform 0.4s ease; }
+.carousel-track { display: flex; gap: 1.5rem; padding: 12px 0 18px; transition: transform 0.45s ease; }
 .carousel-slide {
-  flex: 0 0 420px; transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.12s, border-color 0.12s;
+  flex: 0 0 420px; transition: box-shadow 0.12s, border-color 0.12s;
 }
-.carousel-slide.peek { opacity: 0.55; transform: scale(0.94); }
 .carousel-slide.project-card:hover {
   transform: scale(0.97);
   box-shadow: 6px 6px 0 0 var(--shadow);
   border-color: var(--outline);
-}
-.carousel-slide.peek.project-card:hover { transform: scale(0.94); }
-@media (max-width: 1150px) {
-  .carousel-slide { flex: 0 0 78%; }
-  .carousel-viewport { width: auto; flex: 1 1 auto; padding: 0 20px; }
 }
 @media (max-width: 700px) {
   .carousel-slide { flex: 0 0 82%; }
