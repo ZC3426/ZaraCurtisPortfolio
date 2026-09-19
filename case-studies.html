@@ -2,18 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<script>(function(){try{var s=localStorage.getItem('zc-site-style');document.documentElement.setAttribute('data-theme', s==='personal'?'personal':'business');}catch(e){document.documentElement.setAttribute('data-theme','business');}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Case Studies — Zara Curtis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
 <header class="site-nav">
   <div class="wrap row">
-    <a class="brand" href="index.html"><img src="assets/brand/dino.png" alt="" />Zara Curtis</a>
+    <div class="brand-group">
+      <a class="brand" href="index.html"><img src="assets/brand/dino.png" alt="" />Zara Curtis</a>
+      <button type="button" class="style-toggle" aria-label="Toggle site style">
+        <span class="style-option business">Business-y</span>
+        <span class="style-option personal">My style</span>
+        <span class="style-thumb" aria-hidden="true"></span>
+      </button>
+    </div>
     <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="links">
       <a href="index.html" class="nav-btn">Home</a>

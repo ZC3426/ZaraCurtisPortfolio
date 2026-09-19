@@ -20,6 +20,27 @@
   --max: 1080px;
 }
 
+html[data-theme="business"] {
+  --bg: #f6f6f4;
+  --surface: #ffffff;
+  --ink: #262a27;
+  --ink-soft: #6b7269;
+  --line: #e2e4df;
+  --accent: #3f6b52;
+  --accent-soft: #e4ece7;
+  --accent-2: #a97155;
+  --accent-2-soft: #f2e6de;
+  --yellow: #c9a15a;
+  --yellow-soft: #f6ecd9;
+  --green: #5c8368;
+  --green-soft: #e9f0eb;
+  --card-bg: #ffffff;
+  --outline: #dfe3dd;
+  --forest: #232b26;
+  --shadow: rgba(38, 43, 39, 0.14);
+  --grey-light: #9aa39c;
+}
+
 @font-face {
   font-family: "Chonky Bits";
   src: url("assets/fonts/ChonkyBitsBold.otf") format("opentype");
@@ -79,8 +100,32 @@ header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
   padding-top: 0.9rem; padding-bottom: 0.9rem;
 }
+.brand-group { display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
 .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; text-decoration: none; }
 .brand img { width: 34px; height: 34px; object-fit: contain; }
+
+.style-toggle {
+  position: relative; display: inline-flex; align-items: center; flex: 0 0 auto;
+  background: var(--surface); border: 2px solid var(--outline); border-radius: 100px;
+  padding: 3px; cursor: pointer; font-family: "Space Mono", monospace;
+}
+.style-toggle .style-option {
+  position: relative; z-index: 1; display: inline-block;
+  padding: 0.4rem 0.8rem; font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft);
+  white-space: nowrap; transition: color 0.2s;
+}
+.style-toggle .style-thumb {
+  position: absolute; top: 3px; bottom: 3px; left: 3px;
+  width: calc(50% - 3px); background: var(--ink); border-radius: 100px;
+  transition: transform 0.25s ease;
+}
+html[data-theme="personal"] .style-toggle .style-thumb { transform: translateX(100%); }
+html[data-theme="business"] .style-toggle .style-option.business { color: #fff; }
+html[data-theme="personal"] .style-toggle .style-option.personal { color: #fff; }
+@media (max-width: 520px) {
+  .style-toggle .style-option { padding: 0.4rem 0.55rem; font-size: 0.6rem; }
+}
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; color: var(--ink-soft); transition: color 0.15s; }
 nav.links a:hover, nav.links a.active { color: var(--ink); font-weight: 700; }
@@ -469,3 +514,129 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   font-weight: 700; color: var(--accent);
 }
 .shot .tagline { display: block; margin-top: 0.2rem; font-style: italic; font-weight: 400; color: var(--ink-soft); }
+
+/* =====================================================================
+   BUSINESS-Y THEME OVERRIDES
+   Clean, professional restyle: neutral/nature palette, soft shadows,
+   thin borders, a trendy sans-serif. Same layout/content throughout —
+   only shape, color and type change under [data-theme="business"].
+   ===================================================================== */
+
+[data-theme="business"] body,
+[data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
+[data-theme="business"] .brand, [data-theme="business"] .btn, [data-theme="business"] .thumb,
+[data-theme="business"] .project-card h3, [data-theme="business"] .skills-block h4,
+[data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
+[data-theme="business"] .shot .label, [data-theme="business"] .stat .num,
+[data-theme="business"] .style-toggle {
+  font-family: "Manrope", "Inter", -apple-system, sans-serif;
+}
+[data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
+[data-theme="business"] .brand {
+  font-weight: 800; letter-spacing: -0.01em;
+}
+[data-theme="business"] .project-card h3, [data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
+[data-theme="business"] .skills-block h4 {
+  font-weight: 700; letter-spacing: -0.005em;
+}
+
+[data-theme="business"] body {
+  background-image: radial-gradient(circle at 1px 1px, rgba(38, 43, 39, 0.07) 1px, transparent 0);
+}
+
+/* textured art bands: dial back to a muted, neutral backing */
+[data-theme="business"] .hero::before,
+[data-theme="business"] .page-hero::before,
+[data-theme="business"] .cs-hero::before {
+  filter: grayscale(0.6) brightness(1.1) saturate(0.7);
+  opacity: 0.16;
+}
+[data-theme="business"] .mountain-band .layer {
+  filter: grayscale(0.65) brightness(1.15) saturate(0.6);
+  opacity: 0.55;
+}
+
+/* ---- nav ---- */
+[data-theme="business"] header.site-nav {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid var(--outline);
+}
+[data-theme="business"] nav.links a.cta,
+[data-theme="business"] nav.links a.nav-btn {
+  border: 1px solid var(--outline); box-shadow: none; font-weight: 600;
+}
+[data-theme="business"] nav.links a.cta { background: var(--accent); color: #fff; border-color: var(--accent); }
+[data-theme="business"] nav.links a.nav-btn { background: transparent; }
+[data-theme="business"] nav.links a.nav-btn:hover, [data-theme="business"] nav.links a.nav-btn.active {
+  transform: none; box-shadow: none; background: var(--accent-soft); border-color: var(--accent-soft);
+}
+[data-theme="business"] nav.links a.cta:hover { transform: none; box-shadow: none; opacity: 0.9; }
+[data-theme="business"] .nav-toggle { border: 1px solid var(--outline); box-shadow: none; }
+[data-theme="business"] nav.links { box-shadow: 0 12px 24px rgba(38, 43, 39, 0.08); border-bottom: 1px solid var(--outline); }
+
+/* ---- hero ---- */
+[data-theme="business"] .hero-textbox {
+  border: 1px solid var(--outline); border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(38, 43, 39, 0.08);
+}
+[data-theme="business"] .hero-textbox::after { display: none; }
+
+/* ---- page/case-study header title box ---- */
+[data-theme="business"] .title-box:not(.plain) {
+  border: 1px solid var(--outline); border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(38, 43, 39, 0.08);
+}
+
+/* ---- buttons ---- */
+[data-theme="business"] .btn {
+  border: 1px solid var(--outline); box-shadow: none; font-weight: 600;
+}
+[data-theme="business"] .btn:hover { transform: none; box-shadow: 0 6px 16px rgba(38, 43, 39, 0.1); }
+[data-theme="business"] .btn:active { transform: none; box-shadow: none; }
+[data-theme="business"] .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+[data-theme="business"] .btn.ghost { border-color: var(--outline); }
+
+/* ---- project cards / carousel ---- */
+[data-theme="business"] .project-card {
+  border: 1px solid var(--outline); border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(38, 43, 39, 0.06);
+}
+[data-theme="business"] .project-card:hover {
+  transform: translateY(-4px); box-shadow: 0 16px 34px rgba(38, 43, 39, 0.12);
+}
+[data-theme="business"] .project-card .thumb { border-bottom: 1px solid var(--outline); font-weight: 700; }
+[data-theme="business"] .tag { border: 1px solid var(--outline); font-weight: 600; }
+[data-theme="business"] .carousel-slide.project-card:hover {
+  box-shadow: 0 16px 34px rgba(38, 43, 39, 0.12); border-color: var(--accent);
+}
+[data-theme="business"] .carousel-slide.peek { opacity: 0.6; }
+[data-theme="business"] .carousel-arrow { border: 1px solid var(--outline); box-shadow: 0 6px 16px rgba(38, 43, 39, 0.1); }
+[data-theme="business"] .carousel-arrow:hover { transform: translateY(-50%); box-shadow: 0 3px 10px rgba(38, 43, 39, 0.1); }
+[data-theme="business"] .carousel-dots .dot { border: 1px solid var(--outline); }
+
+/* ---- skills pills ---- */
+[data-theme="business"] .skills span { border: 1px solid var(--outline); box-shadow: none; font-weight: 600; }
+
+/* ---- contact box ---- */
+[data-theme="business"] .contact-box { border: none; box-shadow: 0 20px 44px rgba(38, 43, 39, 0.16); }
+[data-theme="business"] .contact-box .btn.primary { background: #fff; color: var(--forest); border-color: #fff; }
+[data-theme="business"] .contact-box .btn.ghost { box-shadow: none; }
+[data-theme="business"] .contact-box .btn.ghost:hover { box-shadow: none; opacity: 0.85; }
+
+/* ---- overview grid / stats / mini cards / wireframe shots ---- */
+[data-theme="business"] .overview-grid,
+[data-theme="business"] .stat,
+[data-theme="business"] .card-mini,
+[data-theme="business"] .shot {
+  border: 1px solid var(--outline); box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06); border-radius: 12px;
+}
+[data-theme="business"] .shot figcaption { border-top: 1px solid var(--outline); }
+[data-theme="business"] .cs-section blockquote {
+  border: 1px solid var(--outline); border-left: 4px solid var(--accent);
+  box-shadow: none; background: var(--accent-soft);
+}
+[data-theme="business"] .cs-section { border-bottom: 1px solid var(--outline); }
+[data-theme="business"] .cs-hero, [data-theme="business"] .page-hero { border-bottom: 1px solid var(--outline); }
+[data-theme="business"] section.alt { border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline); }
+[data-theme="business"] .mountain-band { border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline); }
+[data-theme="business"] .cs-nav-footer { border-top: 1px solid var(--outline); }

@@ -27,9 +27,26 @@
     });
   }
 
+  function initStyleToggle() {
+    var STORAGE_KEY = 'zc-site-style';
+    var root = document.documentElement;
+    var toggle = document.querySelector('.style-toggle');
+    if (!toggle) return;
+
+    toggle.setAttribute('aria-pressed', root.getAttribute('data-theme') === 'personal' ? 'true' : 'false');
+
+    toggle.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'business' ? 'personal' : 'business';
+      root.setAttribute('data-theme', next);
+      toggle.setAttribute('aria-pressed', next === 'personal' ? 'true' : 'false');
+      try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); });
   } else {
     init();
+    initStyleToggle();
   }
 })();
