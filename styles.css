@@ -259,7 +259,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* ---------- carousel ---------- */
 .carousel {
-  display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
   width: 100%; margin: 2.5rem 0 0; padding: 0 1.5rem;
 }
 .carousel-viewport {
