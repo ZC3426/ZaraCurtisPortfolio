@@ -149,35 +149,69 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script>
 (function () {
-  var viewport = document.querySelector('.carousel-viewport');
   var track = document.querySelector('.carousel-track');
   if (!track) return;
+
+  var realSlides = Array.prototype.slice.call(track.children);
+  var count = realSlides.length;
+
+  var firstClone = realSlides[0].cloneNode(true);
+  var lastClone = realSlides[count - 1].cloneNode(true);
+  firstClone.setAttribute('aria-hidden', 'true');
+  lastClone.setAttribute('aria-hidden', 'true');
+  track.insertBefore(lastClone, track.firstChild);
+  track.appendChild(firstClone);
+
   var slides = Array.prototype.slice.call(track.children);
   var dots = document.querySelectorAll('.carousel-dots .dot');
-  var index = 0;
+  var index = 1;
 
-  function update() {
+  function step() {
     var gap = parseFloat(getComputedStyle(track).gap) || 0;
-    var step = slides[0].getBoundingClientRect().width + gap;
-    var maxScroll = Math.max(0, track.scrollWidth - viewport.clientWidth);
-    var translate = Math.min(index * step, maxScroll);
-    track.style.transform = 'translateX(-' + translate + 'px)';
-    dots.forEach(function (d, i) { d.classList.toggle('active', i === index); });
+    return slides[0].getBoundingClientRect().width + gap;
   }
 
+  function render(instant) {
+    track.style.transition = instant ? 'none' : '';
+    track.style.transform = 'translateX(-' + (index * step()) + 'px)';
+    slides.forEach(function (s, i) {
+      s.classList.toggle('peek', i !== index && i !== index + 1);
+    });
+    var realIndex = ((index - 1) % count + count) % count;
+    dots.forEach(function (d, i) { d.classList.toggle('active', i === realIndex); });
+    if (instant) {
+      track.getBoundingClientRect();
+      track.style.transition = '';
+    }
+  }
+
+  function goTo(i) {
+    index = i;
+    render(false);
+  }
+
+  track.addEventListener('transitionend', function (e) {
+    if (e.propertyName !== 'transform') return;
+    if (index === 0) {
+      index = count;
+      render(true);
+    } else if (index === slides.length - 1) {
+      index = 1;
+      render(true);
+    }
+  });
+
   document.querySelector('.carousel-arrow.prev').addEventListener('click', function () {
-    index = Math.max(0, index - 1);
-    update();
+    goTo(index - 1);
   });
   document.querySelector('.carousel-arrow.next').addEventListener('click', function () {
-    index = Math.min(slides.length - 1, index + 1);
-    update();
+    goTo(index + 1);
   });
   dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { index = i; update(); });
+    d.addEventListener('click', function () { goTo(i + 1); });
   });
-  window.addEventListener('resize', update);
-  update();
+  window.addEventListener('resize', function () { render(true); });
+  render(true);
 })();
 </script>
 
