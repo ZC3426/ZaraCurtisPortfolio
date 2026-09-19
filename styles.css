@@ -157,13 +157,17 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .section-head p { margin-top: 0.85rem; color: var(--ink-soft); }
 
 /* ---------- plain page header (About, Case studies index) ---------- */
-.page-hero { position: relative; overflow: hidden; background-color: var(--bg); padding: 3.5rem 0 2.5rem; border-bottom: 3px solid var(--outline); }
+.page-hero {
+  position: relative; overflow: hidden; background-color: var(--bg);
+  padding: 3.5rem 0 2.5rem; border-bottom: 3px solid var(--outline);
+  min-height: 15.5rem; display: flex; align-items: center;
+}
 .page-hero::before {
   content: ""; position: absolute; inset: 0;
   background-size: cover; background-position: center; background-repeat: no-repeat;
   opacity: 0.4;
 }
-.page-hero > .wrap { position: relative; z-index: 1; }
+.page-hero > .wrap { position: relative; z-index: 1; width: 100%; }
 .page-hero .eyebrow {
   display: inline-block; font-size: 0.85rem; text-transform: uppercase;
   letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
@@ -398,16 +402,18 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 /* ---------- image galleries ---------- */
 .shot-row { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; align-items: flex-start; }
 .shot-row.cols-2 .shot { flex: 1 1 320px; }
-.shot-row.cols-3 .shot { flex: 1 1 220px; }
+.shot-row.cols-3 { align-items: stretch; }
+.shot-row.cols-3 .shot { flex: 1 1 220px; display: flex; flex-direction: column; }
 .shot {
   background: var(--surface); border: 3px solid var(--ink); border-radius: 14px;
   box-shadow: 5px 5px 0 0 var(--shadow); overflow: hidden;
 }
 .shot img { width: 100%; height: auto; display: block; }
 .shot figcaption {
-  padding: 0.7rem 1rem; font-size: 0.82rem; color: var(--ink-soft);
+  padding: 0.9rem 1rem 1rem; font-size: 0.82rem; color: var(--ink-soft);
   border-top: 2px solid var(--ink);
 }
+.shot-row.cols-3 .shot figcaption { flex: 1; display: flex; flex-direction: column; }
 .shot.wide { flex-basis: 100%; }
 .shot-row .shot.mobile { flex: 0 0 auto; width: 220px; align-self: flex-start; }
 
@@ -423,7 +429,20 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   .device-row { justify-content: center; }
   .device-row img { height: 260px; }
 }
-.shot .kept { font-weight: 700; color: var(--ink); }
-.shot .why { display: block; margin-top: 0.35rem; font-style: italic; }
-.shot .category { display: block; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed var(--ink-soft); font-weight: 700; color: var(--accent); }
+.shot .decision { margin-bottom: 0.85rem; }
+.shot .decision p { margin: 0; }
+.shot .label {
+  display: inline-block; font-family: "Space Mono", monospace; font-weight: 700;
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 0.15rem 0.45rem; border-radius: 6px; margin-right: 0.4rem;
+  color: var(--ink);
+}
+.shot .label.kept { background: var(--green-soft); }
+.shot .label.cut { background: var(--accent-2-soft); }
+.shot .decision > p:first-child { font-weight: 700; color: var(--ink); line-height: 1.4; }
+.shot .decision .why { margin-top: 0.3rem; font-style: italic; line-height: 1.45; }
+.shot .category {
+  margin-top: auto; padding-top: 0.7rem; border-top: 1px dashed var(--ink-soft);
+  font-weight: 700; color: var(--accent);
+}
 .shot .tagline { display: block; margin-top: 0.2rem; font-style: italic; font-weight: 400; color: var(--ink-soft); }
