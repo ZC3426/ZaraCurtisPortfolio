@@ -184,17 +184,17 @@
   }
 
   function sizeViewport() {
-    if (window.innerWidth <= 700) { viewport.style.flex = ''; return; }
+    if (window.innerWidth <= 700) { viewport.style.width = ''; return; }
     var cardWidth = slides[0].getBoundingClientRect().width;
     var trackGap = parseFloat(getComputedStyle(track).gap) || 0;
     var u = cardWidth + trackGap;
-    var arrows = document.querySelectorAll('.carousel-arrow');
     var carouselStyle = getComputedStyle(carousel);
-    var rowGap = parseFloat(carouselStyle.gap) || 0;
     var sidePad = (parseFloat(carouselStyle.paddingLeft) || 0) + (parseFloat(carouselStyle.paddingRight) || 0);
-    var available = carousel.clientWidth - sidePad - arrows[0].offsetWidth - arrows[1].offsetWidth - rowGap * 2;
+    var viewportStyle = getComputedStyle(viewport);
+    var bufPad = (parseFloat(viewportStyle.paddingLeft) || 0) + (parseFloat(viewportStyle.paddingRight) || 0);
+    var available = carousel.clientWidth - sidePad - bufPad;
     var n = Math.max(1, Math.floor((available + trackGap) / u));
-    viewport.style.flex = '0 0 ' + (n * u - trackGap) + 'px';
+    viewport.style.width = (n * u - trackGap) + 'px';
   }
 
   function render(instant) {
