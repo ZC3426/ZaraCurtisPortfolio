@@ -16,6 +16,7 @@
   --outline: #1f7a4d;
   --forest: #163d2b;
   --shadow: #a8a29a;
+  --grey-light: #cfccc2;
   --max: 1080px;
 }
 
@@ -168,7 +169,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
   margin-bottom: 0.75rem;
 }
-.page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); color: var(--grey-light); }
 .page-hero p.lede { margin-top: 1rem; color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem; }
 
 .title-box {
@@ -179,6 +180,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   padding: 1rem 1.4rem;
 }
 .title-box h1 { margin: 0; }
+.title-box.plain { background: none; border: none; box-shadow: none; padding: 0; }
 
 .page-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
 .page-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
