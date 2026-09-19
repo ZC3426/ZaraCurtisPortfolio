@@ -169,7 +169,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
   margin-bottom: 0.75rem;
 }
-.page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); color: var(--grey-light); }
+.page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); }
 .page-hero p.lede { margin-top: 1rem; color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem; }
 
 .title-box {
