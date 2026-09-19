@@ -73,10 +73,10 @@ header.site-nav {
   backdrop-filter: blur(6px);
   border-bottom: 3px solid var(--outline);
 }
-header.site-nav .wrap { max-width: none; padding: 0 3rem; }
+header.site-nav .wrap { max-width: none; padding: 0 1.5rem; }
 header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.9rem 0;
+  padding-top: 0.9rem; padding-bottom: 0.9rem;
 }
 .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; text-decoration: none; }
 .brand img { width: 34px; height: 34px; object-fit: contain; }
@@ -257,7 +257,12 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 }
 .carousel-viewport { flex: 1; overflow-x: hidden; overflow-y: visible; }
 .carousel-track { display: flex; gap: 1.5rem; padding: 12px 0 18px; transition: transform 0.4s ease; }
-.carousel-slide { flex: 0 0 calc(50% - 0.75rem); }
+.carousel-slide { flex: 0 0 420px; }
+.carousel-slide.project-card:hover {
+  transform: scale(0.97);
+  box-shadow: 6px 6px 0 0 var(--shadow);
+  border-color: var(--outline);
+}
 @media (max-width: 700px) {
   .carousel-slide { flex: 0 0 85%; }
 }
@@ -360,7 +365,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--ink);
   border-radius: 14px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--shadow);
 }
-.stat .num { font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 2.1rem; color: var(--accent); }
+.stat .num { font-family: "Space Mono", monospace; font-weight: 700; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-top: 1.5rem; }
 @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
