@@ -651,7 +651,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 /* ---- hero ---- */
 [data-theme="business"] .hero-textbox {
   background: none; border: none; box-shadow: none; padding: 0;
-  margin-top: 6rem; margin-bottom: 3rem;
+  margin: 0;
 }
 [data-theme="business"] .hero-textbox::after { display: none; }
 [data-theme="business"] .hero h1 { font-size: clamp(1.6rem, 5.5vw, 3.4rem); }
@@ -662,14 +662,17 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: none; border: none; box-shadow: none; padding: 0;
 }
 
-/* ---- heading space: uniform padding across every page, no art strip.
-   Extra top room (vs bottom) clears the style toggle now living in the
-   band's top-left corner. ---- */
+/* ---- heading space: uniform padding AND height across every page, no
+   art strip. Extra top room (vs bottom) clears the style toggle now
+   living in the band's top-left corner. A shared min-height keeps the
+   banner the same size when flicking between pages, regardless of
+   whether the heading wraps to one or two lines. ---- */
 [data-theme="business"] .hero,
 [data-theme="business"] .page-hero,
 [data-theme="business"] .cs-hero {
-  padding: 5rem 0 1.65rem; min-height: 0;
+  padding: 5rem 0 1.65rem; min-height: 15.5rem;
 }
+[data-theme="business"] .hero { display: grid; align-items: center; }
 
 /* ---- buttons ---- */
 [data-theme="business"] .btn {
