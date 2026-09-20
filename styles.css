@@ -215,7 +215,8 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
 .hero {
   position: relative; overflow: hidden;
   background-color: var(--bg); background-image: none;
-  padding: 3.5rem 0 2.5rem; min-height: 23.5rem;
+  padding: 3.75rem 0 0; min-height: 23.5rem;
+  display: flex; flex-direction: column; justify-content: center;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0;
@@ -227,7 +228,7 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
 .hero > .wrap { position: relative; z-index: 1; max-width: none; padding: 0 3rem; }
 .hero-textbox {
   position: relative;
-  display: inline-block; max-width: 100%; margin-top: 1.75rem;
+  display: inline-block; max-width: 100%;
   opacity: 0.9;
   background: rgba(255, 252, 243, 0.88);
   border: 1.5px solid var(--ink); border-radius: 10px;
@@ -271,7 +272,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 /* ---------- plain page header (About, Case studies index) ---------- */
 .page-hero {
   position: relative; overflow: hidden; background-color: var(--bg);
-  padding: 3.5rem 0 2.5rem; border-bottom: 3px solid var(--outline);
+  padding: 3.75rem 0 0; border-bottom: 3px solid var(--outline);
   min-height: 23.5rem;
 }
 .page-hero::before {
@@ -300,10 +301,12 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* About/Case-studies headings are speech bubbles too, matching the
    homepage hero's box exactly so the heading sits in the same spot
-   on every "simple" page. */
+   on every "simple" page. The margin-top matches wherever the hero's
+   own (centered, two-line) heading lands, so a shorter one-line title
+   ends up in that same spot rather than centering on its own. */
 .page-hero .title-box {
   position: relative;
-  margin-top: 1.75rem;
+  margin-top: 4.125rem;
   padding: 1.5rem 1.75rem;
   opacity: 0.9;
   box-shadow: 0 12px 28px rgba(34, 31, 26, 0.18);
@@ -680,16 +683,12 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .title-box:not(.plain) {
   background: none; border: none; box-shadow: none; padding: 0; margin: 0;
 }
+[data-theme="business"] .page-hero .title-box { margin-top: 6.125rem; }
 [data-theme="business"] .page-hero .title-box::after { display: none; }
 
-/* ---- heading space: same padding and min-height for the hero and
-   page-hero bands, in both themes, so the heading text lands in the
-   same spot and the banner is the same size whichever page or style
-   you're on. Extra top room clears the style toggle in the corner. ---- */
-[data-theme="business"] .hero,
-[data-theme="business"] .page-hero {
-  padding: 7rem 0 2.5rem; min-height: 23.5rem;
-}
+/* ---- heading space: .hero/.page-hero padding, min-height, and the
+   toggle-to-bottom-line centering are shared (theme-agnostic) above.
+   Case-study project pages keep their own, unrelated band size. ---- */
 [data-theme="business"] .cs-hero {
   padding: 5rem 0 1.65rem; min-height: 15.5rem;
 }
