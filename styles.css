@@ -696,7 +696,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 
 /* ---- contact box ---- */
 [data-theme="business"] .contact-box { border: none; box-shadow: 0 20px 44px rgba(38, 43, 39, 0.16); }
-[data-theme="business"] .contact-box .actions { flex-direction: column; align-items: center; }
+[data-theme="business"] .contact-box .actions { align-items: center; }
 [data-theme="business"] .contact-box .btn.primary {
   order: 2; background: none; border: none; box-shadow: none; color: #fff;
 }
