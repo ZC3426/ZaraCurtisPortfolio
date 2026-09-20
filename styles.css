@@ -335,42 +335,29 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   .work-list { grid-template-columns: 1fr; }
 }
 
-/* ---------- carousel: single-card spotlight with a stacked deck behind ---------- */
+/* ---------- carousel: swipeable deck, front card straight, others fanned behind ---------- */
 .carousel {
   display: flex; align-items: center; justify-content: center; gap: 1.25rem;
   width: 100%; margin: 2.5rem 0 0; padding: 0 1.5rem;
 }
-.carousel-viewport {
+.carousel-stack {
   position: relative; flex: 0 0 auto;
   width: 420px; max-width: min(420px, calc(100vw - 180px));
 }
-.ghost-card {
-  position: absolute; border-radius: 8px; pointer-events: none;
-  background: var(--card-bg); border: 3px solid var(--ink);
+.carousel-stack .carousel-slide {
+  position: absolute; top: 0; left: 0; right: 0;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.4s ease;
+  pointer-events: none;
 }
-.ghost-card.back-1 {
-  top: 14px; bottom: -14px; left: 16px; right: 16px;
-  opacity: 0.65; z-index: 1; transform: rotate(-1.5deg);
-}
-.ghost-card.back-2 {
-  top: 28px; bottom: -28px; left: 32px; right: 32px;
-  opacity: 0.35; z-index: 0; transform: rotate(2deg);
-}
-.carousel-clip {
-  position: relative; z-index: 2; overflow: hidden; border-radius: 8px;
-  box-sizing: border-box; padding: 0 10px;
-}
-.carousel-track { display: flex; gap: 1.5rem; padding: 12px 0 18px; transition: transform 0.45s ease; }
-.carousel-slide {
-  flex: 0 0 100%; transition: box-shadow 0.12s, border-color 0.12s;
-}
-.carousel-slide.project-card:hover {
-  transform: scale(0.97);
-  box-shadow: 6px 6px 0 0 var(--shadow);
-  border-color: var(--outline);
-}
+.carousel-stack .carousel-slide.no-transition { transition: none !important; }
+.carousel-slide[data-depth="0"] { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; z-index: 40; pointer-events: auto; }
+.carousel-slide[data-depth="1"] { transform: translateY(10px) scale(0.96) rotate(6deg); opacity: 0.72; z-index: 30; }
+.carousel-slide[data-depth="2"] { transform: translateY(20px) scale(0.92) rotate(-5deg); opacity: 0.5; z-index: 20; }
+.carousel-slide[data-depth="3"] { transform: translateY(30px) scale(0.88) rotate(9deg); opacity: 0.35; z-index: 10; }
+.carousel-slide.exit-right { transform: translateX(160%) rotate(10deg); opacity: 0; z-index: 50; }
+.carousel-slide.enter-from-right { transform: translateX(160%) rotate(-10deg); opacity: 0; z-index: 50; }
 .carousel-arrow {
-  position: static; flex: 0 0 auto; z-index: 5;
+  position: static; flex: 0 0 auto; z-index: 60;
   width: 52px; height: 52px; border-radius: 50%;
   background: #fff; border: 2.5px solid var(--ink); box-shadow: 3px 3px 0 0 var(--shadow);
   display: flex; align-items: center; justify-content: center;
@@ -386,7 +373,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .carousel-dots .dot.active { background: var(--outline); }
 @media (max-width: 640px) {
   .carousel { gap: 0.6rem; }
-  .carousel-viewport { max-width: min(420px, calc(100vw - 116px)); }
+  .carousel-stack { max-width: min(420px, calc(100vw - 116px)); }
   .carousel-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
 }
 
@@ -620,17 +607,12 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 [data-theme="business"] .project-card .thumb { border-bottom: 1px solid var(--outline); font-weight: 700; }
 [data-theme="business"] .tag { border: 1px solid var(--outline); font-weight: 600; }
-[data-theme="business"] .carousel-slide.project-card:hover {
-  box-shadow: 0 16px 34px rgba(38, 43, 39, 0.12); border-color: var(--accent);
-}
 [data-theme="business"] .carousel-arrow { border: 1px solid var(--outline); box-shadow: 0 6px 16px rgba(38, 43, 39, 0.1); }
 [data-theme="business"] .carousel-arrow:hover { transform: none; box-shadow: 0 3px 10px rgba(38, 43, 39, 0.1); }
 [data-theme="business"] .carousel-dots .dot { border: 1px solid var(--outline); }
-[data-theme="business"] .ghost-card {
-  border: 1px solid var(--outline); box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06);
-}
-[data-theme="business"] .ghost-card.back-1 { transform: none; }
-[data-theme="business"] .ghost-card.back-2 { transform: none; }
+[data-theme="business"] .carousel-slide[data-depth="1"] { transform: translateY(10px) scale(0.96) rotate(3deg); }
+[data-theme="business"] .carousel-slide[data-depth="2"] { transform: translateY(20px) scale(0.92) rotate(-2.5deg); }
+[data-theme="business"] .carousel-slide[data-depth="3"] { transform: translateY(30px) scale(0.88) rotate(4.5deg); }
 
 /* ---- skills pills ---- */
 [data-theme="business"] .skills span { border: 1px solid var(--outline); box-shadow: none; font-weight: 600; }

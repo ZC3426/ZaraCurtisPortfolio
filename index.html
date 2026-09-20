@@ -57,11 +57,7 @@
 
       <div class="carousel">
         <button type="button" class="carousel-arrow prev" aria-label="Previous project">←</button>
-        <div class="carousel-viewport">
-          <div class="ghost-card back-2" aria-hidden="true"></div>
-          <div class="ghost-card back-1" aria-hidden="true"></div>
-          <div class="carousel-clip">
-          <div class="carousel-track">
+        <div class="carousel-stack">
 
             <a class="project-card carousel-slide" href="projects/sketchscroll.html">
               <div class="thumb cover"><img src="assets/sketchscroll/dashboard-desktop.jpg" alt="Sketchscroll dashboard cover" width="1600" height="899" loading="lazy" /></div>
@@ -100,8 +96,6 @@
             </a>
 
           </div>
-          </div>
-        </div>
         <button type="button" class="carousel-arrow next" aria-label="Next project">→</button>
       </div>
 
@@ -163,75 +157,124 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script>
 (function () {
-  var track = document.querySelector('.carousel-track');
-  if (!track) return;
+  var stack = document.querySelector('.carousel-stack');
+  if (!stack) return;
 
-  var realSlides = Array.prototype.slice.call(track.children);
-  var count = realSlides.length;
-
-  // Build [clone of all, real slides, clone of all] so the track can be
-  // nudged an entire set in either direction with no visible seam,
-  // however many cards happen to be on screen at once.
-  var frag1 = document.createDocumentFragment();
-  realSlides.forEach(function (s) {
-    var c = s.cloneNode(true);
-    c.setAttribute('aria-hidden', 'true');
-    frag1.appendChild(c);
-  });
-  track.insertBefore(frag1, track.firstChild);
-  realSlides.forEach(function (s) {
-    var c = s.cloneNode(true);
-    c.setAttribute('aria-hidden', 'true');
-    track.appendChild(c);
-  });
-
-  var slides = Array.prototype.slice.call(track.children);
+  var slides = Array.prototype.slice.call(stack.children);
+  var count = slides.length;
   var dots = document.querySelectorAll('.carousel-dots .dot');
-  var index = count;
+  var frontIndex = 0;
+  var animating = false;
 
-  function unit() {
-    var gap = parseFloat(getComputedStyle(track).gap) || 0;
-    return slides[0].getBoundingClientRect().width + gap;
+  function depthOf(cardIndex, front) {
+    return ((cardIndex - front) % count + count) % count;
   }
 
-  function render(instant) {
-    track.style.transition = instant ? 'none' : '';
-    track.style.transform = 'translateX(-' + (index * unit()) + 'px)';
-    var realIndex = ((index - count) % count + count) % count;
-    dots.forEach(function (d, i) { d.classList.toggle('active', i === realIndex); });
-    if (instant) {
-      track.getBoundingClientRect();
-      track.style.transition = '';
-    }
+  function sizeStack() {
+    // Measure each card's natural height while briefly out of absolute
+    // flow, so the stack container reserves enough room for the tallest.
+    var maxH = 0;
+    slides.forEach(function (s) {
+      s.style.position = 'static';
+    });
+    slides.forEach(function (s) {
+      maxH = Math.max(maxH, s.getBoundingClientRect().height);
+    });
+    slides.forEach(function (s) {
+      s.style.position = '';
+    });
+    stack.style.height = Math.ceil(maxH) + 'px';
+  }
+
+  function updateDots() {
+    dots.forEach(function (d, i) { d.classList.toggle('active', i === frontIndex); });
+  }
+
+  function applyDepths(skipIndices) {
+    slides.forEach(function (el, i) {
+      if (skipIndices && skipIndices.indexOf(i) !== -1) return;
+      el.setAttribute('data-depth', depthOf(i, frontIndex));
+    });
+  }
+
+  function forceNoTransition(el, fn) {
+    el.classList.add('no-transition');
+    fn();
+    el.getBoundingClientRect();
+    el.classList.remove('no-transition');
+  }
+
+  function onTransformEnd(el, cb) {
+    el.addEventListener('transitionend', function handler(e) {
+      if (e.propertyName !== 'transform') return;
+      el.removeEventListener('transitionend', handler);
+      cb();
+    });
+  }
+
+  function next() {
+    if (animating) return;
+    animating = true;
+    var outgoingIndex = frontIndex;
+    var outgoing = slides[outgoingIndex];
+
+    outgoing.classList.add('exit-right');
+    frontIndex = (frontIndex + 1) % count;
+    applyDepths([outgoingIndex]);
+    updateDots();
+
+    onTransformEnd(outgoing, function () {
+      forceNoTransition(outgoing, function () {
+        outgoing.classList.remove('exit-right');
+        outgoing.setAttribute('data-depth', depthOf(outgoingIndex, frontIndex));
+      });
+      animating = false;
+    });
+  }
+
+  function prev() {
+    if (animating) return;
+    animating = true;
+    var incomingIndex = (frontIndex - 1 + count) % count;
+    var incoming = slides[incomingIndex];
+
+    // The incoming card is the one jumping all the way from the back of
+    // the deck to the front, so it gets the dramatic sweep. Every other
+    // card (including the outgoing front) just settles one step back,
+    // the same gentle shift next() gives its non-exiting cards.
+    forceNoTransition(incoming, function () {
+      incoming.classList.add('enter-from-right');
+    });
+
+    frontIndex = incomingIndex;
+    applyDepths([incomingIndex]);
+    updateDots();
+
+    requestAnimationFrame(function () {
+      incoming.classList.remove('enter-from-right');
+      incoming.setAttribute('data-depth', '0');
+    });
+
+    onTransformEnd(incoming, function () { animating = false; });
   }
 
   function goTo(i) {
-    index = i;
-    render(false);
+    if (animating || i === frontIndex) return;
+    frontIndex = i;
+    applyDepths();
+    updateDots();
   }
 
-  track.addEventListener('transitionend', function (e) {
-    if (e.propertyName !== 'transform') return;
-    if (index < count) {
-      index += count;
-      render(true);
-    } else if (index >= count * 2) {
-      index -= count;
-      render(true);
-    }
+  document.querySelector('.carousel-arrow.prev').addEventListener('click', prev);
+  document.querySelector('.carousel-arrow.next').addEventListener('click', next);
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { goTo(i); });
   });
 
-  document.querySelector('.carousel-arrow.prev').addEventListener('click', function () {
-    goTo(index - 1);
-  });
-  document.querySelector('.carousel-arrow.next').addEventListener('click', function () {
-    goTo(index + 1);
-  });
-  dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { goTo(count + i); });
-  });
-  window.addEventListener('resize', function () { render(true); });
-  render(true);
+  window.addEventListener('resize', sizeStack);
+  sizeStack();
+  applyDepths();
+  updateDots();
 })();
 </script>
 
