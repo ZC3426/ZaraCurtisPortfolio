@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -55,48 +55,53 @@
       </div>
     </div>
 
-      <div class="carousel">
-        <button type="button" class="carousel-arrow prev" aria-label="Previous project">←</button>
-        <div class="carousel-stack">
+      <div class="wrap carousel-layout">
+        <div class="carousel-captions">
+          <p class="carousel-caption" data-depth="0">An equitable financial literacy tool designed with and for young women.</p>
+          <p class="carousel-caption" data-depth="1">User Research, Persona, Development, Wireframing, Prototyping, Usability Testing.</p>
+          <p class="carousel-caption" data-depth="2">UX Artefact Translation, Inclusive Design Thinking, Service Interventions.</p>
+          <p class="carousel-caption" data-depth="3">Using telematics to analyse how social context shapes driver behaviour.</p>
+        </div>
 
-            <a class="project-card carousel-slide" href="projects/sketchscroll.html">
-              <div class="thumb cover"><img src="assets/sketchscroll/dashboard-desktop.jpg" alt="Sketchscroll dashboard cover" width="1600" height="899" loading="lazy" /></div>
-              <div class="info">
-                <h3>Sketchscroll: A Psychologically Informed Solution to Brainrot Using AI</h3>
-                <p class="desc">User Research, Persona, Development, Wireframing, Prototyping, Usability Testing.</p>
-                <div class="arrow">Read case study →</div>
-              </div>
-            </a>
+        <div class="carousel">
+          <button type="button" class="carousel-arrow prev" aria-label="Previous project">←</button>
+          <div class="carousel-stack">
 
-            <a class="project-card carousel-slide" href="projects/equil.html">
-              <div class="thumb cover"><img src="assets/equil/mock-desktop.png" alt="Equil dashboard cover" width="2000" height="1217" loading="lazy" /></div>
-              <div class="info">
-                <h3>Equil: Closing the Financial Literacy Gap with Research-Informed Design</h3>
-                <p class="desc">An equitable financial literacy tool designed with and for young women.</p>
-                <div class="arrow">Read case study →</div>
-              </div>
-            </a>
+              <a class="project-card carousel-slide" href="projects/equil.html">
+                <div class="thumb cover"><img src="assets/equil/mock-desktop.png" alt="Equil dashboard cover" width="2000" height="1217" loading="lazy" /></div>
+                <div class="info">
+                  <h3>Equil: Closing the Financial Literacy Gap with Research-Informed Design</h3>
+                  <div class="arrow">Read case study →</div>
+                </div>
+              </a>
 
-            <a class="project-card carousel-slide" href="projects/neurodivergence-in-schools.html">
-              <div class="thumb tone-3">Reframing Neurodivergence In Schools</div>
-              <div class="info">
-                <h3>A Systems-Thinking Approach to Reducing Student Exclusions</h3>
-                <p class="desc">UX Artefact Translation, Inclusive Design Thinking, Service Interventions.</p>
-                <div class="arrow">Read case study →</div>
-              </div>
-            </a>
+              <a class="project-card carousel-slide" href="projects/sketchscroll.html">
+                <div class="thumb cover"><img src="assets/sketchscroll/dashboard-desktop.jpg" alt="Sketchscroll dashboard cover" width="1600" height="899" loading="lazy" /></div>
+                <div class="info">
+                  <h3>Sketchscroll: A Psychologically Informed Solution to Brainrot Using AI</h3>
+                  <div class="arrow">Read case study →</div>
+                </div>
+              </a>
 
-            <a class="project-card carousel-slide" href="projects/risky-driving.html">
-              <div class="thumb tone-4">Risky Driving Research</div>
-              <div class="info">
-                <h3>Social Influences and Risky Driving</h3>
-                <p class="desc">Using telematics to analyse how social context shapes driver behaviour.</p>
-                <div class="arrow">Read case study →</div>
-              </div>
-            </a>
+              <a class="project-card carousel-slide" href="projects/neurodivergence-in-schools.html">
+                <div class="thumb tone-3">Reframing Neurodivergence In Schools</div>
+                <div class="info">
+                  <h3>A Systems-Thinking Approach to Reducing Student Exclusions</h3>
+                  <div class="arrow">Read case study →</div>
+                </div>
+              </a>
 
-          </div>
-        <button type="button" class="carousel-arrow next" aria-label="Next project">→</button>
+              <a class="project-card carousel-slide" href="projects/risky-driving.html">
+                <div class="thumb tone-4">Risky Driving Research</div>
+                <div class="info">
+                  <h3>Social Influences and Risky Driving</h3>
+                  <div class="arrow">Read case study →</div>
+                </div>
+              </a>
+
+            </div>
+          <button type="button" class="carousel-arrow next" aria-label="Next project">→</button>
+        </div>
       </div>
 
       <div class="carousel-dots">
@@ -163,6 +168,8 @@
   var slides = Array.prototype.slice.call(stack.children);
   var count = slides.length;
   var dots = document.querySelectorAll('.carousel-dots .dot');
+  var captionsBox = document.querySelector('.carousel-captions');
+  var captions = captionsBox ? Array.prototype.slice.call(captionsBox.children) : [];
   var frontIndex = 0;
   var animating = false;
 
@@ -186,6 +193,15 @@
     stack.style.height = Math.ceil(maxH) + 'px';
   }
 
+  function sizeCaptions() {
+    if (!captionsBox || !captions.length) return;
+    var maxH = 0;
+    captions.forEach(function (c) { c.style.position = 'static'; });
+    captions.forEach(function (c) { maxH = Math.max(maxH, c.getBoundingClientRect().height); });
+    captions.forEach(function (c) { c.style.position = ''; });
+    captionsBox.style.minHeight = Math.ceil(maxH) + 'px';
+  }
+
   function updateDots() {
     dots.forEach(function (d, i) { d.classList.toggle('active', i === frontIndex); });
   }
@@ -193,6 +209,9 @@
   function applyDepths(skipIndices) {
     slides.forEach(function (el, i) {
       if (skipIndices && skipIndices.indexOf(i) !== -1) return;
+      el.setAttribute('data-depth', depthOf(i, frontIndex));
+    });
+    captions.forEach(function (el, i) {
       el.setAttribute('data-depth', depthOf(i, frontIndex));
     });
   }
@@ -242,6 +261,11 @@
     // the deck to the front, so it gets the dramatic sweep. Every other
     // card (including the outgoing front) just settles one step back,
     // the same gentle shift next() gives its non-exiting cards.
+    // "entering" carries the slower transition for the whole glide;
+    // "enter-from-right" only marks the instantaneous off-screen start
+    // so it must be gone before the animated step below, or the fast
+    // default transition would apply instead and the card would snap in.
+    incoming.classList.add('entering');
     forceNoTransition(incoming, function () {
       incoming.classList.add('enter-from-right');
     });
@@ -250,12 +274,21 @@
     applyDepths([incomingIndex]);
     updateDots();
 
+    // A single rAF isn't enough: the browser can coalesce it with the
+    // synchronous changes above into one paint, so the far-right start
+    // position never actually commits and the "transition" has nothing
+    // to animate from. A nested rAF forces that start frame to paint first.
     requestAnimationFrame(function () {
-      incoming.classList.remove('enter-from-right');
-      incoming.setAttribute('data-depth', '0');
+      requestAnimationFrame(function () {
+        incoming.classList.remove('enter-from-right');
+        incoming.setAttribute('data-depth', '0');
+      });
     });
 
-    onTransformEnd(incoming, function () { animating = false; });
+    onTransformEnd(incoming, function () {
+      incoming.classList.remove('entering');
+      animating = false;
+    });
   }
 
   function goTo(i) {
@@ -271,8 +304,9 @@
     d.addEventListener('click', function () { goTo(i); });
   });
 
-  window.addEventListener('resize', sizeStack);
+  window.addEventListener('resize', function () { sizeStack(); sizeCaptions(); });
   sizeStack();
+  sizeCaptions();
   applyDepths();
   updateDots();
 })();

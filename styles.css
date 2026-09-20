@@ -335,13 +335,27 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   .work-list { grid-template-columns: 1fr; }
 }
 
-/* ---------- carousel: swipeable deck, front card straight, others fanned behind ---------- */
+/* ---------- carousel: text panel + swipeable deck, evenly split ---------- */
+.carousel-layout {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 3rem; margin-top: 2.5rem;
+}
+.carousel-captions {
+  position: relative; flex: 1 1 0; min-width: 0; z-index: 1;
+}
+.carousel-captions .carousel-caption {
+  position: absolute; top: 0; left: 0; right: 0;
+  margin: 0; font-size: 1.15rem; line-height: 1.6; color: var(--ink-soft);
+  opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
+}
+.carousel-captions .carousel-caption[data-depth="0"] { opacity: 1; pointer-events: auto; }
+
 .carousel {
   display: flex; align-items: center; justify-content: center; gap: 1.25rem;
-  width: 100%; margin: 2.5rem 0 0; padding: 0 1.5rem;
+  flex: 0 1 auto; margin: 0; padding: 0;
 }
 .carousel-stack {
-  position: relative; flex: 0 0 auto;
+  position: relative; z-index: 5; isolation: isolate; flex: 0 0 auto;
   width: 420px; max-width: min(420px, calc(100vw - 180px));
 }
 .carousel-stack .carousel-slide {
@@ -354,8 +368,12 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .carousel-slide[data-depth="1"] { transform: translateY(10px) scale(0.96) rotate(6deg); opacity: 0.72; z-index: 30; }
 .carousel-slide[data-depth="2"] { transform: translateY(20px) scale(0.92) rotate(-5deg); opacity: 0.5; z-index: 20; }
 .carousel-slide[data-depth="3"] { transform: translateY(30px) scale(0.88) rotate(9deg); opacity: 0.35; z-index: 10; }
-.carousel-slide.exit-right { transform: translateX(160%) rotate(10deg); opacity: 0; z-index: 50; }
-.carousel-slide.enter-from-right { transform: translateX(160%) rotate(-10deg); opacity: 0; z-index: 50; }
+.carousel-stack .carousel-slide.exit-right,
+.carousel-stack .carousel-slide.entering {
+  transition: transform 0.6s cubic-bezier(0.45, 0, 0.55, 1), opacity 0.4s ease;
+}
+.carousel-slide.exit-right { transform: translateX(260%) rotate(10deg); opacity: 1; z-index: 70; }
+.carousel-slide.enter-from-right { transform: translateX(260%) rotate(-10deg); opacity: 1; z-index: 70; }
 .carousel-arrow {
   position: static; flex: 0 0 auto; z-index: 60;
   width: 52px; height: 52px; border-radius: 50%;
@@ -371,6 +389,10 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   border: 2px solid var(--ink); cursor: pointer; padding: 0;
 }
 .carousel-dots .dot.active { background: var(--outline); }
+@media (max-width: 760px) {
+  .carousel-layout { flex-direction: column; align-items: stretch; gap: 1.5rem; }
+  .carousel-captions { text-align: center; }
+}
 @media (max-width: 640px) {
   .carousel { gap: 0.6rem; }
   .carousel-stack { max-width: min(420px, calc(100vw - 116px)); }
@@ -532,12 +554,13 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .btn, [data-theme="business"] .thumb,
 [data-theme="business"] .shot .label, [data-theme="business"] .stat .num,
 [data-theme="business"] .style-toggle {
-  font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  font-family: "Cormorant Garamond", "JetBrains Mono", ui-monospace, serif;
 }
 [data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
 [data-theme="business"] .brand,
 [data-theme="business"] .project-card h3, [data-theme="business"] .skills-block h4,
-[data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3 {
+[data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
+[data-theme="business"] nav.links a.nav-btn, [data-theme="business"] nav.links a.cta {
   font-family: "Aloevera", "Space Mono", cursive;
   font-weight: 400; letter-spacing: 0.01em;
 }
@@ -571,19 +594,42 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   transform: scale(1.08); box-shadow: none; background: none; font-weight: 800;
 }
 [data-theme="business"] .nav-toggle { border: 1px solid var(--outline); box-shadow: none; }
-[data-theme="business"] nav.links { box-shadow: 0 12px 24px rgba(38, 43, 39, 0.08); border-bottom: none; }
+[data-theme="business"] nav.links { border-bottom: none; }
 
 /* ---- hero ---- */
 [data-theme="business"] .hero-textbox {
-  border: 1px solid var(--outline); border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(38, 43, 39, 0.08);
+  background: none; border: none; box-shadow: none; padding: 0;
 }
 [data-theme="business"] .hero-textbox::after { display: none; }
 
 /* ---- page/case-study header title box ---- */
 [data-theme="business"] .title-box:not(.plain) {
-  border: 1px solid var(--outline); border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(38, 43, 39, 0.08);
+  background: none; border: none; box-shadow: none; padding: 0;
+}
+
+/* ---- heading space: shorter, framed top & bottom with a cropped art strip ---- */
+[data-theme="business"] .hero {
+  padding: 1.5rem 0 2rem;
+}
+[data-theme="business"] .page-hero {
+  padding: 1.5rem 0 1.25rem; min-height: 0;
+}
+[data-theme="business"] .cs-hero {
+  padding: 1.5rem 0 1.25rem;
+}
+[data-theme="business"] .hero::before,
+[data-theme="business"] .page-hero::before,
+[data-theme="business"] .cs-hero::before {
+  display: block; opacity: 1; inset: 0 0 auto 0; height: 16px;
+  background-image: url("assets/backgrounds/pages/heading-strip.jpg");
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+[data-theme="business"] .hero::after,
+[data-theme="business"] .page-hero::after,
+[data-theme="business"] .cs-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: auto; height: 16px;
+  background-image: url("assets/backgrounds/pages/heading-strip.jpg");
+  background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 
 /* ---- buttons ---- */
@@ -610,9 +656,9 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .carousel-arrow { border: 1px solid var(--outline); box-shadow: 0 6px 16px rgba(38, 43, 39, 0.1); }
 [data-theme="business"] .carousel-arrow:hover { transform: none; box-shadow: 0 3px 10px rgba(38, 43, 39, 0.1); }
 [data-theme="business"] .carousel-dots .dot { border: 1px solid var(--outline); }
-[data-theme="business"] .carousel-slide[data-depth="1"] { transform: translateY(10px) scale(0.96) rotate(3deg); }
-[data-theme="business"] .carousel-slide[data-depth="2"] { transform: translateY(20px) scale(0.92) rotate(-2.5deg); }
-[data-theme="business"] .carousel-slide[data-depth="3"] { transform: translateY(30px) scale(0.88) rotate(4.5deg); }
+[data-theme="business"] .carousel-slide[data-depth="1"]:not(.exit-right):not(.enter-from-right) { transform: translateY(10px) scale(0.96) rotate(3deg); }
+[data-theme="business"] .carousel-slide[data-depth="2"]:not(.exit-right):not(.enter-from-right) { transform: translateY(20px) scale(0.92) rotate(-2.5deg); }
+[data-theme="business"] .carousel-slide[data-depth="3"]:not(.exit-right):not(.enter-from-right) { transform: translateY(30px) scale(0.88) rotate(4.5deg); }
 
 /* ---- skills pills ---- */
 [data-theme="business"] .skills span { border: 1px solid var(--outline); box-shadow: none; font-weight: 600; }
