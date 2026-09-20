@@ -366,9 +366,12 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   background: var(--card-bg); border: 3px solid var(--ink); border-radius: 8px;
   box-shadow: 6px 6px 0 0 var(--shadow);
   overflow: hidden; text-decoration: none; color: inherit;
-  transition: transform 0.12s, box-shadow 0.12s;
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
 }
-.project-card:hover { transform: translate(-6px, -6px); box-shadow: 13px 13px 0 0 var(--shadow); }
+/* The shadow's far corner is kept ~stationary (offset grows by the same
+   amount the card moves) so it reads as the card lifting off a fixed
+   shadow, not the shadow itself growing/receding. */
+.project-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0 0 var(--shadow); }
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
   display: flex; align-items: center; justify-content: center;
