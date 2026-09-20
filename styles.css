@@ -225,7 +225,7 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
   image-rendering: pixelated;
   opacity: 0.55;
 }
-.hero > .wrap { position: relative; z-index: 1; max-width: none; padding: 0 3rem; }
+.hero > .wrap { position: relative; z-index: 1; max-width: none; margin: 0; padding: 0 3rem; }
 .hero-textbox {
   position: relative;
   display: inline-block; max-width: 100%;
@@ -280,7 +280,10 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   background-size: cover; background-position: center; background-repeat: no-repeat;
   opacity: 0.4;
 }
-.page-hero > .wrap { position: relative; z-index: 1; width: 100%; }
+.page-hero > .wrap {
+  position: relative; z-index: 1;
+  max-width: none; width: 100%; margin: 0; padding: 0 3rem;
+}
 .page-hero .eyebrow {
   display: inline-block; font-size: 0.85rem; text-transform: uppercase;
   letter-spacing: 0.08em; font-weight: 700; color: var(--ink-soft);
