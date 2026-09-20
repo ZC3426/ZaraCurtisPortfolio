@@ -304,6 +304,41 @@
     d.addEventListener('click', function () { goTo(i); });
   });
 
+  // Swipe support: horizontal drag on the stack moves to the next/prev
+  // card. A swipe suppresses the card's own link click; a plain tap
+  // still opens the project as normal.
+  (function () {
+    var startX = 0, startY = 0, tracking = false, swiping = false;
+
+    stack.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+      swiping = false;
+    }, { passive: true });
+
+    stack.addEventListener('touchmove', function (e) {
+      if (!tracking) return;
+      var dx = e.touches[0].clientX - startX;
+      var dy = e.touches[0].clientY - startY;
+      if (!swiping && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        swiping = true;
+      }
+      if (swiping && e.cancelable) e.preventDefault();
+    }, { passive: false });
+
+    stack.addEventListener('touchend', function (e) {
+      if (!tracking) return;
+      tracking = false;
+      if (!swiping) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) {
+        if (dx < 0) next(); else prev();
+      }
+    });
+  })();
+
   window.addEventListener('resize', function () { sizeStack(); sizeCaptions(); });
   sizeStack();
   sizeCaptions();
