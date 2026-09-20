@@ -58,6 +58,9 @@
       <div class="carousel">
         <button type="button" class="carousel-arrow prev" aria-label="Previous project">←</button>
         <div class="carousel-viewport">
+          <div class="ghost-card back-2" aria-hidden="true"></div>
+          <div class="ghost-card back-1" aria-hidden="true"></div>
+          <div class="carousel-clip">
           <div class="carousel-track">
 
             <a class="project-card carousel-slide" href="projects/sketchscroll.html">
@@ -96,6 +99,7 @@
               </div>
             </a>
 
+          </div>
           </div>
         </div>
         <button type="button" class="carousel-arrow next" aria-label="Next project">→</button>
@@ -159,8 +163,6 @@
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 <script>
 (function () {
-  var carousel = document.querySelector('.carousel');
-  var viewport = document.querySelector('.carousel-viewport');
   var track = document.querySelector('.carousel-track');
   if (!track) return;
 
@@ -190,20 +192,6 @@
   function unit() {
     var gap = parseFloat(getComputedStyle(track).gap) || 0;
     return slides[0].getBoundingClientRect().width + gap;
-  }
-
-  function sizeViewport() {
-    if (window.innerWidth <= 700) { viewport.style.width = ''; return; }
-    var cardWidth = slides[0].getBoundingClientRect().width;
-    var trackGap = parseFloat(getComputedStyle(track).gap) || 0;
-    var u = cardWidth + trackGap;
-    var carouselStyle = getComputedStyle(carousel);
-    var sidePad = (parseFloat(carouselStyle.paddingLeft) || 0) + (parseFloat(carouselStyle.paddingRight) || 0);
-    var viewportStyle = getComputedStyle(viewport);
-    var bufPad = (parseFloat(viewportStyle.paddingLeft) || 0) + (parseFloat(viewportStyle.paddingRight) || 0);
-    var available = carousel.clientWidth - sidePad - bufPad;
-    var n = Math.max(1, Math.floor((available + trackGap) / u));
-    viewport.style.width = (n * u - trackGap) + 'px';
   }
 
   function render(instant) {
@@ -242,11 +230,7 @@
   dots.forEach(function (d, i) {
     d.addEventListener('click', function () { goTo(count + i); });
   });
-  window.addEventListener('resize', function () {
-    sizeViewport();
-    render(true);
-  });
-  sizeViewport();
+  window.addEventListener('resize', function () { render(true); });
   render(true);
 })();
 </script>

@@ -327,38 +327,49 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   .work-list { grid-template-columns: 1fr; }
 }
 
-/* ---------- carousel ---------- */
+/* ---------- carousel: single-card spotlight with a stacked deck behind ---------- */
 .carousel {
-  position: relative;
+  display: flex; align-items: center; justify-content: center; gap: 1.25rem;
   width: 100%; margin: 2.5rem 0 0; padding: 0 1.5rem;
 }
 .carousel-viewport {
-  margin: 0 auto; box-sizing: content-box; padding: 0 16px;
-  overflow-x: hidden; overflow-y: visible;
+  position: relative; flex: 0 0 auto;
+  width: 420px; max-width: min(420px, calc(100vw - 180px));
+}
+.ghost-card {
+  position: absolute; border-radius: 18px; pointer-events: none;
+  background: var(--card-bg); border: 3px solid var(--ink);
+}
+.ghost-card.back-1 {
+  top: 14px; bottom: -14px; left: 16px; right: 16px;
+  opacity: 0.65; z-index: 1; transform: rotate(-1.5deg);
+}
+.ghost-card.back-2 {
+  top: 28px; bottom: -28px; left: 32px; right: 32px;
+  opacity: 0.35; z-index: 0; transform: rotate(2deg);
+}
+.carousel-clip {
+  position: relative; z-index: 2; overflow: hidden; border-radius: 18px;
+  box-sizing: border-box; padding: 0 10px;
 }
 .carousel-track { display: flex; gap: 1.5rem; padding: 12px 0 18px; transition: transform 0.45s ease; }
 .carousel-slide {
-  flex: 0 0 420px; transition: box-shadow 0.12s, border-color 0.12s;
+  flex: 0 0 100%; transition: box-shadow 0.12s, border-color 0.12s;
 }
 .carousel-slide.project-card:hover {
   transform: scale(0.97);
   box-shadow: 6px 6px 0 0 var(--shadow);
   border-color: var(--outline);
 }
-@media (max-width: 700px) {
-  .carousel-slide { flex: 0 0 82%; }
-}
 .carousel-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+  position: static; flex: 0 0 auto; z-index: 5;
   width: 52px; height: 52px; border-radius: 50%;
   background: #fff; border: 2.5px solid var(--ink); box-shadow: 3px 3px 0 0 var(--shadow);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.3rem; font-weight: 700; color: var(--ink); cursor: pointer; padding: 0;
   transition: transform 0.1s, box-shadow 0.1s;
 }
-.carousel-arrow.prev { left: 0.5rem; }
-.carousel-arrow.next { right: 0.5rem; }
-.carousel-arrow:hover { transform: translateY(-50%) translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
+.carousel-arrow:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--shadow); }
 .carousel-dots { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1.75rem; }
 .carousel-dots .dot {
   width: 12px; height: 12px; border-radius: 50%; background: var(--surface);
@@ -366,9 +377,9 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 }
 .carousel-dots .dot.active { background: var(--outline); }
 @media (max-width: 640px) {
+  .carousel { gap: 0.6rem; }
+  .carousel-viewport { max-width: min(420px, calc(100vw - 116px)); }
   .carousel-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
-  .carousel-arrow.prev { left: 0.15rem; }
-  .carousel-arrow.next { right: 0.15rem; }
 }
 
 /* ---------- about ---------- */
@@ -609,10 +620,14 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .carousel-slide.project-card:hover {
   box-shadow: 0 16px 34px rgba(38, 43, 39, 0.12); border-color: var(--accent);
 }
-[data-theme="business"] .carousel-slide.peek { opacity: 0.6; }
 [data-theme="business"] .carousel-arrow { border: 1px solid var(--outline); box-shadow: 0 6px 16px rgba(38, 43, 39, 0.1); }
-[data-theme="business"] .carousel-arrow:hover { transform: translateY(-50%); box-shadow: 0 3px 10px rgba(38, 43, 39, 0.1); }
+[data-theme="business"] .carousel-arrow:hover { transform: none; box-shadow: 0 3px 10px rgba(38, 43, 39, 0.1); }
 [data-theme="business"] .carousel-dots .dot { border: 1px solid var(--outline); }
+[data-theme="business"] .ghost-card {
+  border: 1px solid var(--outline); box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06);
+}
+[data-theme="business"] .ghost-card.back-1 { transform: none; }
+[data-theme="business"] .ghost-card.back-2 { transform: none; }
 
 /* ---- skills pills ---- */
 [data-theme="business"] .skills span { border: 1px solid var(--outline); box-shadow: none; font-weight: 600; }
