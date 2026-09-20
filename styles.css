@@ -584,8 +584,13 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    size — and with it the header's width/position — stable when the
    style toggle switches themes. */
 [data-theme="business"] .brand { font-size: 2.3rem; }
+/* Aloevera's ink sits high in its line box, so the dino (a true square
+   image, vertically centered by the flex row) reads as sitting low
+   next to it — nudge it up to line up with the visible letterforms. */
+[data-theme="business"] .brand img { transform: translateY(-6px); }
 @media (max-width: 480px) {
   [data-theme="business"] .brand { font-size: 1.4rem; }
+  [data-theme="business"] .brand img { transform: translateY(-3px); }
 }
 
 [data-theme="business"] body {
@@ -634,33 +639,11 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: none; border: none; box-shadow: none; padding: 0;
 }
 
-/* ---- heading space: uniform across every page, +10% taller, framed
-   top & bottom with sage line / art strip / sage line ---- */
+/* ---- heading space: uniform padding across every page, no art strip ---- */
 [data-theme="business"] .hero,
 [data-theme="business"] .page-hero,
 [data-theme="business"] .cs-hero {
   padding: 1.65rem 0; min-height: 0;
-}
-[data-theme="business"] .hero::before,
-[data-theme="business"] .page-hero::before,
-[data-theme="business"] .cs-hero::before,
-[data-theme="business"] .hero::after,
-[data-theme="business"] .page-hero::after,
-[data-theme="business"] .cs-hero::after {
-  display: block; opacity: 1; height: 16px; box-sizing: border-box;
-  border-top: 1.5px solid var(--outline); border-bottom: 1.5px solid var(--outline);
-  background-image: url("assets/backgrounds/pages/heading-strip.jpg");
-  background-size: cover; background-position: center; background-repeat: no-repeat;
-}
-[data-theme="business"] .hero::before,
-[data-theme="business"] .page-hero::before,
-[data-theme="business"] .cs-hero::before {
-  inset: 0 0 auto 0;
-}
-[data-theme="business"] .hero::after,
-[data-theme="business"] .page-hero::after,
-[data-theme="business"] .cs-hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: auto;
 }
 
 /* ---- buttons ---- */
