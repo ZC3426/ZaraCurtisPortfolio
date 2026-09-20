@@ -115,30 +115,37 @@ header.site-nav .row {
 @media (max-width: 480px) {
   .brand { font-size: 1.15rem; gap: 0.35rem; }
   .brand img { width: 24px; height: 24px; }
-  .brand-group { flex-wrap: wrap; row-gap: 0.5rem; gap: 0.5rem; }
 }
 
+/* Style toggle now lives inside each page's hero/heading band, top-left
+   with room from the band's corner — not in the nav row. Each option
+   keeps its own identity regardless of which theme is active: Business
+   always in Aloevera/dark grey, My style always in the pixel font/teal. */
 .style-toggle {
-  position: relative; display: inline-flex; align-items: center; flex: 0 0 auto;
+  position: absolute; top: 1.25rem; left: 1.5rem; z-index: 5;
+  display: inline-flex; align-items: center;
   background: var(--surface); border: 2px solid var(--outline); border-radius: 100px;
-  padding: 3px; cursor: pointer; font-family: "Space Mono", monospace;
+  padding: 4px; cursor: pointer;
 }
 .style-toggle .style-option {
   position: relative; z-index: 1; display: inline-block;
-  padding: 0.4rem 0.8rem; font-size: 0.68rem; font-weight: 700; line-height: 1;
-  text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft);
+  padding: 0.6rem 1.3rem; font-size: 1.1rem; font-weight: 700; line-height: 1;
+  text-transform: uppercase; letter-spacing: 0.03em;
   white-space: nowrap; transition: color 0.2s;
 }
+.style-toggle .style-option.business { font-family: "Aloevera", cursive; color: #4a4a4a; }
+.style-toggle .style-option.personal { font-family: "Gome Pixel", monospace; color: #2b7a78; }
 .style-toggle .style-thumb {
-  position: absolute; top: 3px; bottom: 3px; left: 3px;
-  width: calc(50% - 3px); background: var(--ink); border-radius: 100px;
+  position: absolute; top: 4px; bottom: 4px; left: 4px;
+  width: calc(50% - 4px); background: var(--ink); border-radius: 100px;
   transition: transform 0.25s ease;
 }
 html[data-theme="personal"] .style-toggle .style-thumb { transform: translateX(100%); }
 html[data-theme="business"] .style-toggle .style-option.business { color: #fff; }
 html[data-theme="personal"] .style-toggle .style-option.personal { color: #fff; }
-@media (max-width: 520px) {
-  .style-toggle .style-option { padding: 0.4rem 0.55rem; font-size: 0.6rem; }
+@media (max-width: 640px) {
+  .style-toggle { top: 1rem; left: 1rem; }
+  .style-toggle .style-option { padding: 0.5rem 0.9rem; font-size: 0.85rem; }
 }
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; line-height: 1; color: var(--ink-soft); transition: color 0.15s; }
@@ -461,7 +468,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 
 /* ---------- case study page ---------- */
-.cs-hero { padding: 3.25rem 0 2.5rem; border-bottom: 3px solid var(--outline); }
+.cs-hero { padding: 5.5rem 0 2.5rem; border-bottom: 3px solid var(--outline); }
 .cs-hero .back { font-size: 0.9rem; color: var(--ink-soft); text-decoration: none; font-weight: 700; }
 .cs-hero .back:hover { color: var(--ink); }
 .cs-hero h1 { margin-top: 1.1rem; font-size: clamp(1.9rem, 4.2vw, 2.7rem); max-width: 100%; }
@@ -567,8 +574,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 
 [data-theme="business"] body,
 [data-theme="business"] .btn, [data-theme="business"] .thumb,
-[data-theme="business"] .shot .label, [data-theme="business"] .stat .num,
-[data-theme="business"] .style-toggle {
+[data-theme="business"] .shot .label, [data-theme="business"] .stat .num {
   font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
 }
 [data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
@@ -585,14 +591,11 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    style toggle switches themes. */
 [data-theme="business"] .brand { font-size: 2.3rem; }
 /* Aloevera's ink sits well above the vertical center of its own line
-   box, and its uppercase-heavy toggle label (now in Inter) sits a
-   little below center — so lined up by box-center alone, the dino,
-   the wordmark and the toggle all read as sitting at different
-   heights. Nudge each measured element to a shared optical middle,
-   matching the nav links, which needed no adjustment. */
+   box, so the dino (a plain square image, vertically centered by the
+   flex row) and the wordmark read as sitting at different heights.
+   Nudge each to a shared optical middle. */
 [data-theme="business"] .brand img { transform: translateY(-3px); }
 [data-theme="business"] .brand-name { display: inline-block; transform: translateY(4px); }
-[data-theme="business"] .style-toggle { transform: translateY(-2px); }
 @media (max-width: 480px) {
   [data-theme="business"] .brand { font-size: 1.4rem; }
   [data-theme="business"] .brand img { transform: translateY(-2px); }
@@ -647,11 +650,13 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: none; border: none; box-shadow: none; padding: 0;
 }
 
-/* ---- heading space: uniform padding across every page, no art strip ---- */
+/* ---- heading space: uniform padding across every page, no art strip.
+   Extra top room (vs bottom) clears the style toggle now living in the
+   band's top-left corner. ---- */
 [data-theme="business"] .hero,
 [data-theme="business"] .page-hero,
 [data-theme="business"] .cs-hero {
-  padding: 1.65rem 0; min-height: 0;
+  padding: 5rem 0 1.65rem; min-height: 0;
 }
 
 /* ---- buttons ---- */
