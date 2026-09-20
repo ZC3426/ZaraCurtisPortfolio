@@ -311,7 +311,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
    ends up in that same spot rather than centering on its own. */
 .page-hero .title-box {
   position: relative;
-  margin-top: 4.125rem;
+  margin-top: 8.3125rem;
   padding: 1.5rem 1.75rem;
   opacity: 0.9;
   box-shadow: 0 12px 28px rgba(34, 31, 26, 0.18);
@@ -693,7 +693,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .title-box:not(.plain) {
   background: none; border: none; box-shadow: none; padding: 0; margin: 0;
 }
-[data-theme="business"] .page-hero .title-box { margin-top: 6.125rem; }
+[data-theme="business"] .page-hero .title-box { margin-top: 9.875rem; }
 [data-theme="business"] .page-hero .title-box::after { display: none; }
 
 /* ---- heading space: .hero/.page-hero padding, min-height, and the
