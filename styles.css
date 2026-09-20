@@ -106,10 +106,10 @@ header.site-nav {
 header.site-nav .wrap { max-width: none; padding: 0 1.5rem; }
 header.site-nav .row {
   display: flex; align-items: center; justify-content: space-between;
-  padding-top: 0.9rem; padding-bottom: 0.9rem;
+  padding-top: 0.9rem; padding-bottom: 0.9rem; min-height: 4.75rem;
 }
 .brand-group { display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
-.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; line-height: 1; text-decoration: none; }
 .brand img { width: 34px; height: 34px; object-fit: contain; }
 
 .style-toggle {
@@ -137,6 +137,15 @@ html[data-theme="personal"] .style-toggle .style-option.personal { color: #fff; 
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; color: var(--ink-soft); transition: color 0.15s; }
 nav.links a:hover, nav.links a.active { color: var(--ink); font-weight: 700; }
+/* Fixed per-item widths (wide enough for either theme's font) so the
+   whole row doesn't reflow, and nothing before it drifts, when the
+   style toggle swaps fonts. */
+nav.links a.nav-btn, nav.links a.cta { display: inline-block; text-align: center; }
+nav.links a:nth-child(1) { min-width: 98px; }
+nav.links a:nth-child(2) { min-width: 114px; }
+nav.links a:nth-child(3) { min-width: 146px; }
+nav.links a:nth-child(4) { min-width: 112px; }
+nav.links a:nth-child(5) { min-width: 128px; }
 nav.links a.cta {
   color: var(--ink); background: var(--yellow); padding: 0.5rem 1.1rem;
   border: 2.5px solid var(--outline); border-radius: 100px; box-shadow: 3px 3px 0 0 var(--shadow);
@@ -554,7 +563,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .btn, [data-theme="business"] .thumb,
 [data-theme="business"] .shot .label, [data-theme="business"] .stat .num,
 [data-theme="business"] .style-toggle {
-  font-family: "Cormorant Garamond", "JetBrains Mono", ui-monospace, serif;
+  font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
 }
 [data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
 [data-theme="business"] .brand,
@@ -564,6 +573,11 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   font-family: "Aloevera", "Space Mono", cursive;
   font-weight: 400; letter-spacing: 0.01em;
 }
+/* Aloevera reads visually smaller than the personal-mode fonts at an
+   equal font-size, so it's bumped here to keep the nav's apparent text
+   size — and with it the header's width/position — stable when the
+   style toggle switches themes. */
+[data-theme="business"] .brand { font-size: 2.3rem; }
 
 [data-theme="business"] body {
   background-image: radial-gradient(circle at 1px 1px, rgba(64, 52, 25, 0.09) 1px, transparent 0);
@@ -584,7 +598,8 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 [data-theme="business"] nav.links a.cta,
 [data-theme="business"] nav.links a.nav-btn {
-  background: none; border: none; box-shadow: none; padding: 0.5rem 0.2rem;
+  background: none; border: 2.5px solid transparent; box-shadow: none;
+  padding: 0.5rem 1.1rem; font-size: 0.98rem;
   font-weight: 600; color: var(--ink); border-radius: 0;
   transition: transform 0.15s ease, font-weight 0.15s ease, color 0.15s ease;
 }
@@ -601,35 +616,41 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: none; border: none; box-shadow: none; padding: 0;
 }
 [data-theme="business"] .hero-textbox::after { display: none; }
+[data-theme="business"] .hero h1 { font-size: clamp(1.6rem, 5.5vw, 3.4rem); }
+[data-theme="business"] .hero-break { display: block; }
 
 /* ---- page/case-study header title box ---- */
 [data-theme="business"] .title-box:not(.plain) {
   background: none; border: none; box-shadow: none; padding: 0;
 }
 
-/* ---- heading space: shorter, framed top & bottom with a cropped art strip ---- */
-[data-theme="business"] .hero {
-  padding: 1.5rem 0 2rem;
-}
-[data-theme="business"] .page-hero {
-  padding: 1.5rem 0 1.25rem; min-height: 0;
-}
+/* ---- heading space: uniform across every page, +10% taller, framed
+   top & bottom with sage line / art strip / sage line ---- */
+[data-theme="business"] .hero,
+[data-theme="business"] .page-hero,
 [data-theme="business"] .cs-hero {
-  padding: 1.5rem 0 1.25rem;
+  padding: 1.65rem 0; min-height: 0;
+}
+[data-theme="business"] .hero::before,
+[data-theme="business"] .page-hero::before,
+[data-theme="business"] .cs-hero::before,
+[data-theme="business"] .hero::after,
+[data-theme="business"] .page-hero::after,
+[data-theme="business"] .cs-hero::after {
+  display: block; opacity: 1; height: 26px; box-sizing: border-box;
+  border-top: 4px solid var(--accent); border-bottom: 4px solid var(--accent);
+  background-image: url("assets/backgrounds/pages/heading-strip.jpg");
+  background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 [data-theme="business"] .hero::before,
 [data-theme="business"] .page-hero::before,
 [data-theme="business"] .cs-hero::before {
-  display: block; opacity: 1; inset: 0 0 auto 0; height: 16px;
-  background-image: url("assets/backgrounds/pages/heading-strip.jpg");
-  background-size: cover; background-position: center; background-repeat: no-repeat;
+  inset: 0 0 auto 0;
 }
 [data-theme="business"] .hero::after,
 [data-theme="business"] .page-hero::after,
 [data-theme="business"] .cs-hero::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: auto; height: 16px;
-  background-image: url("assets/backgrounds/pages/heading-strip.jpg");
-  background-size: cover; background-position: center; background-repeat: no-repeat;
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; top: auto;
 }
 
 /* ---- buttons ---- */
