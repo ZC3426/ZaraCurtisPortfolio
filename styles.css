@@ -156,9 +156,8 @@ html[data-theme="business"] .style-toggle .style-thumb { transform: translateX(1
 html[data-theme="personal"] .style-toggle .style-option.personal { color: #faf7f0; }
 @media (max-width: 640px) {
   .style-toggle { top: 1rem; right: 1rem; }
-  .style-toggle .style-option { padding: 0.55rem; gap: 0; }
-  .style-toggle .style-label { display: none; }
-  .style-toggle .style-icon { width: 16px; height: 16px; }
+  .style-toggle .style-option { padding: 0.55rem 1.1rem; }
+  .style-toggle .style-icon { display: none; }
 }
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; line-height: 1; color: var(--ink-soft); transition: color 0.15s; }
@@ -660,6 +659,14 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   image-rendering: auto;
   opacity: 0.05;
 }
+/* About Me gets its own art (a floral batik pattern) instead of the
+   generic one above, kept just barely visible. My Style's About page
+   is untouched — this only ever applies under the business theme. */
+[data-theme="business"] .page-hero.bg-floral::before {
+  background-image: url("assets/backgrounds/pages/about-floral.jpg");
+  background-size: cover; background-position: center;
+  opacity: 0.035;
+}
 [data-theme="business"] .mountain-band { display: none; }
 
 /* ---- nav ---- */
@@ -707,9 +714,20 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   padding: 4rem 0 1.32rem; min-height: 12.4rem;
 }
 /* mobile: heading space cut by a further 40% on top of the reduction
-   above, in both styles */
+   above, in both styles. The About/Case-studies title-box's fixed
+   margin-top was calibrated to desktop's much taller band, which left
+   no room to breathe (or even overflowed slightly) in this much
+   shorter one — so page-hero switches to self-centering here too,
+   like .hero already does, instead of reusing that fixed offset. */
 @media (max-width: 640px) {
-  .hero, .page-hero { padding-top: 2.25rem; min-height: 11.28rem; }
+  .hero, .page-hero {
+    padding-top: 2.25rem; padding-bottom: 1rem; min-height: 12.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .page-hero .title-box,
+  [data-theme="business"] .page-hero .title-box {
+    margin-top: 0;
+  }
   [data-theme="business"] .cs-hero { padding: 2.4rem 0 0.8rem; min-height: 7.44rem; }
 }
 
