@@ -125,7 +125,7 @@ header.site-nav .row {
 }
 .style-toggle .style-option {
   position: relative; z-index: 1; display: inline-block;
-  padding: 0.4rem 0.8rem; font-size: 0.68rem; font-weight: 700;
+  padding: 0.4rem 0.8rem; font-size: 0.68rem; font-weight: 700; line-height: 1;
   text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft);
   white-space: nowrap; transition: color 0.2s;
 }
@@ -141,7 +141,7 @@ html[data-theme="personal"] .style-toggle .style-option.personal { color: #fff; 
   .style-toggle .style-option { padding: 0.4rem 0.55rem; font-size: 0.6rem; }
 }
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
-nav.links a { text-decoration: none; font-size: 0.9rem; color: var(--ink-soft); transition: color 0.15s; }
+nav.links a { text-decoration: none; font-size: 0.9rem; line-height: 1; color: var(--ink-soft); transition: color 0.15s; }
 nav.links a:hover, nav.links a.active { color: var(--ink); font-weight: 700; }
 /* Fixed per-item widths (wide enough for either theme's font) so the
    whole row doesn't reflow, and nothing before it drifts, when the
@@ -584,13 +584,19 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    size — and with it the header's width/position — stable when the
    style toggle switches themes. */
 [data-theme="business"] .brand { font-size: 2.3rem; }
-/* Aloevera's ink sits high in its line box, so the dino (a true square
-   image, vertically centered by the flex row) reads as sitting low
-   next to it — nudge it up to line up with the visible letterforms. */
-[data-theme="business"] .brand img { transform: translateY(-6px); }
+/* Aloevera's ink sits well above the vertical center of its own line
+   box, and its uppercase-heavy toggle label (now in Inter) sits a
+   little below center — so lined up by box-center alone, the dino,
+   the wordmark and the toggle all read as sitting at different
+   heights. Nudge each measured element to a shared optical middle,
+   matching the nav links, which needed no adjustment. */
+[data-theme="business"] .brand img { transform: translateY(-3px); }
+[data-theme="business"] .brand-name { display: inline-block; transform: translateY(4px); }
+[data-theme="business"] .style-toggle { transform: translateY(-2px); }
 @media (max-width: 480px) {
   [data-theme="business"] .brand { font-size: 1.4rem; }
-  [data-theme="business"] .brand img { transform: translateY(-3px); }
+  [data-theme="business"] .brand img { transform: translateY(-2px); }
+  [data-theme="business"] .brand-name { transform: translateY(2px); }
 }
 
 [data-theme="business"] body {
@@ -610,10 +616,12 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: rgba(251, 248, 239, 0.92);
   border-bottom: none;
 }
+[data-theme="business"] nav.links { gap: 2.25rem; }
 [data-theme="business"] nav.links a.cta,
 [data-theme="business"] nav.links a.nav-btn {
   background: none; border: 2.5px solid transparent; box-shadow: none;
-  padding: 0.5rem 1.1rem; font-size: 0.98rem;
+  padding: 0.5rem 1.1rem; font-size: 1.15rem; letter-spacing: 0.04em;
+  min-width: 0;
   font-weight: 600; color: var(--ink); border-radius: 0;
   transition: transform 0.15s ease, font-weight 0.15s ease, color 0.15s ease;
 }
