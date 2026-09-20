@@ -117,12 +117,13 @@ header.site-nav .row {
   .brand img { width: 24px; height: 24px; }
 }
 
-/* Style toggle now lives inside each page's hero/heading band, top-left
+/* Style toggle now lives inside each page's hero/heading band, top-right
    with room from the band's corner — not in the nav row. Each option
    keeps its own identity regardless of which theme is active: Business
-   always in Aloevera/dark grey, My style always in the pixel font/teal. */
+   always in Aloevera/dark grey, My style always in the pixel font/teal.
+   My style is the first (left) option, Business-y the second (right). */
 .style-toggle {
-  position: absolute; top: 1.25rem; left: 1.5rem; z-index: 5;
+  position: absolute; top: 1.25rem; right: 1.5rem; z-index: 5;
   display: inline-flex; align-items: stretch;
   background: var(--surface); border: 2px solid #cdbf94; border-radius: 100px;
   padding: 3px; cursor: pointer;
@@ -148,13 +149,13 @@ header.site-nav .row {
    thumb, so it switches to an off-white only while active. */
 .style-toggle .style-thumb {
   position: absolute; top: 3px; bottom: 3px; left: 3px;
-  width: calc(50% - 3px); background: #cdbf94; border-radius: 100px;
+  width: calc(50% - 3px); background: #2b7a78; border-radius: 100px;
   transition: transform 0.25s ease, background 0.25s ease;
 }
-html[data-theme="personal"] .style-toggle .style-thumb { transform: translateX(100%); background: #2b7a78; }
+html[data-theme="business"] .style-toggle .style-thumb { transform: translateX(100%); background: #cdbf94; }
 html[data-theme="personal"] .style-toggle .style-option.personal { color: #faf7f0; }
 @media (max-width: 640px) {
-  .style-toggle { top: 1rem; left: 1rem; }
+  .style-toggle { top: 1rem; right: 1rem; }
   .style-toggle .style-option { padding: 0.55rem; gap: 0; }
   .style-toggle .style-label { display: none; }
   .style-toggle .style-icon { width: 16px; height: 16px; }
@@ -215,7 +216,7 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
 .hero {
   position: relative; overflow: hidden;
   background-color: var(--bg); background-image: none;
-  padding: 3.75rem 0 0; min-height: 23.5rem;
+  padding: 3.75rem 0 0; min-height: 18.8rem;
   display: flex; flex-direction: column; justify-content: center;
 }
 .hero::before {
@@ -273,7 +274,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .page-hero {
   position: relative; overflow: hidden; background-color: var(--bg);
   padding: 3.75rem 0 0; border-bottom: 3px solid var(--outline);
-  min-height: 23.5rem;
+  min-height: 18.8rem;
 }
 .page-hero::before {
   content: ""; position: absolute; inset: 0;
@@ -311,7 +312,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
    ends up in that same spot rather than centering on its own. */
 .page-hero .title-box {
   position: relative;
-  margin-top: 8.3125rem;
+  margin-top: 5.9625rem;
   padding: 1.5rem 1.75rem;
   opacity: 0.9;
   box-shadow: 0 12px 28px rgba(34, 31, 26, 0.18);
@@ -693,14 +694,20 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .title-box:not(.plain) {
   background: none; border: none; box-shadow: none; padding: 0; margin: 0;
 }
-[data-theme="business"] .page-hero .title-box { margin-top: 9.875rem; }
+[data-theme="business"] .page-hero .title-box { margin-top: 7.525rem; }
 [data-theme="business"] .page-hero .title-box::after { display: none; }
 
 /* ---- heading space: .hero/.page-hero padding, min-height, and the
    toggle-to-bottom-line centering are shared (theme-agnostic) above.
    Case-study project pages keep their own, unrelated band size. ---- */
 [data-theme="business"] .cs-hero {
-  padding: 5rem 0 1.65rem; min-height: 15.5rem;
+  padding: 4rem 0 1.32rem; min-height: 12.4rem;
+}
+/* mobile: heading space cut by a further 40% on top of the reduction
+   above, in both styles */
+@media (max-width: 640px) {
+  .hero, .page-hero { padding-top: 2.25rem; min-height: 11.28rem; }
+  [data-theme="business"] .cs-hero { padding: 2.4rem 0 0.8rem; min-height: 7.44rem; }
 }
 
 /* ---- buttons ---- */
