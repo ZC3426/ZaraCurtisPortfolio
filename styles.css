@@ -215,7 +215,7 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
 .hero {
   position: relative; overflow: hidden;
   background-color: var(--bg); background-image: none;
-  padding: 3.5rem 0 4.5rem;
+  padding: 3.5rem 0 2.5rem; min-height: 23.5rem;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0;
@@ -227,7 +227,7 @@ nav.links a.nav-btn:hover, nav.links a.nav-btn.active {
 .hero > .wrap { position: relative; z-index: 1; max-width: none; padding: 0 3rem; }
 .hero-textbox {
   position: relative;
-  display: inline-block; max-width: 100%; margin-top: 4rem;
+  display: inline-block; max-width: 100%; margin-top: 1.75rem;
   opacity: 0.9;
   background: rgba(255, 252, 243, 0.88);
   border: 1.5px solid var(--ink); border-radius: 10px;
@@ -272,7 +272,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .page-hero {
   position: relative; overflow: hidden; background-color: var(--bg);
   padding: 3.5rem 0 2.5rem; border-bottom: 3px solid var(--outline);
-  min-height: 23.5rem; display: flex; align-items: center;
+  min-height: 23.5rem;
 }
 .page-hero::before {
   content: ""; position: absolute; inset: 0;
@@ -297,6 +297,25 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 }
 .title-box h1 { margin: 0; }
 .title-box.plain { background: none; border: none; box-shadow: none; padding: 0; }
+
+/* About/Case-studies headings are speech bubbles too, matching the
+   homepage hero's box exactly so the heading sits in the same spot
+   on every "simple" page. */
+.page-hero .title-box {
+  position: relative;
+  margin-top: 1.75rem;
+  padding: 1.5rem 1.75rem;
+  opacity: 0.9;
+  box-shadow: 0 12px 28px rgba(34, 31, 26, 0.18);
+}
+.page-hero .title-box::after {
+  content: ""; position: absolute; bottom: -11px; left: 32px;
+  width: 24px; height: 24px;
+  background: rgba(255, 252, 243, 0.88);
+  border-right: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
+  border-radius: 0 0 8px 0;
+  transform: rotate(45deg);
+}
 
 .page-hero.bg-village::before { background-image: url("assets/backgrounds/pages/village.jpg"); }
 .page-hero.bg-hd-landscape::before { background-image: url("assets/backgrounds/pages/hd-landscape.jpg"); }
@@ -631,7 +650,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: rgba(251, 248, 239, 0.92);
   border-bottom: 1px solid var(--outline);
 }
-[data-theme="business"] nav.links { gap: 2.25rem; }
+[data-theme="business"] nav.links { gap: 1.5rem; }
 [data-theme="business"] nav.links a.cta,
 [data-theme="business"] nav.links a.nav-btn {
   background: none; border: 2.5px solid transparent; box-shadow: none;
@@ -659,20 +678,21 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 
 /* ---- page/case-study header title box ---- */
 [data-theme="business"] .title-box:not(.plain) {
-  background: none; border: none; box-shadow: none; padding: 0;
+  background: none; border: none; box-shadow: none; padding: 0; margin: 0;
 }
+[data-theme="business"] .page-hero .title-box::after { display: none; }
 
-/* ---- heading space: uniform padding AND height across every page, no
-   art strip. Extra top room (vs bottom) clears the style toggle now
-   living in the band's top-left corner. A shared min-height keeps the
-   banner the same size when flicking between pages, regardless of
-   whether the heading wraps to one or two lines. ---- */
+/* ---- heading space: same padding and min-height for the hero and
+   page-hero bands, in both themes, so the heading text lands in the
+   same spot and the banner is the same size whichever page or style
+   you're on. Extra top room clears the style toggle in the corner. ---- */
 [data-theme="business"] .hero,
-[data-theme="business"] .page-hero,
+[data-theme="business"] .page-hero {
+  padding: 7rem 0 2.5rem; min-height: 23.5rem;
+}
 [data-theme="business"] .cs-hero {
   padding: 5rem 0 1.65rem; min-height: 15.5rem;
 }
-[data-theme="business"] .hero { display: grid; align-items: center; }
 
 /* ---- buttons ---- */
 [data-theme="business"] .btn {
