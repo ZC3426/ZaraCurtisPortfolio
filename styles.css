@@ -123,12 +123,17 @@ header.site-nav .row {
    always in Aloevera/dark grey, My style always in the pixel font/teal. */
 .style-toggle {
   position: absolute; top: 1.25rem; left: 1.5rem; z-index: 5;
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: stretch;
   background: var(--surface); border: 2px solid #cdbf94; border-radius: 100px;
   padding: 3px; cursor: pointer;
 }
+/* Equal-width halves (not sized to each label's own content) so the
+   thumb — a fixed 50% — actually lines up with each option, and each
+   icon+label sits centered within its own half rather than off to one
+   side. */
 .style-toggle .style-option {
-  position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 0.4em;
+  position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 0.4em;
+  flex: 1 1 0;
   padding: 0.45rem 1.5rem; font-size: 0.68rem; font-weight: 700; line-height: 1;
   text-transform: uppercase; letter-spacing: 0.03em;
   white-space: nowrap; transition: color 0.2s;
