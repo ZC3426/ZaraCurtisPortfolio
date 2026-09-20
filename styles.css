@@ -645,11 +645,16 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background-image: radial-gradient(circle at 1px 1px, rgba(64, 52, 25, 0.09) 1px, transparent 0);
 }
 
-/* no background art at all in business mode */
+/* faint batik-pattern art in business mode, kept very subtle so it
+   reads as texture rather than a busy graphic */
 [data-theme="business"] .hero::before,
 [data-theme="business"] .page-hero::before,
 [data-theme="business"] .cs-hero::before {
-  display: none;
+  display: block;
+  background-image: url("assets/backgrounds/pages/business-pattern.jpg");
+  background-size: cover; background-position: center;
+  image-rendering: auto;
+  opacity: 0.05;
 }
 [data-theme="business"] .mountain-band { display: none; }
 
