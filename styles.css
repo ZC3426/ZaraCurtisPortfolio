@@ -140,7 +140,7 @@ header.site-nav .row {
   white-space: nowrap; transition: color 0.2s;
 }
 .style-toggle .style-icon { width: 15px; height: 15px; flex: 0 0 auto; display: block; }
-.style-toggle .style-option.business { font-family: "Aloevera", cursive; color: #4a4a4a; }
+.style-toggle .style-option.business { font-family: "Inter", -apple-system, "Segoe UI", sans-serif; color: #4a4a4a; }
 .style-toggle .style-option.personal { font-family: "Gome Pixel", monospace; color: #2b7a78; }
 /* Colored per active side (tan for business, teal for personal) rather
    than a flat neutral pill, per the "background for X should be Y"
