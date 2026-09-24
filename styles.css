@@ -678,9 +678,13 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    .mountain-band for business, so About Me goes back to the plain
    sitewide pattern like every other header. */
 [data-theme="business"] .mountain-band {
+  border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline);
+}
+[data-theme="business"] .mountain-band::before {
+  content: ""; position: absolute; inset: 0;
   background-image: url("assets/backgrounds/pages/about-floral.jpg");
   background-size: cover; background-position: center;
-  border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline);
+  opacity: 0.5;
 }
 [data-theme="business"] .mountain-band .layer { display: none; }
 
@@ -780,11 +784,16 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 /* ---- contact box ---- */
 [data-theme="business"] .contact-box { border: none; box-shadow: 0 20px 44px rgba(38, 43, 39, 0.16); }
 [data-theme="business"] .contact-box .actions { align-items: center; }
-[data-theme="business"] .contact-box .btn.primary {
-  order: 2; background: none; border: none; box-shadow: none; color: #fff;
+[data-theme="business"] .contact-box .btn {
+  border-radius: 100px; padding: 0.8rem 1.75rem;
 }
-[data-theme="business"] .contact-box .btn.ghost { order: 1; color: #fff; box-shadow: none; }
-[data-theme="business"] .contact-box .btn.ghost:hover { box-shadow: none; }
+[data-theme="business"] .contact-box .btn.primary {
+  order: 2; background: #fff; border: none; box-shadow: none; color: var(--ink);
+}
+[data-theme="business"] .contact-box .btn.ghost {
+  order: 1; background: none; border: 1.5px solid #fff; color: #fff; box-shadow: none;
+}
+[data-theme="business"] .contact-box .btn.ghost:hover { box-shadow: none; background: rgba(255, 255, 255, 0.1); }
 
 /* ---- overview grid / stats / mini cards / wireframe shots ---- */
 [data-theme="business"] .overview-grid,
