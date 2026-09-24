@@ -123,7 +123,7 @@ header.site-nav .row {
    always in Aloevera/dark grey, My style always in the pixel font/teal.
    My style is the first (left) option, Business-y the second (right). */
 .style-toggle {
-  position: absolute; top: 1.25rem; right: 1.5rem; z-index: 5;
+  position: fixed; top: 6rem; right: 1.5rem; z-index: 40;
   display: inline-flex; align-items: stretch;
   background: var(--surface); border: 2px solid #cdbf94; border-radius: 100px;
   padding: 3px; cursor: pointer;
@@ -155,7 +155,7 @@ header.site-nav .row {
 html[data-theme="business"] .style-toggle .style-thumb { transform: translateX(100%); background: #cdbf94; }
 html[data-theme="personal"] .style-toggle .style-option.personal { color: #faf7f0; }
 @media (max-width: 640px) {
-  .style-toggle { top: 1rem; right: 1rem; }
+  .style-toggle { top: 5.75rem; right: 1rem; }
   .style-toggle .style-option { padding: 0.55rem 1.1rem; }
   .style-toggle .style-icon { display: none; }
 }
@@ -375,6 +375,13 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
    then a separate static layer revealing more of itself) and both
    still read as the shadow doing something, not the card. */
 .project-card:hover {
+  transform: translate(-6px, -10px) rotate(-1.5deg) scale(1.02);
+}
+/* The homepage carousel's front card also matches [data-depth="0"],
+   which sets its own resting transform at equal specificity and wins
+   on source order alone, silently cancelling the hover transform above
+   — so the carousel card never actually moved. This beats it back. */
+.carousel-slide[data-depth="0"]:hover {
   transform: translate(-6px, -10px) rotate(-1.5deg) scale(1.02);
 }
 .project-card .thumb {
@@ -665,15 +672,17 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   image-rendering: auto;
   opacity: 0.05;
 }
-/* About Me gets its own art (a floral batik pattern) instead of the
-   generic one above, kept just barely visible. My Style's About page
-   is untouched — this only ever applies under the business theme. */
-[data-theme="business"] .page-hero.bg-floral::before {
+/* The floral pattern belongs here — a proper art band above "A little
+   about me" on the homepage, matching where My Style shows its mountain
+   parallax scene in the same spot. It replaces (rather than hides)
+   .mountain-band for business, so About Me goes back to the plain
+   sitewide pattern like every other header. */
+[data-theme="business"] .mountain-band {
   background-image: url("assets/backgrounds/pages/about-floral.jpg");
   background-size: cover; background-position: center;
-  opacity: 0.035;
+  border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline);
 }
-[data-theme="business"] .mountain-band { display: none; }
+[data-theme="business"] .mountain-band .layer { display: none; }
 
 /* ---- nav ---- */
 [data-theme="business"] header.site-nav {
