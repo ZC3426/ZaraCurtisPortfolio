@@ -73,15 +73,14 @@ html { scroll-behavior: smooth; }
    brown instead of the OS default black. */
 html[data-theme="personal"] { cursor: url("assets/cursors/pixel-cursor.png") 2 2, auto; }
 html[data-theme="business"] { cursor: url("assets/cursors/brown-cursor.png") 2 2, auto; }
-/* Buttons set their own cursor:pointer, which would otherwise override
-   the themed cursor above with the OS default hand — repoint those at
-   the same themed cursor, falling back to pointer if the image fails. */
-html[data-theme="personal"] .style-toggle, html[data-theme="personal"] .nav-toggle,
-html[data-theme="personal"] .carousel-arrow, html[data-theme="personal"] .carousel-dots .dot {
+/* Links and buttons resolve their own cursor to the browser's default
+   hand/pointer rather than inheriting the themed one above — cover
+   every clickable element (all of this site's interactive controls are
+   <a> or <button>) so the themed cursor never reverts on hover. */
+html[data-theme="personal"] a, html[data-theme="personal"] button {
   cursor: url("assets/cursors/pixel-cursor.png") 2 2, pointer;
 }
-html[data-theme="business"] .style-toggle, html[data-theme="business"] .nav-toggle,
-html[data-theme="business"] .carousel-arrow, html[data-theme="business"] .carousel-dots .dot {
+html[data-theme="business"] a, html[data-theme="business"] button {
   cursor: url("assets/cursors/brown-cursor.png") 2 2, pointer;
 }
 
@@ -516,16 +515,74 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   .carousel-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
 }
 
-/* ---------- about ---------- */
-.about-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-.about-body p { color: var(--ink-soft); margin-bottom: 1rem; }
-.skills-block { margin-top: 2rem; }
-.skills-block h4 { font-family: "Gome Pixel", monospace; font-size: 1.4rem; margin-bottom: 0.75rem; }
-.skills { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 1.75rem; }
-.skills span {
-  font-size: 0.82rem; padding: 0.4rem 0.9rem; border-radius: 100px;
-  border: 2px solid var(--ink); color: var(--ink); background: var(--surface);
-  box-shadow: 2px 2px 0 0 var(--shadow);
+/* ---------- about: shared structure ----------
+   Both themes share the same five panels (about, research, design,
+   systems, tools). My Style shows them as a tabbed folder — one page
+   visible at a time. Professional ignores the tabs and lays every
+   panel out at once, as a main sheet with smaller notes strewn below. */
+.folder-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.folder-tab {
+  display: flex; align-items: center; gap: 0.45rem;
+  background: none; border: none; font: inherit; text-align: left;
+}
+.tab-icon { width: 17px; height: 17px; flex: 0 0 auto; }
+.folder-page { display: none; }
+.folder-page.active { display: block; }
+.paper-main p { color: var(--ink-soft); margin-bottom: 1rem; }
+.paper-note h4 { margin-bottom: 0.6rem; }
+.paper-note ul { padding-left: 1.1rem; color: var(--ink-soft); }
+.paper-note li { margin-bottom: 0.4rem; }
+.paper-notes-desk { display: contents; }
+
+/* ---- My Style: the folder tab strip ---- */
+html[data-theme="personal"] .folder-tab {
+  font-family: "Gome Pixel", monospace; font-size: 1rem; color: var(--ink-soft);
+  padding: 0.7rem 1.1rem 0.6rem; border-radius: 10px 10px 0 0;
+  border: 2px solid var(--ink); border-bottom: none;
+  background: var(--outline); box-shadow: 3px -3px 0 0 var(--shadow);
+  transform: translateY(4px);
+}
+html[data-theme="personal"] .folder-tab.active {
+  background: var(--surface); color: var(--ink); position: relative; z-index: 2;
+  transform: translateY(0); box-shadow: none;
+}
+html[data-theme="personal"] .folder-pages {
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 0 10px 10px 10px;
+  box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem; position: relative; z-index: 1;
+}
+html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
+@media (max-width: 600px) {
+  html[data-theme="personal"] .folder-tab { padding: 0.55rem 0.7rem; }
+  html[data-theme="personal"] .folder-tab span:not(.tab-icon) { display: none; }
+}
+
+/* ---- Professional: paper on a desk ---- */
+[data-theme="business"] .folder-tabs { display: none; }
+[data-theme="business"] .folder-page { display: block; }
+[data-theme="business"] .paper-main {
+  background: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 2px;
+  box-shadow: 0 14px 34px rgba(38, 43, 39, 0.1); padding: 2.5rem;
+  position: relative; z-index: 2;
+}
+[data-theme="business"] .folder-contact { margin-top: 1.75rem; }
+[data-theme="business"] .paper-notes-desk {
+  display: flex; flex-wrap: wrap; gap: 1.75rem 2rem;
+  margin-top: 3rem; padding-top: 0.5rem;
+}
+[data-theme="business"] .paper-note {
+  background: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 2px;
+  box-shadow: 0 10px 22px rgba(38, 43, 39, 0.12);
+  padding: 1.5rem 1.65rem; width: calc(50% - 1rem);
+  transform: rotate(var(--rot, 0deg));
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+[data-theme="business"] .paper-note:hover {
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow: 0 16px 30px rgba(38, 43, 39, 0.16);
+}
+[data-theme="business"] .paper-note h4 { font-size: 1.05rem; }
+@media (max-width: 700px) {
+  [data-theme="business"] .paper-note { width: 100%; transform: rotate(0deg); }
 }
 
 /* ---------- contact ---------- */
@@ -674,7 +731,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 [data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
 [data-theme="business"] .brand,
-[data-theme="business"] .project-card h3, [data-theme="business"] .skills-block h4,
+[data-theme="business"] .project-card h3,
 [data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
 [data-theme="business"] nav.links a.nav-btn, [data-theme="business"] nav.links a.cta {
   font-family: "Aloevera", "Space Mono", cursive;
@@ -818,9 +875,6 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .carousel-slide[data-depth="1"]:not(.exit-right):not(.enter-from-right) { transform: translateY(10px) scale(0.96) rotate(3deg); }
 [data-theme="business"] .carousel-slide[data-depth="2"]:not(.exit-right):not(.enter-from-right) { transform: translateY(20px) scale(0.92) rotate(-2.5deg); }
 [data-theme="business"] .carousel-slide[data-depth="3"]:not(.exit-right):not(.enter-from-right) { transform: translateY(30px) scale(0.88) rotate(4.5deg); }
-
-/* ---- skills pills ---- */
-[data-theme="business"] .skills span { border: 1px solid var(--outline); box-shadow: none; font-weight: 600; }
 
 /* ---- contact box ---- */
 [data-theme="business"] .contact-box { border: none; box-shadow: 0 20px 44px rgba(38, 43, 39, 0.16); }
