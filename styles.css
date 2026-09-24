@@ -418,8 +418,15 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 /* The homepage carousel's front card also matches [data-depth="0"],
    which sets its own resting transform at equal specificity and wins
    on source order alone, silently cancelling the hover transform above
-   — so the carousel card never actually moved. This beats it back. */
-.carousel-slide[data-depth="0"]:hover {
+   — so the carousel card never actually moved. This beats it back.
+   Guarded by :not(.suppress-hover): clicking an arrow swaps in a new
+   front card wherever the cursor already happens to be sitting, and
+   :hover matches purely on current position — with no guard, that new
+   card would instantly "react" to the cursor without it ever moving.
+   JS adds that class right after an arrow/dot click and removes it on
+   the next real mouse movement, so hover still works, just not for a
+   position the cursor never chose. */
+.carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:hover {
   transform: translate(-6px, -12px) scale(1.03);
   box-shadow: 6px 6px 0 0 var(--shadow), 0 22px 32px rgba(34, 31, 26, 0.22);
 }

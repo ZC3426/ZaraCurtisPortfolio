@@ -47,7 +47,7 @@
   // its heading out on open too, same as the homepage hero. Plain text,
   // no typos — just a quick character-by-character reveal.
   function initPageHeadingTyping() {
-    var h1 = document.querySelector('.page-hero .title-box h1');
+    var h1 = document.querySelector('.page-hero .title-box h1, .cs-hero .title-box h1');
     if (!h1) return;
     var box = h1.closest('.title-box');
     var text = h1.textContent;

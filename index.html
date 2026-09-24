@@ -305,10 +305,33 @@
     updateDots();
   }
 
-  document.querySelector('.carousel-arrow.prev').addEventListener('click', prev);
-  document.querySelector('.carousel-arrow.next').addEventListener('click', next);
+  // Clicking an arrow or dot swaps in a new front card wherever the
+  // mouse already happens to be — often right next to the arrow it was
+  // just used to click — and :hover matches on that position alone, so
+  // the new card can "react" to a cursor that never actually moved onto
+  // it. Suppress hover the moment a click drives the navigation, and
+  // only re-enable it once the mouse genuinely moves again.
+  function suppressHoverUntilMove() {
+    stack.classList.add('suppress-hover');
+    window.addEventListener('mousemove', function handler() {
+      stack.classList.remove('suppress-hover');
+      window.removeEventListener('mousemove', handler);
+    });
+  }
+
+  document.querySelector('.carousel-arrow.prev').addEventListener('click', function () {
+    suppressHoverUntilMove();
+    prev();
+  });
+  document.querySelector('.carousel-arrow.next').addEventListener('click', function () {
+    suppressHoverUntilMove();
+    next();
+  });
   dots.forEach(function (d, i) {
-    d.addEventListener('click', function () { goTo(i); });
+    d.addEventListener('click', function () {
+      suppressHoverUntilMove();
+      goTo(i);
+    });
   });
 
   // Swipe support: horizontal drag on the stack moves to the next/prev
@@ -531,8 +554,15 @@
     clone.style.top = '0';
     clone.style.minWidth = '0';
     clone.style.minHeight = '0';
-    var rect = box.getBoundingClientRect();
-    if (rect.width) clone.style.width = rect.width + 'px';
+    clone.style.width = 'auto';
+    // Deliberately NOT sized from box.getBoundingClientRect(): once the
+    // box has already been locked once, its current width is that
+    // locked value, not its natural one — measuring against it and then
+    // adding the cursor buffer again would compound a little wider on
+    // every call (lock, relock on fonts.ready, ...). Left to size
+    // itself, the clone naturally settles at the same width the live
+    // box would if nothing had ever constrained it: its own content's
+    // preferred width, capped by max-width like any ordinary element.
 
     var h1clone = document.createElement('h1');
     h1clone.className = h1.className;
