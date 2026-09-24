@@ -377,7 +377,7 @@
     { breakStart: true },
     { text: "Product " },
     { typo: "Designar", fix: "Designer" },
-    { text: isPersonal ? ". :)" : "." }
+    { text: isPersonal ? " :)" : "." }
   ];
 
   var steps = [];
@@ -569,7 +569,12 @@
     h1clone.appendChild(breakWrap);
 
     clone.appendChild(h1clone);
-    document.body.appendChild(clone);
+    // Appended next to the live box (inside .hero), not to
+    // document.body — theme- and section-scoped rules like
+    // "[data-theme=business] .hero h1" only match h1 as a descendant
+    // of .hero, so a clone parented to body would silently fall back
+    // to the wrong font-size/max-width and measure the wrong wraps.
+    box.parentNode.appendChild(clone);
     return { clone: clone, prefixSpans: prefixSpans, breakSpans: breakSpans, breakWrap: breakWrap };
   }
 
@@ -580,7 +585,7 @@
     if (!box) return;
     var built = buildFinalClone();
     var rect = built.clone.getBoundingClientRect();
-    document.body.removeChild(built.clone);
+    built.clone.parentNode.removeChild(built.clone);
     // +14px covers the blinking cursor glyph landing mid-line (after the
     // prefix, before the break) at a width this single measurement,
     // cursor fixed at the very end, doesn't otherwise account for.
@@ -611,7 +616,7 @@
       }
       prevTop = top;
     });
-    document.body.removeChild(built.clone);
+    built.clone.parentNode.removeChild(built.clone);
     return { prefixBreaks: prefixBreaks, breakBreaks: breakBreaks };
   }
 
@@ -623,7 +628,7 @@
   // final one.
   lockBoxSize();
   lineBreaks = computeLineBreaks();
-  h1.innerHTML = '<span class="type-cursor">|</span><span class="hero-break"></span>';
+  render();
   setTimeout(step, 250);
 
   // The heading font loads late on a cold cache (e.g. a hard refresh),
