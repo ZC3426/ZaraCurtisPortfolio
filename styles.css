@@ -127,10 +127,15 @@ header.site-nav .row {
 .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; line-height: 1; text-decoration: none; white-space: nowrap; }
 .brand-icon { position: relative; display: inline-flex; flex: 0 0 auto; }
 .brand img { width: 34px; height: 34px; object-fit: contain; flex: 0 0 auto; }
-/* A tiny top hat, tipped over the dino's head, shown only in Professional
-   mode — positioned against where the head actually sits in the source
-   art (upper-right area of the square icon box). */
-.brand-hat { display: none; position: absolute; width: 46%; left: 58%; top: -20%; transform: rotate(6deg); pointer-events: none; }
+/* A tiny top hat, bowtie and monocle on the dino, shown only in
+   Professional mode — positioned against where the head/eye/neck
+   actually sit in the source art (upper-right, eye, and lower-center
+   of the square icon box, respectively). Grey rather than the line
+   art's dark brown so they read as separate, worn accessories. */
+.brand-hat, .brand-monocle, .brand-bowtie { display: none; position: absolute; pointer-events: none; }
+.brand-hat { width: 46%; left: 46%; top: -22%; transform: rotate(11deg); }
+.brand-monocle { width: 30%; left: 59%; top: 7%; }
+.brand-bowtie { width: 26%; left: 37%; top: 76%; }
 
 @media (max-width: 480px) {
   .brand { font-size: 1.15rem; gap: 0.35rem; }
@@ -512,15 +517,17 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* ---------- about: shared structure ----------
    Both themes share the same five panels (about, research, design,
-   systems, tools). My Style shows them as a tabbed folder — one page
-   visible at a time. Professional ignores the tabs and lays every
-   panel out at once, as a main sheet with smaller notes strewn below. */
+   systems, tools) and the same one-page-at-a-time folder mechanic —
+   tabs pick which page shows. They differ only in how the tabs and
+   the open page are dressed: My Style as a manila folder, Professional
+   as a page held together with paperclips. */
 .folder-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .folder-tab {
   display: flex; align-items: center; gap: 0.45rem;
   background: none; border: none; font: inherit; text-align: left;
 }
 .tab-icon { width: 17px; height: 17px; flex: 0 0 auto; }
+.tab-icon-clip { display: none; }
 .folder-page { display: none; }
 .folder-page.active { display: block; }
 .paper-main p { color: var(--ink-soft); margin-bottom: 1rem; }
@@ -529,75 +536,54 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .paper-note li { margin-bottom: 0.4rem; }
 .paper-notes-desk { display: contents; }
 
-/* ---- My Style: the folder tab strip ---- */
+/* ---- My Style: a manila folder ---- */
 html[data-theme="personal"] .folder-tabs { gap: 0.65rem; }
 html[data-theme="personal"] .folder-tab {
   font-family: "Gome Pixel", monospace; font-size: 1rem; color: #fdfbf1;
-  padding: 0.7rem 1.1rem 0.6rem; border-radius: 10px 10px 0 0;
+  padding: 0.7rem 1.3rem 0.6rem; clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
   border: 2px solid var(--ink); border-bottom: none;
   background: #2b7a78; box-shadow: 3px -3px 0 0 var(--shadow);
   transform: translateY(4px);
 }
 html[data-theme="personal"] .folder-tab.active {
-  background: var(--surface); color: var(--ink); position: relative; z-index: 2;
+  background: #e8cf94; color: var(--ink); position: relative; z-index: 2;
   transform: translateY(0); box-shadow: none;
 }
 html[data-theme="personal"] .folder-pages {
-  background: var(--surface); border: 3px solid #e0a726; border-radius: 0 10px 10px 10px;
+  background: #e8cf94; border: 2px solid var(--ink); border-radius: 0 10px 10px 10px;
   box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem; position: relative; z-index: 1;
 }
 html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
 @media (max-width: 600px) {
-  html[data-theme="personal"] .folder-tab { padding: 0.55rem 0.7rem; }
+  html[data-theme="personal"] .folder-tab { padding: 0.55rem 0.9rem; }
   html[data-theme="personal"] .folder-tab span:not(.tab-icon) { display: none; }
 }
 
-/* ---- Professional: paper on a desk ----
-   The note papers sit tucked mostly behind the main sheet (lower
-   z-index, pulled up under its bottom edge), showing just their
-   heading as a peeking label. Hovering nudges a note a little further
-   out; clicking pulls it fully out from under the main paper so its
-   list can be read, and clicking again tucks it back away. */
-[data-theme="business"] .folder-tabs { display: none; }
-[data-theme="business"] .folder-page { display: block; }
-[data-theme="business"] .paper-main {
-  background: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 2px;
-  box-shadow: 0 14px 34px rgba(38, 43, 39, 0.1); padding: 2.5rem;
-  position: relative; z-index: 2;
+/* ---- Professional: paperclipped pages ----
+   Same tab strip as My Style, styled as a plain row of paperclips
+   instead of folder tabs — each one "clips" onto whichever page is
+   currently open. */
+[data-theme="business"] .folder-tabs { gap: 1.6rem; margin-bottom: 0.25rem; }
+[data-theme="business"] .folder-tab {
+  color: var(--ink-soft); font-weight: 600; font-size: 0.92rem;
+  padding-bottom: 0.4rem; border-bottom: 2px solid transparent;
 }
-[data-theme="business"] .folder-contact { margin-top: 1.75rem; }
-[data-theme="business"] .paper-notes-desk {
-  display: flex; flex-wrap: wrap; gap: 0.9rem 1rem;
-  margin-top: -1.4rem; position: relative; z-index: 1;
+[data-theme="business"] .tab-icon { display: none; }
+[data-theme="business"] .tab-icon-clip { display: block; width: 15px; height: 15px; transform: rotate(45deg); }
+[data-theme="business"] .folder-tab.active {
+  color: var(--ink); border-bottom-color: #9aa0a6;
 }
+[data-theme="business"] .folder-tab.active .tab-icon-clip { color: #6b7176; }
+[data-theme="business"] .paper-main,
 [data-theme="business"] .paper-note {
   background: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 2px;
-  box-shadow: 0 10px 22px rgba(38, 43, 39, 0.12);
-  padding: 0.85rem 1.2rem; flex: 1 1 160px; width: auto; overflow: hidden;
-  transform: rotate(var(--rot, 0deg));
-  transition: transform 0.2s ease, box-shadow 0.2s ease, flex-basis 0.2s ease;
-  cursor: pointer;
+  box-shadow: 0 14px 34px rgba(38, 43, 39, 0.1); padding: 2.5rem;
+  position: relative;
 }
-[data-theme="business"] .paper-note h4 {
-  font-size: 1.05rem; margin-bottom: 0;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-[data-theme="business"] .paper-note ul { display: none; margin-top: 0.7rem; }
-[data-theme="business"] .paper-note:hover:not(.open) {
-  transform: rotate(0deg) translateY(8px);
-  box-shadow: 0 16px 30px rgba(38, 43, 39, 0.16);
-}
-[data-theme="business"] .paper-note.open {
-  flex: 1 1 100%; cursor: default; position: relative; z-index: 3;
-  transform: rotate(0deg) translateY(1.5rem);
-  box-shadow: 0 20px 34px rgba(38, 43, 39, 0.2);
-  padding: 1.5rem 1.65rem;
-}
-[data-theme="business"] .paper-note.open h4 { white-space: normal; margin-bottom: 0.6rem; }
-[data-theme="business"] .paper-note.open ul { display: block; }
-@media (max-width: 700px) {
-  [data-theme="business"] .paper-note { flex-basis: 100%; transform: rotate(0deg); }
-  [data-theme="business"] .paper-notes-desk { margin-top: -1rem; }
+[data-theme="business"] .folder-contact { margin-top: 1.75rem; }
+@media (max-width: 600px) {
+  [data-theme="business"] .paper-main,
+  [data-theme="business"] .paper-note { padding: 1.75rem; }
 }
 
 /* ---------- contact ---------- */
@@ -763,7 +749,9 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    Nudge each to a shared optical middle. */
 [data-theme="business"] .brand img { transform: translateY(-3px); }
 [data-theme="business"] .brand-name { display: inline-block; transform: translateY(4px); }
-[data-theme="business"] .brand-hat { display: block; }
+[data-theme="business"] .brand-hat,
+[data-theme="business"] .brand-monocle,
+[data-theme="business"] .brand-bowtie { display: block; }
 @media (max-width: 480px) {
   [data-theme="business"] .brand { font-size: 1.4rem; }
   [data-theme="business"] .brand img { transform: translateY(-2px); }
