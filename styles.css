@@ -370,19 +370,17 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 /* My Style only (business overrides this below): the shadow is fixed
    (never changes) and rigidly attached to the card, like a real shadow
    cast by an object — it just rides along. All of the visible reaction
-   comes from the card itself moving: a lift, a slight tilt, a bit of
-   scale. Earlier attempts changed the shadow on hover (bigger offset,
-   then a separate static layer revealing more of itself) and both
-   still read as the shadow doing something, not the card. */
+   comes from the card itself popping straight up and slightly bigger —
+   no tilt, per feedback that the turn didn't feel right. */
 .project-card:hover {
-  transform: translate(-6px, -10px) rotate(-1.5deg) scale(1.02);
+  transform: translate(-6px, -12px) scale(1.03);
 }
 /* The homepage carousel's front card also matches [data-depth="0"],
    which sets its own resting transform at equal specificity and wins
    on source order alone, silently cancelling the hover transform above
    — so the carousel card never actually moved. This beats it back. */
 .carousel-slide[data-depth="0"]:hover {
-  transform: translate(-6px, -10px) rotate(-1.5deg) scale(1.02);
+  transform: translate(-6px, -12px) scale(1.03);
 }
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
