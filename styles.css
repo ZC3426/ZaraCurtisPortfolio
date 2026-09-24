@@ -128,6 +128,11 @@ header.site-nav .row {
   background: var(--surface); border: 2px solid #cdbf94; border-radius: 100px;
   padding: 3px; cursor: pointer;
 }
+/* My Style's --surface is the same near-white cream used for case-study
+   mockup cards (e.g. Equil's device backdrop), so the toggle blended
+   into whatever page content it floated over. A greyer tone keeps it
+   visually distinct as a floating UI element. */
+html[data-theme="personal"] .style-toggle { background: #e2ded2; }
 /* Equal-width halves (not sized to each label's own content) so the
    thumb — a fixed 50% — actually lines up with each option, and each
    icon+label sits centered within its own half rather than off to one
@@ -363,17 +368,18 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .project-card {
   display: flex; flex-direction: column;
   background: var(--card-bg); border: 3px solid var(--ink); border-radius: 8px;
-  box-shadow: 6px 6px 0 0 var(--shadow);
+  box-shadow: 6px 6px 0 0 var(--shadow), 0 2px 6px rgba(34, 31, 26, 0.08);
   overflow: hidden; text-decoration: none; color: inherit;
-  transition: transform 0.2s ease-out;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
-/* My Style only (business overrides this below): the shadow is fixed
-   (never changes) and rigidly attached to the card, like a real shadow
-   cast by an object — it just rides along. All of the visible reaction
-   comes from the card itself popping straight up and slightly bigger —
-   no tilt, per feedback that the turn didn't feel right. */
+/* My Style only (business overrides this below): the flat, hard-edge
+   shadow is fixed and rigidly attached, like the earlier fix — it never
+   moves. A second, soft ambient shadow layered behind it grows and
+   softens on hover instead, the classic cue for an object lifting
+   further off a surface, so the shadow itself reads as "lifting" too. */
 .project-card:hover {
   transform: translate(-6px, -12px) scale(1.03);
+  box-shadow: 6px 6px 0 0 var(--shadow), 0 22px 32px rgba(34, 31, 26, 0.22);
 }
 /* The homepage carousel's front card also matches [data-depth="0"],
    which sets its own resting transform at equal specificity and wins
@@ -381,6 +387,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
    — so the carousel card never actually moved. This beats it back. */
 .carousel-slide[data-depth="0"]:hover {
   transform: translate(-6px, -12px) scale(1.03);
+  box-shadow: 6px 6px 0 0 var(--shadow), 0 22px 32px rgba(34, 31, 26, 0.22);
 }
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
