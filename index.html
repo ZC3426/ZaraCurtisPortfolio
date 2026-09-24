@@ -17,7 +17,7 @@
 <header class="site-nav">
   <div class="wrap row">
     <div class="brand-group">
-      <a class="brand" href="index.html"><img src="assets/brand/dino.png" alt="" /><span class="brand-name">Zara Curtis</span></a>
+      <a class="brand" href="index.html"><span class="brand-icon"><img src="assets/brand/dino.png" alt="" /><svg class="brand-hat" viewBox="0 0 40 26" aria-hidden="true"><ellipse cx="20" cy="21.5" rx="15" ry="3.2" fill="#39392f"/><path d="M11 21 12.5 6a2 2 0 0 1 2-1.8h9a2 2 0 0 1 2 1.8L27 21Z" fill="#39392f"/></svg></span><span class="brand-name">Zara Curtis</span></a>
     </div>
     <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="links">
@@ -47,7 +47,7 @@
     </button>
     <div class="wrap">
       <div class="hero-textbox">
-        <h1>Hello! I'm Zara, a psychology-backed <span class="hero-break">Product Designer.</span></h1>
+        <h1 id="hero-typing">Hello! I'm Zara, a psychology-backed <span class="hero-break">Product Designer.</span></h1>
       </div>
     </div>
   </section>
@@ -354,6 +354,98 @@
   sizeCaptions();
   applyDepths();
   updateDots();
+})();
+</script>
+
+<script>
+(function () {
+  var h1 = document.getElementById('hero-typing');
+  var toggle = document.querySelector('.style-toggle');
+  if (!h1) return;
+
+  // Each part is either straight typing, or a typo: the wrong text gets
+  // typed, backspaced out, then replaced with the correct text. A
+  // "breakStart" marker switches subsequent parts into the .hero-break
+  // span so "Product Designer." still lands on its own line in business.
+  var parts = [
+    { text: "Hello! " },
+    { typo: "im", fix: "I'm" },
+    { text: " Zara, a psychology-backed " },
+    { breakStart: true },
+    { text: "Product " },
+    { typo: "Designar", fix: "Designer" },
+    { text: "." }
+  ];
+
+  var steps = [];
+  (function build() {
+    var phase = 0;
+    parts.forEach(function (p) {
+      if (p.breakStart) { phase = 1; return; }
+      if (p.text) {
+        for (var i = 0; i < p.text.length; i++) steps.push({ t: 'type', c: p.text[i], phase: phase });
+      } else if (p.typo) {
+        for (var i = 0; i < p.typo.length; i++) steps.push({ t: 'type', c: p.typo[i], phase: phase });
+        for (var i = 0; i < p.typo.length; i++) steps.push({ t: 'back', phase: phase, pause: i === 0 });
+        for (var i = 0; i < p.fix.length; i++) steps.push({ t: 'type', c: p.fix[i], phase: phase });
+      }
+    });
+  })();
+
+  // Weighted so the whole thing lands around 3.5s regardless of small
+  // future text edits: typing costs more than backspacing, and the
+  // moment right after noticing a typo gets a brief "oops" pause.
+  var TOTAL_MS = 3500;
+  var totalWeight = 0;
+  steps.forEach(function (s) {
+    s.w = s.t === 'back' ? 0.55 : 1;
+    if (s.pause) s.w += 3;
+    totalWeight += s.w;
+  });
+  var msPerUnit = TOTAL_MS / totalWeight;
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  var prefixStr = '', breakStr = '';
+  function render(phase) {
+    var cursor = '<span class="type-cursor">|</span>';
+    var prefixHtml = escapeHtml(prefixStr) + (phase === 0 ? cursor : '');
+    var breakHtml = escapeHtml(breakStr) + (phase === 1 ? cursor : '');
+    h1.innerHTML = prefixHtml + '<span class="hero-break">' + breakHtml + '</span>';
+  }
+
+  function shakeToggle() {
+    if (!toggle) return;
+    toggle.classList.add('shake');
+    toggle.addEventListener('animationend', function handler() {
+      toggle.classList.remove('shake');
+      toggle.removeEventListener('animationend', handler);
+    });
+  }
+
+  var i = 0;
+  function step() {
+    if (i >= steps.length) {
+      h1.innerHTML = escapeHtml(prefixStr) + '<span class="hero-break">' + escapeHtml(breakStr) + '</span>';
+      setTimeout(shakeToggle, 3000);
+      return;
+    }
+    var s = steps[i];
+    if (s.t === 'type') {
+      if (s.phase === 0) prefixStr += s.c; else breakStr += s.c;
+    } else {
+      if (s.phase === 0) prefixStr = prefixStr.slice(0, -1); else breakStr = breakStr.slice(0, -1);
+    }
+    render(s.phase);
+    i++;
+    var delay = s.w * msPerUnit * (0.75 + Math.random() * 0.5);
+    setTimeout(step, delay);
+  }
+
+  h1.innerHTML = '<span class="type-cursor">|</span><span class="hero-break"></span>';
+  setTimeout(step, 250);
 })();
 </script>
 
