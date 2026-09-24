@@ -392,10 +392,10 @@
     });
   })();
 
-  // Weighted so the whole thing lands around 3.5s regardless of small
+  // Weighted so the whole thing lands around 4.5s regardless of small
   // future text edits: typing costs more than backspacing, and the
   // moment right after noticing a typo gets a brief "oops" pause.
-  var TOTAL_MS = 3500;
+  var TOTAL_MS = 4500;
   var totalWeight = 0;
   steps.forEach(function (s) {
     s.w = s.t === 'back' ? 0.55 : 1;
@@ -444,8 +444,39 @@
     setTimeout(step, delay);
   }
 
-  h1.innerHTML = '<span class="type-cursor">|</span><span class="hero-break"></span>';
-  setTimeout(step, 250);
+  // Lock the speech-bubble box to the size of the FULLY typed text
+  // before animating, so it never grows/shrinks as characters are
+  // typed and backspaced — only its content changes.
+  function lockBoxSize() {
+    var box = h1.closest('.hero-textbox');
+    if (!box) return;
+    var finalPrefix = '', finalBreak = '', phase = 0;
+    parts.forEach(function (p) {
+      if (p.breakStart) { phase = 1; return; }
+      var t = p.text || p.fix;
+      if (phase === 0) finalPrefix += t; else finalBreak += t;
+    });
+    var cursor = '<span class="type-cursor">|</span>';
+    h1.innerHTML = escapeHtml(finalPrefix) + '<span class="hero-break">' + escapeHtml(finalBreak) + cursor + '</span>';
+    var rect = box.getBoundingClientRect();
+    // +14px covers the blinking cursor glyph landing mid-line (after the
+    // prefix, before the break) at a width this single measurement,
+    // cursor fixed at the very end, doesn't otherwise account for.
+    box.style.minWidth = (rect.width + 14) + 'px';
+    box.style.minHeight = rect.height + 'px';
+  }
+
+  function start() {
+    lockBoxSize();
+    h1.innerHTML = '<span class="type-cursor">|</span><span class="hero-break"></span>';
+    setTimeout(step, 250);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(start);
+  } else {
+    start();
+  }
 })();
 </script>
 

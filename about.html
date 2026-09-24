@@ -191,6 +191,22 @@
     });
   });
 })();
+
+(function () {
+  // Professional only: notes sit tucked behind the main paper, showing
+  // just their heading. Clicking one pulls it out to be read; clicking
+  // it again (or another note) tucks it back away.
+  var notes = document.querySelectorAll('.paper-note');
+  if (!notes.length) return;
+  notes.forEach(function (note) {
+    note.addEventListener('click', function () {
+      if (document.documentElement.getAttribute('data-theme') !== 'business') return;
+      var wasOpen = note.classList.contains('open');
+      notes.forEach(function (n) { n.classList.remove('open'); });
+      note.classList.toggle('open', !wasOpen);
+    });
+  });
+})();
 </script>
 
 <script src="nav.js" defer></script>

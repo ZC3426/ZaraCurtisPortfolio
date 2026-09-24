@@ -148,11 +148,6 @@ header.site-nav .row {
   background: var(--surface); border: 2px solid #cdbf94; border-radius: 100px;
   padding: 3px; cursor: pointer;
 }
-/* My Style's --surface is the same near-white cream used for case-study
-   mockup cards (e.g. Equil's device backdrop), so the toggle blended
-   into whatever page content it floated over. A greyer tone keeps it
-   visually distinct as a floating UI element. */
-html[data-theme="personal"] .style-toggle { background: #e2ded2; }
 /* Equal-width halves (not sized to each label's own content) so the
    thumb — a fixed 50% — actually lines up with each option, and each
    icon+label sits centered within its own half rather than off to one
@@ -535,11 +530,12 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .paper-notes-desk { display: contents; }
 
 /* ---- My Style: the folder tab strip ---- */
+html[data-theme="personal"] .folder-tabs { gap: 0.65rem; }
 html[data-theme="personal"] .folder-tab {
-  font-family: "Gome Pixel", monospace; font-size: 1rem; color: var(--ink-soft);
+  font-family: "Gome Pixel", monospace; font-size: 1rem; color: #fdfbf1;
   padding: 0.7rem 1.1rem 0.6rem; border-radius: 10px 10px 0 0;
   border: 2px solid var(--ink); border-bottom: none;
-  background: var(--outline); box-shadow: 3px -3px 0 0 var(--shadow);
+  background: #2b7a78; box-shadow: 3px -3px 0 0 var(--shadow);
   transform: translateY(4px);
 }
 html[data-theme="personal"] .folder-tab.active {
@@ -547,7 +543,7 @@ html[data-theme="personal"] .folder-tab.active {
   transform: translateY(0); box-shadow: none;
 }
 html[data-theme="personal"] .folder-pages {
-  background: var(--surface); border: 2px solid var(--ink); border-radius: 0 10px 10px 10px;
+  background: var(--surface); border: 3px solid #e0a726; border-radius: 0 10px 10px 10px;
   box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem; position: relative; z-index: 1;
 }
 html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
@@ -556,7 +552,12 @@ html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
   html[data-theme="personal"] .folder-tab span:not(.tab-icon) { display: none; }
 }
 
-/* ---- Professional: paper on a desk ---- */
+/* ---- Professional: paper on a desk ----
+   The note papers sit tucked mostly behind the main sheet (lower
+   z-index, pulled up under its bottom edge), showing just their
+   heading as a peeking label. Hovering nudges a note a little further
+   out; clicking pulls it fully out from under the main paper so its
+   list can be read, and clicking again tucks it back away. */
 [data-theme="business"] .folder-tabs { display: none; }
 [data-theme="business"] .folder-page { display: block; }
 [data-theme="business"] .paper-main {
@@ -566,23 +567,37 @@ html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
 }
 [data-theme="business"] .folder-contact { margin-top: 1.75rem; }
 [data-theme="business"] .paper-notes-desk {
-  display: flex; flex-wrap: wrap; gap: 1.75rem 2rem;
-  margin-top: 3rem; padding-top: 0.5rem;
+  display: flex; flex-wrap: wrap; gap: 0.9rem 1rem;
+  margin-top: -1.4rem; position: relative; z-index: 1;
 }
 [data-theme="business"] .paper-note {
   background: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 2px;
   box-shadow: 0 10px 22px rgba(38, 43, 39, 0.12);
-  padding: 1.5rem 1.65rem; width: calc(50% - 1rem);
+  padding: 0.85rem 1.2rem; flex: 1 1 160px; width: auto; overflow: hidden;
   transform: rotate(var(--rot, 0deg));
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, flex-basis 0.2s ease;
+  cursor: pointer;
 }
-[data-theme="business"] .paper-note:hover {
-  transform: rotate(0deg) translateY(-2px);
+[data-theme="business"] .paper-note h4 {
+  font-size: 1.05rem; margin-bottom: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+[data-theme="business"] .paper-note ul { display: none; margin-top: 0.7rem; }
+[data-theme="business"] .paper-note:hover:not(.open) {
+  transform: rotate(0deg) translateY(8px);
   box-shadow: 0 16px 30px rgba(38, 43, 39, 0.16);
 }
-[data-theme="business"] .paper-note h4 { font-size: 1.05rem; }
+[data-theme="business"] .paper-note.open {
+  flex: 1 1 100%; cursor: default; position: relative; z-index: 3;
+  transform: rotate(0deg) translateY(1.5rem);
+  box-shadow: 0 20px 34px rgba(38, 43, 39, 0.2);
+  padding: 1.5rem 1.65rem;
+}
+[data-theme="business"] .paper-note.open h4 { white-space: normal; margin-bottom: 0.6rem; }
+[data-theme="business"] .paper-note.open ul { display: block; }
 @media (max-width: 700px) {
-  [data-theme="business"] .paper-note { width: 100%; transform: rotate(0deg); }
+  [data-theme="business"] .paper-note { flex-basis: 100%; transform: rotate(0deg); }
+  [data-theme="business"] .paper-notes-desk { margin-top: -1rem; }
 }
 
 /* ---------- contact ---------- */
