@@ -24,6 +24,7 @@
       <a href="about.html" class="nav-btn active">About Me</a>
       <a href="case-studies.html" class="nav-btn">Case studies</a>
       <a href="https://www.linkedin.com/in/zaracurtis" target="_blank" rel="noopener" class="nav-btn">LinkedIn</a>
+      <a href="https://zarasink.substack.com/" target="_blank" rel="noopener" class="nav-btn">Substack</a>
       <a href="mailto:Zaracurtis@gmail.com" class="cta">Contact me</a>
     </nav>
   </div>
@@ -50,80 +51,75 @@
   <section style="padding-top: 2.5rem;">
     <div class="wrap">
       <div class="folder">
-        <!-- My Style only: folder tab strip. Business hides this and
-             shows every page below at once, paper-on-a-desk style. -->
         <div class="folder-tabs" role="tablist">
           <button type="button" class="folder-tab active" data-tab="about" role="tab" aria-selected="true">
             <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3.5-6 7-6s7 2.5 7 6"/></svg>
-            <svg class="tab-icon-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             <span>About me</span>
           </button>
           <button type="button" class="folder-tab" data-tab="research" role="tab" aria-selected="false">
             <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15 20 20"/></svg>
-            <svg class="tab-icon-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             <span>Research</span>
           </button>
           <button type="button" class="folder-tab" data-tab="design" role="tab" aria-selected="false">
             <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l.8-3.8L15.5 5.5l3 3L7.8 19.2 4 20Z"/><path d="M13.5 7l3 3"/></svg>
-            <svg class="tab-icon-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             <span>Design</span>
           </button>
           <button type="button" class="folder-tab" data-tab="systems" role="tab" aria-selected="false">
             <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.8"/><path d="M12 3.5v2.6M12 17.9v2.6M20.5 12h-2.6M6.1 12H3.5M17.6 6.4l-1.8 1.8M8.2 15.8l-1.8 1.8M17.6 17.6l-1.8-1.8M8.2 8.2 6.4 6.4"/></svg>
-            <svg class="tab-icon-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             <span>Systems</span>
           </button>
           <button type="button" class="folder-tab" data-tab="tools" role="tab" aria-selected="false">
             <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 5.5a4 4 0 0 0-5.4 5l-6 6 2 2 6-6a4 4 0 0 0 5-5.4l-2.6 2.6-2-2Z"/></svg>
-            <svg class="tab-icon-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
             <span>Tools</span>
           </button>
         </div>
 
-        <div class="folder-pages">
-          <div class="folder-page paper-main active" data-page="about">
-            <p>
-              I am a curious and empathy-driven product designer, passionate about psychology,
-              philosophy and the relationships humans forge with ourselves, others, and the
-              world around us.
-            </p>
-            <p>
-              My passion for product and product design stems from my unwavering commitment to
-              improve the lives of others using my skills in empathy, critical thinking and
-              resilience. I first applied these skills in an academic context to improve the
-              lives of young and old learners alike. I now am seeking to apply myself to
-              improve financial and educational products.
-            </p>
-            <p>
-              My mixed and multi-everything background has given me the gift of comfort in
-              discomfort, making me highly adaptable and light on my feet during times of
-              change and stress. I have never experienced the privilege of feeling like I
-              belonged, or was a part of a greater cultural context. This lifelong challenge
-              instilled in me a deep and profound sense of curiosity, which I have nurtured and
-              continue to nurture through personal and professional projects. It is a gift to
-              not feel burdened by a &lsquo;norm&rsquo;, and professionally, frees space to
-              explore avenues left untouched. I am excited to get stuck into projects that make
-              life easier, more comprehendible, or more enjoyable for people. If this sounds
-              like something you care about as well, do reach out and connect!
-            </p>
-            <p>
-              I recently led the end-to-end design of a business customer portal for a gas and
-              power company who turn over half a billion pounds a year, taking it from a
-              clunky tool used by around 30 people a month to 14 redesigned pages and a full
-              design system, all in two months. I work across user research, testing, UI and
-              design systems, and I use AI tools throughout my process to research, prototype.
-              I am, and have been, an AI native in many ways, but I am sure to use it with
-              intention and steer to retain creative expression and a human touch.
-            </p>
-            <p class="folder-contact">
-              <a class="btn primary" href="mailto:Zaracurtis@gmail.com">Email me</a>
-              &nbsp;
-              <a class="btn ghost" href="https://www.linkedin.com/in/zaracurtis" target="_blank" rel="noopener">LinkedIn</a>
-            </p>
+        <div class="folder-pages" data-active="about">
+          <div class="folder-page active" data-page="about">
+            <div class="paper-sheet">
+              <p>
+                I am a curious and empathy-driven product designer, passionate about psychology,
+                philosophy and the relationships humans forge with ourselves, others, and the
+                world around us.
+              </p>
+              <p>
+                My passion for product and product design stems from my unwavering commitment to
+                improve the lives of others using my skills in empathy, critical thinking and
+                resilience. I first applied these skills in an academic context to improve the
+                lives of young and old learners alike. I now am seeking to apply myself to
+                improve financial and educational products.
+              </p>
+              <p>
+                My mixed and multi-everything background has given me the gift of comfort in
+                discomfort, making me highly adaptable and light on my feet during times of
+                change and stress. I have never experienced the privilege of feeling like I
+                belonged, or was a part of a greater cultural context. This lifelong challenge
+                instilled in me a deep and profound sense of curiosity, which I have nurtured and
+                continue to nurture through personal and professional projects. It is a gift to
+                not feel burdened by a &lsquo;norm&rsquo;, and professionally, frees space to
+                explore avenues left untouched. I am excited to get stuck into projects that make
+                life easier, more comprehendible, or more enjoyable for people. If this sounds
+                like something you care about as well, do reach out and connect!
+              </p>
+              <p>
+                I recently led the end-to-end design of a business customer portal for a gas and
+                power company who turn over half a billion pounds a year, taking it from a
+                clunky tool used by around 30 people a month to 14 redesigned pages and a full
+                design system, all in two months. I work across user research, testing, UI and
+                design systems, and I use AI tools throughout my process to research, prototype.
+                I am, and have been, an AI native in many ways, but I am sure to use it with
+                intention and steer to retain creative expression and a human touch.
+              </p>
+              <p class="folder-contact">
+                <a class="btn primary" href="mailto:Zaracurtis@gmail.com">Email me</a>
+                &nbsp;
+                <a class="btn ghost" href="https://www.linkedin.com/in/zaracurtis" target="_blank" rel="noopener">LinkedIn</a>
+              </p>
+            </div>
           </div>
 
-          <div class="paper-notes-desk">
-            <div class="folder-page paper-note" data-page="research" style="--rot: -3deg;">
+          <div class="folder-page" data-page="research">
+            <div class="paper-sheet">
               <h4>Research &amp; strategy</h4>
               <ul>
                 <li>User research: interviews, surveys, usability testing</li>
@@ -132,8 +128,10 @@
                 <li>Data-informed design decisions</li>
               </ul>
             </div>
+          </div>
 
-            <div class="folder-page paper-note" data-page="design" style="--rot: 2deg;">
+          <div class="folder-page" data-page="design">
+            <div class="paper-sheet">
               <h4>Design</h4>
               <ul>
                 <li>Information architecture and wireframing</li>
@@ -143,8 +141,10 @@
                 <li>Accessibility (inclusive, standards-aware design)</li>
               </ul>
             </div>
+          </div>
 
-            <div class="folder-page paper-note" data-page="systems" style="--rot: -2deg;">
+          <div class="folder-page" data-page="systems">
+            <div class="paper-sheet">
               <h4>Systems &amp; delivery</h4>
               <ul>
                 <li>Design systems: components, tokens, documentation</li>
@@ -153,8 +153,10 @@
                 <li>Stakeholder management and aligning competing priorities</li>
               </ul>
             </div>
+          </div>
 
-            <div class="folder-page paper-note" data-page="tools" style="--rot: 3deg;">
+          <div class="folder-page" data-page="tools">
+            <div class="paper-sheet">
               <h4>Tools</h4>
               <ul>
                 <li>Figma: wireframing, hi-fi UI, prototyping, component libraries and design systems</li>
@@ -181,7 +183,37 @@
 (function () {
   var tabs = document.querySelectorAll('.folder-tab');
   var pages = document.querySelectorAll('.folder-page');
+  var wrap = document.querySelector('.folder-pages');
   if (!tabs.length) return;
+
+  // The pages are wildly different lengths (About's four paragraphs vs.
+  // a short list), so switching tabs used to resize the whole folder —
+  // and everything below it on the page — every time, which read as a
+  // jolt. Lock the folder to the height of its tallest page up front so
+  // switching only ever swaps content, never the page's layout.
+  function lockFolderHeight() {
+    if (!wrap) return;
+    wrap.style.minHeight = '';
+    var maxH = 0;
+    pages.forEach(function (p) {
+      var isActive = p.classList.contains('active');
+      if (!isActive) {
+        p.style.position = 'absolute';
+        p.style.visibility = 'hidden';
+        p.style.display = 'block';
+        p.style.width = '100%';
+      }
+      maxH = Math.max(maxH, p.scrollHeight);
+      if (!isActive) {
+        p.style.position = '';
+        p.style.visibility = '';
+        p.style.display = '';
+        p.style.width = '';
+      }
+    });
+    wrap.style.minHeight = maxH + 'px';
+  }
+
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
       var target = tab.getAttribute('data-tab');
@@ -193,7 +225,15 @@
       pages.forEach(function (p) {
         p.classList.toggle('active', p.getAttribute('data-page') === target);
       });
+      if (wrap) wrap.setAttribute('data-active', target);
     });
+  });
+
+  lockFolderHeight();
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(lockFolderHeight, 150);
   });
 })();
 

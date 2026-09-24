@@ -518,72 +518,91 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 /* ---------- about: shared structure ----------
    Both themes share the same five panels (about, research, design,
    systems, tools) and the same one-page-at-a-time folder mechanic —
-   tabs pick which page shows. They differ only in how the tabs and
-   the open page are dressed: My Style as a manila folder, Professional
-   as a page held together with paperclips. */
-.folder-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+   tabs pick which page shows, and the folder body's colour changes to
+   match whichever tab is open. Inside every page sits the same lined
+   "paper" holding the actual text, which never changes colour. They
+   differ only in how bold/rounded (My Style) vs muted/square
+   (Professional) that dressing is. */
+.folder { position: relative; }
+.folder-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .folder-tab {
   display: flex; align-items: center; gap: 0.45rem;
-  background: none; border: none; font: inherit; text-align: left;
+  font: inherit; text-align: left; cursor: pointer;
 }
 .tab-icon { width: 17px; height: 17px; flex: 0 0 auto; }
-.tab-icon-clip { display: none; }
 .folder-page { display: none; }
 .folder-page.active { display: block; }
-.paper-main p { color: var(--ink-soft); margin-bottom: 1rem; }
-.paper-note h4 { margin-bottom: 0.6rem; }
-.paper-note ul { padding-left: 1.1rem; color: var(--ink-soft); }
-.paper-note li { margin-bottom: 0.4rem; }
-.paper-notes-desk { display: contents; }
+.folder-pages { position: relative; transition: background-color 0.25s ease; }
+.paper-sheet {
+  background-color: #f5ecd2;
+  background-image: repeating-linear-gradient(
+    to bottom, transparent 0, transparent 1.65em,
+    rgba(90, 70, 40, 0.16) 1.65em, rgba(90, 70, 40, 0.16) calc(1.65em + 1px)
+  );
+  background-position: 0 0.2em;
+}
+.paper-sheet p { color: var(--ink-soft); margin-bottom: 1rem; }
+.paper-sheet h4 { margin-bottom: 0.6rem; }
+.paper-sheet ul { padding-left: 1.1rem; color: var(--ink-soft); }
+.paper-sheet li { margin-bottom: 0.4rem; }
 
-/* ---- My Style: a manila folder ---- */
-html[data-theme="personal"] .folder-tabs { gap: 0.65rem; }
+/* ---- My Style: a manila folder, rounded, boldly coloured ---- */
 html[data-theme="personal"] .folder-tab {
-  font-family: "Gome Pixel", monospace; font-size: 1rem; color: #fdfbf1;
-  padding: 0.7rem 1.3rem 0.6rem; clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
-  border: 2px solid var(--ink); border-bottom: none;
-  background: #2b7a78; box-shadow: 3px -3px 0 0 var(--shadow);
-  transform: translateY(4px);
+  font-family: "Gome Pixel", monospace; font-size: 1rem; color: var(--ink);
+  padding: 0.65rem 1.2rem; border-radius: 10px;
+  border: 2px solid var(--ink); box-shadow: 3px 3px 0 0 var(--shadow);
+  opacity: 0.72;
 }
 html[data-theme="personal"] .folder-tab.active {
-  background: #e8cf94; color: var(--ink); position: relative; z-index: 2;
-  transform: translateY(0); box-shadow: none;
+  opacity: 1; transform: translateY(-2px); box-shadow: 4px 5px 0 0 var(--shadow);
 }
+html[data-theme="personal"] .folder-tab[data-tab="about"] { background: #f0c48f; }
+html[data-theme="personal"] .folder-tab[data-tab="research"] { background: #e2564f; color: #fff; }
+html[data-theme="personal"] .folder-tab[data-tab="design"] { background: #eec94d; }
+html[data-theme="personal"] .folder-tab[data-tab="systems"] { background: #3f9c63; color: #fff; }
+html[data-theme="personal"] .folder-tab[data-tab="tools"] { background: #4a90d9; color: #fff; }
 html[data-theme="personal"] .folder-pages {
-  background: #e8cf94; border: 2px solid var(--ink); border-radius: 0 10px 10px 10px;
-  box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem; position: relative; z-index: 1;
+  border-radius: 16px; border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem;
+}
+html[data-theme="personal"] .folder-pages[data-active="about"] { background: #f7ddb8; }
+html[data-theme="personal"] .folder-pages[data-active="research"] { background: #f3c3bf; }
+html[data-theme="personal"] .folder-pages[data-active="design"] { background: #f8ecb5; }
+html[data-theme="personal"] .folder-pages[data-active="systems"] { background: #c8ead1; }
+html[data-theme="personal"] .folder-pages[data-active="tools"] { background: #c9deee; }
+html[data-theme="personal"] .paper-sheet {
+  border-radius: 8px; border: 2px solid var(--ink); padding: 1.75rem 2rem;
 }
 html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
 @media (max-width: 600px) {
-  html[data-theme="personal"] .folder-tab { padding: 0.55rem 0.9rem; }
+  html[data-theme="personal"] .folder-tab { padding: 0.55rem 0.7rem; }
   html[data-theme="personal"] .folder-tab span:not(.tab-icon) { display: none; }
 }
 
-/* ---- Professional: paperclipped pages ----
-   Same tab strip as My Style, styled as a plain row of paperclips
-   instead of folder tabs — each one "clips" onto whichever page is
-   currently open. */
-[data-theme="business"] .folder-tabs { gap: 1.6rem; margin-bottom: 0.25rem; }
+/* ---- Professional: the same folder, square and all beige ---- */
 [data-theme="business"] .folder-tab {
   color: var(--ink-soft); font-weight: 600; font-size: 0.92rem;
-  padding-bottom: 0.4rem; border-bottom: 2px solid transparent;
+  padding: 0.6rem 1.1rem; border-radius: 0; border: 1px solid #e6dfc9;
+  background: #f2ead3;
 }
-[data-theme="business"] .tab-icon { display: none; }
-[data-theme="business"] .tab-icon-clip { display: block; width: 15px; height: 15px; transform: rotate(45deg); }
-[data-theme="business"] .folder-tab.active {
-  color: var(--ink); border-bottom-color: #9aa0a6;
-}
-[data-theme="business"] .folder-tab.active .tab-icon-clip { color: #6b7176; }
-[data-theme="business"] .paper-main,
-[data-theme="business"] .paper-note {
-  background: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 2px;
+[data-theme="business"] .folder-tab.active { color: var(--ink); background: #fdfbf1; }
+[data-theme="business"] .folder-pages {
+  border-radius: 0; border: 1px solid #e6dfc9;
   box-shadow: 0 14px 34px rgba(38, 43, 39, 0.1); padding: 2.5rem;
-  position: relative;
+}
+[data-theme="business"] .folder-pages[data-active="about"] { background: #f8f2df; }
+[data-theme="business"] .folder-pages[data-active="research"] { background: #f2ecdc; }
+[data-theme="business"] .folder-pages[data-active="design"] { background: #f6f0dd; }
+[data-theme="business"] .folder-pages[data-active="systems"] { background: #f0ead9; }
+[data-theme="business"] .folder-pages[data-active="tools"] { background: #f3eddc; }
+[data-theme="business"] .paper-sheet {
+  background-color: #fdfbf1; border-radius: 0; border: 1px solid #e6dfc9;
+  padding: 1.75rem 2rem; box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06);
 }
 [data-theme="business"] .folder-contact { margin-top: 1.75rem; }
 @media (max-width: 600px) {
-  [data-theme="business"] .paper-main,
-  [data-theme="business"] .paper-note { padding: 1.75rem; }
+  [data-theme="business"] .folder-tab { padding: 0.55rem 0.8rem; }
+  [data-theme="business"] .paper-sheet { padding: 1.5rem 1.75rem; }
 }
 
 /* ---------- contact ---------- */

@@ -25,6 +25,7 @@
       <a href="about.html" class="nav-btn">About Me</a>
       <a href="case-studies.html" class="nav-btn">Case studies</a>
       <a href="https://www.linkedin.com/in/zaracurtis" target="_blank" rel="noopener" class="nav-btn">LinkedIn</a>
+      <a href="https://zarasink.substack.com/" target="_blank" rel="noopener" class="nav-btn">Substack</a>
       <a href="mailto:Zaracurtis@gmail.com" class="cta">Contact me</a>
     </nav>
   </div>
@@ -362,11 +363,13 @@
   var h1 = document.getElementById('hero-typing');
   var toggle = document.querySelector('.style-toggle');
   if (!h1) return;
+  var box = h1.closest('.hero-textbox');
 
   // Each part is either straight typing, or a typo: the wrong text gets
   // typed, backspaced out, then replaced with the correct text. A
   // "breakStart" marker switches subsequent parts into the .hero-break
   // span so "Product Designer." still lands on its own line in business.
+  var isPersonal = document.documentElement.getAttribute('data-theme') === 'personal';
   var parts = [
     { text: "Hello! " },
     { typo: "im", fix: "I'm" },
@@ -374,7 +377,7 @@
     { breakStart: true },
     { text: "Product " },
     { typo: "Designar", fix: "Designer" },
-    { text: "." }
+    { text: isPersonal ? ". :)" : "." }
   ];
 
   var steps = [];
@@ -408,12 +411,74 @@
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  var finalPrefix = '', finalBreak = '';
+  (function () {
+    var phase = 0;
+    parts.forEach(function (p) {
+      if (p.breakStart) { phase = 1; return; }
+      var t = p.text || p.fix;
+      if (phase === 0) finalPrefix += t; else finalBreak += t;
+    });
+  })();
+
+  // Line breaks the destination (fully-typed) layout actually falls on,
+  // filled in below once the box's final width is known. Typing into
+  // them (rather than letting the browser re-wrap live, shorter text)
+  // is what stops a word like "psychology-backed" from briefly fitting
+  // at the end of a line, then jumping down once it's finished.
+  var lineBreaks = { prefixBreaks: [], breakBreaks: [] };
+
+  function insertBreaks(str, offsets) {
+    if (!offsets.length) return escapeHtml(str);
+    var out = '', last = 0;
+    offsets.forEach(function (idx) {
+      if (idx > last && idx <= str.length) {
+        out += escapeHtml(str.slice(last, idx)) + '<br>';
+        last = idx;
+      }
+    });
+    return out + escapeHtml(str.slice(last));
+  }
+
+  // A cursor sitting inline, mid-typing, adds just enough width to
+  // occasionally push a word into a wrap that isn't there in the final,
+  // cursor-free layout — the same jump this whole file is built to
+  // avoid, just triggered by the cursor instead of the text itself. So
+  // the cursor is never part of the text flow: it's a single persistent
+  // element, positioned absolutely after each render from where the
+  // typed text actually ends, contributing zero width to anything.
+  var cursorEl = document.createElement('span');
+  cursorEl.className = 'type-cursor';
+  cursorEl.textContent = '|';
+  cursorEl.setAttribute('aria-hidden', 'true');
+  cursorEl.style.position = 'absolute';
+  if (box) box.appendChild(cursorEl);
+
+  function positionCursor() {
+    if (!box) return;
+    var walker = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT);
+    var lastNode = null, node;
+    while ((node = walker.nextNode())) lastNode = node;
+    var boxRect = box.getBoundingClientRect();
+    var rect;
+    if (lastNode && lastNode.textContent.length) {
+      var range = document.createRange();
+      range.setStart(lastNode, lastNode.textContent.length);
+      range.setEnd(lastNode, lastNode.textContent.length);
+      rect = range.getBoundingClientRect();
+    } else {
+      rect = h1.getBoundingClientRect();
+    }
+    cursorEl.style.left = (rect.left - boxRect.left) + 'px';
+    cursorEl.style.top = (rect.top - boxRect.top) + 'px';
+  }
+
   var prefixStr = '', breakStr = '';
-  function render(phase) {
-    var cursor = '<span class="type-cursor">|</span>';
-    var prefixHtml = escapeHtml(prefixStr) + (phase === 0 ? cursor : '');
-    var breakHtml = escapeHtml(breakStr) + (phase === 1 ? cursor : '');
+  function render() {
+    var prefixHtml = insertBreaks(prefixStr, lineBreaks.prefixBreaks);
+    var breakHtml = insertBreaks(breakStr, lineBreaks.breakBreaks);
     h1.innerHTML = prefixHtml + '<span class="hero-break">' + breakHtml + '</span>';
+    positionCursor();
   }
 
   function shakeToggle() {
@@ -428,7 +493,8 @@
   var i = 0;
   function step() {
     if (i >= steps.length) {
-      h1.innerHTML = escapeHtml(prefixStr) + '<span class="hero-break">' + escapeHtml(breakStr) + '</span>';
+      render();
+      cursorEl.style.display = 'none';
       setTimeout(shakeToggle, 3000);
       return;
     }
@@ -438,32 +504,115 @@
     } else {
       if (s.phase === 0) prefixStr = prefixStr.slice(0, -1); else breakStr = breakStr.slice(0, -1);
     }
-    render(s.phase);
+    render();
     i++;
     var delay = s.w * msPerUnit * (0.75 + Math.random() * 0.5);
     setTimeout(step, delay);
+  }
+
+  // Splits text at every point a browser might wrap it: runs of
+  // whitespace, and just after a hyphen inside a compound word (e.g.
+  // "psychology-backed" can wrap right after the hyphen).
+  function tokenize(str) {
+    var out = [], re = /\s+|[^\s-]+-|[^\s-]+/g, m;
+    while ((m = re.exec(str))) out.push(m[0]);
+    return out;
+  }
+
+  // Builds an offscreen clone of the box with the FULL final heading —
+  // never touching the live h1 — so it's safe to call anytime, mid-
+  // animation or not. Used both to lock the box's size and, per token,
+  // to read off exactly where the destination layout wraps.
+  function buildFinalClone() {
+    var clone = box.cloneNode(false);
+    clone.style.position = 'absolute';
+    clone.style.visibility = 'hidden';
+    clone.style.left = '-9999px';
+    clone.style.top = '0';
+    clone.style.minWidth = '0';
+    clone.style.minHeight = '0';
+    var rect = box.getBoundingClientRect();
+    if (rect.width) clone.style.width = rect.width + 'px';
+
+    var h1clone = document.createElement('h1');
+    h1clone.className = h1.className;
+
+    var prefixSpans = [], breakSpans = [], offset;
+    offset = 0;
+    tokenize(finalPrefix).forEach(function (tok) {
+      if (/^\s+$/.test(tok)) {
+        h1clone.appendChild(document.createTextNode(tok));
+      } else {
+        var span = document.createElement('span');
+        span.textContent = tok;
+        h1clone.appendChild(span);
+        prefixSpans.push({ span: span, start: offset });
+      }
+      offset += tok.length;
+    });
+
+    var breakWrap = document.createElement('span');
+    breakWrap.className = 'hero-break';
+    offset = 0;
+    tokenize(finalBreak).forEach(function (tok) {
+      if (/^\s+$/.test(tok)) {
+        breakWrap.appendChild(document.createTextNode(tok));
+      } else {
+        var span = document.createElement('span');
+        span.textContent = tok;
+        breakWrap.appendChild(span);
+        breakSpans.push({ span: span, start: offset });
+      }
+      offset += tok.length;
+    });
+    breakWrap.appendChild(document.createElement('span')).className = 'type-cursor';
+    h1clone.appendChild(breakWrap);
+
+    clone.appendChild(h1clone);
+    document.body.appendChild(clone);
+    return { clone: clone, prefixSpans: prefixSpans, breakSpans: breakSpans, breakWrap: breakWrap };
   }
 
   // Lock the speech-bubble box to the size of the FULLY typed text
   // before animating, so it never grows/shrinks as characters are
   // typed and backspaced — only its content changes.
   function lockBoxSize() {
-    var box = h1.closest('.hero-textbox');
     if (!box) return;
-    var finalPrefix = '', finalBreak = '', phase = 0;
-    parts.forEach(function (p) {
-      if (p.breakStart) { phase = 1; return; }
-      var t = p.text || p.fix;
-      if (phase === 0) finalPrefix += t; else finalBreak += t;
-    });
-    var cursor = '<span class="type-cursor">|</span>';
-    h1.innerHTML = escapeHtml(finalPrefix) + '<span class="hero-break">' + escapeHtml(finalBreak) + cursor + '</span>';
-    var rect = box.getBoundingClientRect();
+    var built = buildFinalClone();
+    var rect = built.clone.getBoundingClientRect();
+    document.body.removeChild(built.clone);
     // +14px covers the blinking cursor glyph landing mid-line (after the
     // prefix, before the break) at a width this single measurement,
     // cursor fixed at the very end, doesn't otherwise account for.
     box.style.minWidth = (rect.width + 14) + 'px';
     box.style.minHeight = rect.height + 'px';
+  }
+
+  // Reads where the destination (fully-typed) layout actually wraps, so
+  // typing can be made to land straight on the right line instead of
+  // relying on the browser to re-wrap live, shorter text the same way
+  // every time (it doesn't — a word can fit at a line's end while it's
+  // still growing, then jump to the next line once it's finished).
+  function computeLineBreaks() {
+    var built = buildFinalClone();
+    var isBlockBreak = getComputedStyle(built.breakWrap).display === 'block';
+    var prefixBreaks = [], breakBreaks = [], prevTop = null;
+    built.prefixSpans.forEach(function (item) {
+      var top = item.span.getBoundingClientRect().top;
+      if (prevTop !== null && Math.round(top) !== Math.round(prevTop)) prefixBreaks.push(item.start);
+      prevTop = top;
+    });
+    built.breakSpans.forEach(function (item, idx) {
+      var top = item.span.getBoundingClientRect().top;
+      // Business already forces this onto its own line via display:
+      // block — an explicit break there would just add a blank line.
+      if (prevTop !== null && Math.round(top) !== Math.round(prevTop) && !(idx === 0 && isBlockBreak)) {
+        breakBreaks.push(item.start);
+      }
+      prevTop = top;
+    });
+    document.body.removeChild(built.clone);
+    return { prefixBreaks: prefixBreaks, breakBreaks: breakBreaks };
   }
 
   // Runs immediately, not after fonts/anything else finish loading —
@@ -473,8 +622,23 @@
   // right away, means the bubble is never seen at any size but its
   // final one.
   lockBoxSize();
+  lineBreaks = computeLineBreaks();
   h1.innerHTML = '<span class="type-cursor">|</span><span class="hero-break"></span>';
   setTimeout(step, 250);
+
+  // The heading font loads late on a cold cache (e.g. a hard refresh),
+  // so that very first pass was measured against the fallback font —
+  // its metrics (and therefore the wrap points) can be quite different,
+  // which used to make the box balloon, and words land on the wrong
+  // line, once the real font swapped in mid-animation. Redoing both
+  // (still on an invisible clone, never touching the live h1) once the
+  // real font is actually ready corrects it without any visible flash.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      lockBoxSize();
+      lineBreaks = computeLineBreaks();
+    });
+  }
 })();
 </script>
 
