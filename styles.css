@@ -872,13 +872,17 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 
 /* ink-drawing art in business mode — visible as art, not just texture,
-   but still light enough that heading text stays legible over it */
+   but still light enough that heading text stays legible over it. The
+   source file is pre-cropped to end right where the baby's arm starts,
+   and "bottom" keeps that line anchored so any extra cropping at short
+   viewport heights eats into the empty sky/branches above the figures
+   instead of cutting back into their faces. */
 [data-theme="business"] .hero::before,
 [data-theme="business"] .page-hero::before,
 [data-theme="business"] .cs-hero::before {
   display: block;
   background-image: url("assets/backgrounds/pages/business-drawing.jpg");
-  background-size: cover; background-position: center;
+  background-size: cover; background-position: center bottom;
   image-rendering: auto;
   opacity: 0.32;
 }
@@ -886,8 +890,10 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    about me" on the homepage, matching where My Style shows its mountain
    parallax scene in the same spot. It replaces (rather than hides)
    .mountain-band for business, so About Me goes back to the plain
-   sitewide pattern like every other header. Position weighted toward the
-   bottom of the artwork so the three figures on the path stay in frame. */
+   sitewide pattern like every other header. The source file is
+   pre-cropped to keep the figures' feet right at its bottom edge, and
+   "bottom" anchors that line so their feet stay visible at any viewport
+   height. */
 [data-theme="business"] .mountain-band {
   border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline);
 }
