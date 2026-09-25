@@ -120,7 +120,7 @@ h1, h2, h3, h4 {
 
 /* ---------- nav ---------- */
 header.site-nav {
-  position: sticky; top: 0; z-index: 30;
+  position: sticky; top: 0; z-index: 50;
   background: rgba(244, 236, 216, 0.94);
   backdrop-filter: blur(6px);
   border-bottom: 3px solid var(--outline);

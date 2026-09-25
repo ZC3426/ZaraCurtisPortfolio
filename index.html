@@ -584,6 +584,18 @@
     return out;
   }
 
+  // The clone below is position:absolute, whose containing block is its
+  // positioned ancestor's PADDING box — so a plain "max-width: 100%"
+  // measures against .wrap's full width, not the narrower area actually
+  // left after .wrap's own side padding. On narrow viewports that let
+  // the clone (and the box locked to its size) come out wider than the
+  // space the in-flow box really has, overflowing past .hero's clipped
+  // edge. Measuring against this instead keeps the two in agreement.
+  function availWidth() {
+    var cs = getComputedStyle(box.parentNode);
+    return box.parentNode.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  }
+
   // Builds an offscreen clone of the box with the FULL final heading —
   // never touching the live h1 — so it's safe to call anytime, mid-
   // animation or not. Used both to lock the box's size and, per token,
@@ -597,6 +609,7 @@
     clone.style.minWidth = '0';
     clone.style.minHeight = '0';
     clone.style.width = 'auto';
+    clone.style.maxWidth = availWidth() + 'px';
     // Deliberately NOT sized from box.getBoundingClientRect(): once the
     // box has already been locked once, its current width is that
     // locked value, not its natural one — measuring against it and then
@@ -661,7 +674,10 @@
     // +14px covers the blinking cursor glyph landing mid-line (after the
     // prefix, before the break) at a width this single measurement,
     // cursor fixed at the very end, doesn't otherwise account for.
-    box.style.minWidth = (rect.width + 14) + 'px';
+    // Clamped to availWidth() as a safety net — the clone is already
+    // measured within that same limit, so this only guards against the
+    // +14px cushion itself pushing past the edge on the narrowest phones.
+    box.style.minWidth = Math.min(rect.width + 14, availWidth()) + 'px';
     box.style.minHeight = rect.height + 'px';
   }
 
