@@ -585,11 +585,10 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 
 /* ---- My Style: a pixel-art manila folder, boldly coloured ----
    Sharp, blocky edges (no border-radius, like Professional's own
-   square corners) and a stepped pixel-corner notch instead of a smooth
-   curve — read as a retro/8-bit file icon rather than a rounded UI
-   card. Tabs are thin rectangular strips, spaced apart, sitting behind
-   the folder body — only the active one sits flush against it, the
-   rest float a little above, tucked behind. */
+   square corners) — reads as a retro/8-bit file icon rather than a
+   rounded UI card. Tabs are thin rectangular strips, spaced apart,
+   sitting behind the folder body — only the active one sits flush
+   against it, the rest float a little above, tucked behind. */
 html[data-theme="personal"] .folder-tabs { gap: 0.85rem; align-items: flex-end; }
 html[data-theme="personal"] .folder-tab {
   font-family: "Gome Pixel", "Space Mono", monospace; font-size: 0.92rem; color: var(--ink);
@@ -597,7 +596,6 @@ html[data-theme="personal"] .folder-tab {
   border: 3px solid var(--ink); border-bottom: none;
   box-shadow: 3px -3px 0 0 var(--shadow);
   transform: translateY(6px);
-  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 0 100%);
 }
 html[data-theme="personal"] .folder-tab.active {
   transform: translateY(0); box-shadow: none; position: relative; z-index: 2;
@@ -611,10 +609,6 @@ html[data-theme="personal"] .folder-pages {
   border-radius: 0; border: 3px solid var(--ink);
   box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem;
   position: relative; z-index: 1;
-  clip-path: polygon(
-    0 12px, 12px 12px, 12px 0,
-    100% 0, 100% 100%, 0 100%
-  );
 }
 html[data-theme="personal"] .folder-pages[data-active="about"] { background: #f7ddb8; }
 html[data-theme="personal"] .folder-pages[data-active="research"] { background: #f3c3bf; }
@@ -623,7 +617,6 @@ html[data-theme="personal"] .folder-pages[data-active="systems"] { background: #
 html[data-theme="personal"] .folder-pages[data-active="tools"] { background: #c9deee; }
 html[data-theme="personal"] .paper-sheet {
   border-radius: 0; border: 3px solid var(--ink); padding: 1.75rem 2rem;
-  clip-path: polygon(0 8px, 8px 8px, 8px 0, 100% 0, 100% 100%, 0 100%);
 }
 html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
 @media (max-width: 600px) {
