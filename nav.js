@@ -40,6 +40,10 @@
       root.setAttribute('data-theme', next);
       toggle.setAttribute('aria-pressed', next === 'personal' ? 'true' : 'false');
       try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
+      // Lets anything theme-dependent that already finished setting
+      // itself up on load (like the homepage's typed heading) redo that
+      // setup now, rather than sit mismatched with the new theme.
+      document.dispatchEvent(new CustomEvent('zc-theme-changed'));
     });
   }
 

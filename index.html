@@ -392,57 +392,69 @@
   // typed, backspaced out, then replaced with the correct text. A
   // "breakStart" marker switches subsequent parts into the .hero-break
   // span so "Product Designer." still lands on its own line in business.
-  var isPersonal = document.documentElement.getAttribute('data-theme') === 'personal';
-  var parts = [
-    { text: "Hello! " },
-    { typo: "im", fix: "I'm" },
-    { text: " Zara, a psychology-backed " },
-    { breakStart: true },
-    { text: "Product " },
-    { typo: "Designar", fix: "Designer" },
-    { text: isPersonal ? " :)" : "." }
-  ];
-
-  var steps = [];
-  (function build() {
-    var phase = 0;
-    parts.forEach(function (p) {
-      if (p.breakStart) { phase = 1; return; }
-      if (p.text) {
-        for (var i = 0; i < p.text.length; i++) steps.push({ t: 'type', c: p.text[i], phase: phase });
-      } else if (p.typo) {
-        for (var i = 0; i < p.typo.length; i++) steps.push({ t: 'type', c: p.typo[i], phase: phase });
-        for (var i = 0; i < p.typo.length; i++) steps.push({ t: 'back', phase: phase, pause: i === 0 });
-        for (var i = 0; i < p.fix.length; i++) steps.push({ t: 'type', c: p.fix[i], phase: phase });
-      }
-    });
-  })();
-
-  // Weighted so the whole thing lands around 4.5s regardless of small
-  // future text edits: typing costs more than backspacing, and the
-  // moment right after noticing a typo gets a brief "oops" pause.
+  // All of this is rebuilt by buildForTheme() below, not just computed
+  // once — the toggle switches theme live, without a reload, and the
+  // smiley (and the box's own font/size) differ by theme, so a change
+  // needs to redo this rather than leave the OLD theme's heading sitting
+  // in a box now styled for the new one.
+  var isPersonal, parts, steps, totalWeight, msPerUnit;
   var TOTAL_MS = 4500;
-  var totalWeight = 0;
-  steps.forEach(function (s) {
-    s.w = s.t === 'back' ? 0.55 : 1;
-    if (s.pause) s.w += 3;
-    totalWeight += s.w;
-  });
-  var msPerUnit = TOTAL_MS / totalWeight;
+
+  function buildForTheme() {
+    isPersonal = document.documentElement.getAttribute('data-theme') === 'personal';
+    parts = [
+      { text: "Hello! " },
+      { typo: "im", fix: "I'm" },
+      { text: " Zara, a psychology-backed " },
+      { breakStart: true },
+      { text: "Product " },
+      { typo: "Designar", fix: "Designer" },
+      { text: isPersonal ? " :)" : "." }
+    ];
+
+    steps = [];
+    (function build() {
+      var phase = 0;
+      parts.forEach(function (p) {
+        if (p.breakStart) { phase = 1; return; }
+        if (p.text) {
+          for (var i = 0; i < p.text.length; i++) steps.push({ t: 'type', c: p.text[i], phase: phase });
+        } else if (p.typo) {
+          for (var i = 0; i < p.typo.length; i++) steps.push({ t: 'type', c: p.typo[i], phase: phase });
+          for (var i = 0; i < p.typo.length; i++) steps.push({ t: 'back', phase: phase, pause: i === 0 });
+          for (var i = 0; i < p.fix.length; i++) steps.push({ t: 'type', c: p.fix[i], phase: phase });
+        }
+      });
+    })();
+
+    // Weighted so the whole thing lands around 4.5s regardless of small
+    // future text edits: typing costs more than backspacing, and the
+    // moment right after noticing a typo gets a brief "oops" pause.
+    totalWeight = 0;
+    steps.forEach(function (s) {
+      s.w = s.t === 'back' ? 0.55 : 1;
+      if (s.pause) s.w += 3;
+      totalWeight += s.w;
+    });
+    msPerUnit = TOTAL_MS / totalWeight;
+    buildFinalStrings();
+  }
 
   function escapeHtml(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  var finalPrefix = '', finalBreak = '';
-  (function () {
+  var finalPrefix, finalBreak;
+  function buildFinalStrings() {
+    finalPrefix = ''; finalBreak = '';
     var phase = 0;
     parts.forEach(function (p) {
       if (p.breakStart) { phase = 1; return; }
       var t = p.text || p.fix;
       if (phase === 0) finalPrefix += t; else finalBreak += t;
     });
-  })();
+  }
+  buildForTheme();
 
   // Line breaks the destination (fully-typed) layout actually falls on,
   // filled in below once the box's final width is known. Typing into
@@ -514,6 +526,7 @@
   }
 
   var i = 0;
+  var stepTimer = null;
   function step() {
     if (i >= steps.length) {
       render();
@@ -530,8 +543,27 @@
     render();
     i++;
     var delay = s.w * msPerUnit * (0.75 + Math.random() * 0.5);
-    setTimeout(step, delay);
+    stepTimer = setTimeout(step, delay);
   }
+
+  // The toggle switches theme live, with no reload — if that happens
+  // while typing is still mid-animation, or any time after, the heading
+  // and the box's own lock/wraps were built for whichever theme was
+  // active at page load and don't update on their own. Cancel any typing
+  // in progress and jump straight to the new theme's finished heading,
+  // re-measured from scratch, rather than leave the old theme's text (or
+  // its now-mismatched box size) sitting in a box styled for the new one.
+  document.addEventListener('zc-theme-changed', function () {
+    if (stepTimer) { clearTimeout(stepTimer); stepTimer = null; }
+    buildForTheme();
+    lockBoxSize();
+    lineBreaks = computeLineBreaks();
+    prefixStr = finalPrefix;
+    breakStr = finalBreak;
+    i = steps.length;
+    render();
+    cursorEl.style.display = 'none';
+  });
 
   // Splits text at every point a browser might wrap it: runs of
   // whitespace, and just after a hyphen inside a compound word (e.g.
@@ -659,7 +691,7 @@
   lockBoxSize();
   lineBreaks = computeLineBreaks();
   render();
-  setTimeout(step, 250);
+  stepTimer = setTimeout(step, 250);
 
   // The heading font loads late on a cold cache (e.g. a hard refresh),
   // so that very first pass was measured against the fallback font —
