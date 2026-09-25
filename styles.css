@@ -55,6 +55,13 @@ html[data-theme="business"] {
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  /* This font's digit glyphs are broken — every one of 0-9 renders as
+     the same wrong shape. Excluding them from its unicode-range makes
+     the browser fall back to the next font in the stack (monospace)
+     for any digit character, wherever headings use this font, without
+     having to hunt down and special-case every heading that happens to
+     contain a number. */
+  unicode-range: U+0000-002F, U+003A-10FFFF;
 }
 
 @font-face {
@@ -98,7 +105,7 @@ a { color: inherit; }
 img { max-width: 100%; display: block; }
 
 h1, h2, h3, h4 {
-  font-family: "Gome Pixel", monospace;
+  font-family: "Gome Pixel", "Space Mono", monospace;
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.1;
@@ -124,7 +131,7 @@ header.site-nav .row {
   padding-top: 0.9rem; padding-bottom: 0.9rem; min-height: 4.75rem;
 }
 .brand-group { display: flex; align-items: center; gap: 0.85rem; min-width: 0; }
-.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.9rem; line-height: 1; text-decoration: none; white-space: nowrap; }
+.brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: "Gome Pixel", "Space Mono", monospace; font-weight: 400; font-size: 1.9rem; line-height: 1; text-decoration: none; white-space: nowrap; }
 .brand-icon { position: relative; display: inline-flex; flex: 0 0 auto; }
 .brand img { width: 34px; height: 34px; object-fit: contain; flex: 0 0 auto; }
 /* A tiny top hat, bowtie and monocle on the dino, shown only in
@@ -166,7 +173,7 @@ header.site-nav .row {
 }
 .style-toggle .style-icon { width: 15px; height: 15px; flex: 0 0 auto; display: block; }
 .style-toggle .style-option.business { font-family: "Inter", -apple-system, "Segoe UI", sans-serif; color: #4a4a4a; }
-.style-toggle .style-option.personal { font-family: "Gome Pixel", monospace; color: #2b7a78; }
+.style-toggle .style-option.personal { font-family: "Gome Pixel", "Space Mono", monospace; color: #2b7a78; }
 /* Colored per active side (tan for business, teal for personal) rather
    than a flat neutral pill, per the "background for X should be Y"
    request. Business's own dark-grey text already reads fine against
@@ -433,7 +440,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .project-card .thumb {
   aspect-ratio: 16 / 10; border-bottom: 3px solid var(--ink);
   display: flex; align-items: center; justify-content: center;
-  font-family: "Gome Pixel", monospace; font-weight: 400; font-size: 1.8rem; text-align: center; padding: 1rem;
+  font-family: "Gome Pixel", "Space Mono", monospace; font-weight: 400; font-size: 1.8rem; text-align: center; padding: 1rem;
 }
 .thumb.tone-1 { background: var(--accent); color: #fff; }
 .thumb.tone-2 { background: var(--accent-2); color: #fff; }
@@ -442,7 +449,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .thumb.cover { background: var(--surface); padding: 1.25rem; }
 .thumb.cover img { width: 100%; height: 100%; object-fit: contain; }
 .project-card .info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
-.project-card .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
 .tag {
   font-size: 0.68rem; color: var(--ink); background: var(--accent-soft);
   border: 1.5px solid var(--ink); padding: 0.2rem 0.55rem; border-radius: 100px; font-weight: 700;
@@ -585,7 +592,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
    rest float a little above, tucked behind. */
 html[data-theme="personal"] .folder-tabs { gap: 0.85rem; align-items: flex-end; }
 html[data-theme="personal"] .folder-tab {
-  font-family: "Gome Pixel", monospace; font-size: 0.92rem; color: var(--ink);
+  font-family: "Gome Pixel", "Space Mono", monospace; font-size: 0.92rem; color: var(--ink);
   padding: 0.4rem 1.15rem; border-radius: 0;
   border: 3px solid var(--ink); border-bottom: none;
   box-shadow: 3px -3px 0 0 var(--shadow);
@@ -710,7 +717,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .cs-section:last-of-type { border-bottom: none; }
 .cs-section h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); }
 .cs-section .kicker { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); font-weight: 700; }
-.cs-section h3 { font-family: "Gome Pixel", monospace; font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+.cs-section h3 { font-family: "Gome Pixel", "Space Mono", monospace; font-size: 1.5rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
 .cs-section p { color: var(--ink-soft); margin-top: 0.85rem; max-width: 72ch; }
 .cs-section ul { margin-top: 0.85rem; padding-left: 1.2rem; color: var(--ink-soft); }
 .cs-section ul li { margin-bottom: 0.5rem; max-width: 72ch; }
@@ -727,13 +734,45 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .stat .num { font-family: "Space Mono", monospace; font-weight: 700; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-top: 1.5rem; }
-@media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+/* An odd one out left dangling in the left column, unbalanced against
+   the pairs above it — centre it under them instead, same size as the
+   others, not stretched or floated to one side. */
+.two-col > *:last-child:nth-child(odd) {
+  grid-column: 1 / -1; max-width: calc(50% - 0.875rem); margin: 0 auto;
+}
+@media (max-width: 700px) {
+  .two-col { grid-template-columns: 1fr; }
+  .two-col > *:last-child:nth-child(odd) { max-width: none; }
+}
 .card-mini {
   background: var(--surface); border: 2.5px solid var(--ink); border-radius: 8px; padding: 1.4rem;
   box-shadow: 3px 3px 0 0 var(--shadow);
 }
-.card-mini h4 { font-family: "Gome Pixel", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
+.card-mini h4 { font-family: "Gome Pixel", "Space Mono", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
 .card-mini .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
+
+/* Recurring "3 trends from research" motif: colour-coded so the same
+   trend reads as the same trend wherever it resurfaces later in the
+   case study. Three fits its own row evenly, so this skips the
+   odd-one-out centring rule above rather than needing it.
+   The number badge is Space Mono, not the heading font — Gome Pixel's
+   digit glyphs don't render correctly, so numerals never use it. */
+.trend-cards { grid-template-columns: repeat(3, 1fr); }
+.trend-cards > .trend:last-child:nth-child(odd) { grid-column: auto; max-width: none; margin: 0; }
+@media (max-width: 700px) { .trend-cards { grid-template-columns: 1fr; } }
+.card-mini.trend { border-width: 3px; }
+.card-mini.trend h4 {
+  font-family: "Space Mono", monospace; font-weight: 700; font-size: 1.1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.trend-num {
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  width: 1.8rem; height: 1.8rem; border-radius: 50%; border: 2px solid var(--ink);
+  font-family: "Space Mono", monospace; font-weight: 700; font-size: 0.95rem; color: #fff;
+}
+.trend-1 { background: #f8ddc4; } .trend-1 .trend-num { background: #e2564f; }
+.trend-2 { background: #fbeec0; } .trend-2 .trend-num { background: #c98a1f; }
+.trend-3 { background: #d9ecdf; } .trend-3 .trend-num { background: #3f9c63; }
 
 .cs-nav-footer {
   display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 0;
