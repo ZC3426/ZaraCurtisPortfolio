@@ -871,8 +871,8 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background-image: radial-gradient(circle at 1px 1px, rgba(64, 52, 25, 0.09) 1px, transparent 0);
 }
 
-/* faint ink-drawing art in business mode, kept very subtle so it
-   reads as texture rather than a busy graphic */
+/* ink-drawing art in business mode — visible as art, not just texture,
+   but still light enough that heading text stays legible over it */
 [data-theme="business"] .hero::before,
 [data-theme="business"] .page-hero::before,
 [data-theme="business"] .cs-hero::before {
@@ -880,21 +880,22 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background-image: url("assets/backgrounds/pages/business-drawing.jpg");
   background-size: cover; background-position: center;
   image-rendering: auto;
-  opacity: 0.06;
+  opacity: 0.32;
 }
-/* The floral pattern belongs here — a proper art band above "A little
+/* The forest ink drawing belongs here — a proper art band above "A little
    about me" on the homepage, matching where My Style shows its mountain
    parallax scene in the same spot. It replaces (rather than hides)
    .mountain-band for business, so About Me goes back to the plain
-   sitewide pattern like every other header. */
+   sitewide pattern like every other header. Position weighted toward the
+   bottom of the artwork so the three figures on the path stay in frame. */
 [data-theme="business"] .mountain-band {
   border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline);
 }
 [data-theme="business"] .mountain-band::before {
   content: ""; position: absolute; inset: 0;
-  background-image: url("assets/backgrounds/pages/about-floral.jpg");
-  background-size: cover; background-position: center;
-  opacity: 0.5;
+  background-image: url("assets/backgrounds/pages/about-forest-drawing.jpg");
+  background-size: cover; background-position: center bottom;
+  opacity: 0.55;
 }
 [data-theme="business"] .mountain-band .layer { display: none; }
 
