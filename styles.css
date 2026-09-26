@@ -763,6 +763,41 @@ html[data-theme="personal"] .mp-tools .paper-sticker { background: #4a90d9; colo
   [data-theme="business"] .paper-sheet { padding: 1.5rem 1.75rem; }
 }
 
+/* On a phone, the folder metaphor (tabs, coloured pages, lined paper,
+   mosaic tiles with stickers/pins) is a lot of chrome fighting for a
+   narrow width - dropped entirely here in favour of just the content:
+   both pages shown at once as plain text under a heading, in reading
+   order, no tabs to switch. Applies to both themes identically, since
+   there's no folder left to theme. */
+@media (max-width: 700px) {
+  .folder-tabs { display: none; }
+  .folder-pages, .paper-sheet, .mosaic-paper,
+  html[data-theme="personal"] .folder-pages, [data-theme="business"] .folder-pages,
+  html[data-theme="personal"] .paper-sheet, [data-theme="business"] .paper-sheet,
+  html[data-theme="personal"] .mosaic-paper, [data-theme="business"] .mosaic-paper {
+    background: none !important; border: none !important; box-shadow: none !important; padding: 0 !important;
+  }
+  .folder-page { display: block !important; margin-top: 2.25rem; }
+  .folder-page:first-child { margin-top: 0; }
+  .folder-page::before {
+    display: block; font-family: "Gome Pixel", "Space Mono", monospace; font-size: 1.3rem;
+    margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--outline); color: var(--ink);
+  }
+  .folder-page[data-page="about"]::before { content: "About me"; }
+  .folder-page[data-page="skills"]::before { content: "Skills & Tools"; }
+  .mosaic-grid { display: block !important; }
+  .mosaic-paper { transform: none !important; margin-bottom: 1.1rem; padding-top: 0 !important; }
+  .mosaic-paper:last-child { margin-bottom: 0; }
+  .paper-pin { display: none !important; }
+  html[data-theme="personal"] .paper-sticker, [data-theme="business"] .paper-sticker {
+    display: block !important; position: static !important; transform: none !important;
+    max-width: none !important; padding: 0 !important; border: none !important; box-shadow: none !important;
+    background: none !important; color: var(--ink) !important; text-align: left !important;
+    font-family: "Gome Pixel", "Space Mono", monospace; font-weight: 700; font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+}
+
 /* ---------- contact ---------- */
 .contact-box {
   background: var(--forest); color: var(--bg); border-radius: 12px;
@@ -924,29 +959,27 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .trend-3 { background: #d9ecdf; } .trend-3 .trend-num { background: #3f9c63; }
 
 /* On a phone, a set of related cards (a problem's sub-points, three
-   research findings, a pair of testing takeaways...) used to stack into
-   one long vertical column - readable, but it turns "look at these N
-   related things together" into a lot of scrolling, unlike desktop's
-   grid where they all sit in view at once. A horizontal, snap-scrolled
-   row keeps that same "glance across a related set" experience: each
-   card mostly fills the screen on its own, the next one peeks in at the
-   edge as a swipe hint, and swiping through the set stays a single,
-   contained gesture instead of scrolling the whole page. */
+   research findings, a pair of testing takeaways...) stays a 2-column
+   mosaic rather than a single column: two cards per row, and if the
+   count is odd, the last one spans both columns instead of leaving a
+   lopsided gap next to it — the same odd-one-out treatment .two-col
+   already uses on desktop, just carried down to a 2-column grid here
+   instead of 1. */
 @media (max-width: 700px) {
-  .two-col, .list-cards, .trend-cards {
-    display: flex; grid-template-columns: none;
-    overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-    gap: 1rem; padding-bottom: 0.75rem; scrollbar-width: none;
+  .wrap { padding: 0 1rem; }
+  .two-col, .list-cards, .list-cards.cols-2, .list-cards.cols-3, .trend-cards {
+    grid-template-columns: repeat(2, 1fr); gap: 0.85rem;
   }
-  .two-col::-webkit-scrollbar, .list-cards::-webkit-scrollbar, .trend-cards::-webkit-scrollbar {
-    display: none; height: 0;
+  /* Grid items default to min-width:auto, so a track can still grow
+     past its 1fr share to fit an unbroken word/phrase - min-width:0
+     lets the card's own text wrap within its column instead. */
+  .two-col > *, .list-cards > *, .trend-cards > * { min-width: 0; }
+  .two-col > *:last-child:nth-child(odd),
+  .list-cards > *:last-child:nth-child(odd),
+  .trend-cards > *:last-child:nth-child(odd) {
+    grid-column: 1 / -1; max-width: none; margin: 0;
   }
-  .two-col > *, .list-cards > *, .trend-cards > * {
-    flex: 0 0 82%; scroll-snap-align: start; max-width: none; margin: 0;
-  }
-  .two-col > *:only-child,
-  .list-cards > *:only-child,
-  .trend-cards > *:only-child { flex-basis: 100%; }
+  .card-mini { padding: 1rem; }
 }
 
 .cs-nav-footer {

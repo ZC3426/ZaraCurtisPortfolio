@@ -56,6 +56,18 @@
     var box = h1.closest('.title-box');
     var text = h1.textContent;
 
+    // The clone below is position:absolute, whose containing block is
+    // its positioned ancestor's PADDING box — so appending it straight
+    // to document.body (with no side padding of its own) let it measure
+    // against the full viewport width, wider than the space .wrap's own
+    // padding actually leaves the live box. On narrow phones with a long
+    // heading, that let the locked box come out wider than it could
+    // really show, overflowing past the page edge.
+    function availWidth() {
+      var cs = getComputedStyle(box.parentNode);
+      return box.parentNode.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    }
+
     // Measures the full heading on an offscreen clone — never the live
     // h1 — so it's safe to call again later without disturbing whatever
     // is on screen mid-animation.
@@ -68,16 +80,18 @@
       clone.style.top = '0';
       clone.style.minWidth = '0';
       clone.style.minHeight = '0';
+      clone.style.maxWidth = availWidth() + 'px';
       var h1clone = document.createElement('h1');
       h1clone.className = h1.className;
       h1clone.textContent = text;
       clone.appendChild(h1clone);
-      document.body.appendChild(clone);
+      box.parentNode.appendChild(clone);
       var rect = clone.getBoundingClientRect();
-      document.body.removeChild(clone);
+      box.parentNode.removeChild(clone);
       // +10px covers the blinking cursor glyph that always trails the
       // last typed character, which this text-only measurement doesn't.
-      box.style.minWidth = (rect.width + 10) + 'px';
+      // Clamped to availWidth() as a safety net for that same cushion.
+      box.style.minWidth = Math.min(rect.width + 10, availWidth()) + 'px';
       box.style.minHeight = rect.height + 'px';
     }
 
