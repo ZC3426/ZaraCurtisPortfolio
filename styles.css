@@ -762,6 +762,25 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 .card-mini h4 { font-family: "Gome Pixel", "Space Mono", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
 .card-mini .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
+.card-mini > *:first-child { margin-top: 0; }
+
+/* A plain bulleted list of parallel, categorised points (a problem's
+   sub-points, a set of design decisions, testing outcomes...) reads as
+   a wall of text next to the rest of a case study's cards and callouts.
+   Turned into a grid of plain card-mini boxes instead — one per point —
+   so each reads as its own distinct, scannable item. Kept uncoloured
+   (unlike .trend-cards) since most of these lists aren't a motif that
+   resurfaces elsewhere on the page the way equil's 3 research trends do. */
+.list-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem; margin-top: 1.25rem;
+}
+.list-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.list-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.list-cards .card-mini p { margin-top: 0; max-width: none; }
+@media (max-width: 700px) {
+  .list-cards, .list-cards.cols-2, .list-cards.cols-3 { grid-template-columns: 1fr; }
+}
 
 /* Recurring "3 trends from research" motif: colour-coded so the same
    trend reads as the same trend wherever it resurfaces later in the
