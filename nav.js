@@ -125,11 +125,51 @@
     setTimeout(step, 150);
   }
 
+  // On a phone, the 2-column card mosaic squeezes a long point into a
+  // tall, narrow sliver — five-plus wrapped lines in a ~170px column.
+  // Past that length a card reads better full-width (stacked alone if
+  // need be) than crammed into half the screen. CSS alone can't measure
+  // how many lines something actually wrapped to, so this checks each
+  // card's rendered paragraph height against its line-height and
+  // promotes the long ones with a "wide" class (styles.css gives that
+  // grid-column: 1 / -1 at the same narrow breakpoint this only runs at).
+  function initWideCards() {
+    var groups = document.querySelectorAll('.two-col, .list-cards, .trend-cards');
+    if (!groups.length) return;
+
+    function measure() {
+      var narrow = window.innerWidth <= 700;
+      Array.prototype.forEach.call(groups, function (group) {
+        Array.prototype.forEach.call(group.children, function (card) {
+          card.classList.remove('wide');
+          if (!narrow) return;
+          var p = card.querySelector('p');
+          if (!p) return;
+          var cs = getComputedStyle(p);
+          var lineHeight = parseFloat(cs.lineHeight);
+          if (!lineHeight || isNaN(lineHeight)) lineHeight = parseFloat(cs.fontSize) * 1.4;
+          var lines = Math.round(p.getBoundingClientRect().height / lineHeight);
+          if (lines >= 5) card.classList.add('wide');
+        });
+      });
+    }
+
+    measure();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    document.addEventListener('zc-theme-changed', function () { setTimeout(measure, 50); });
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(measure, 150);
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); });
   } else {
     init();
     initStyleToggle();
     initPageHeadingTyping();
+    initWideCards();
   }
 })();

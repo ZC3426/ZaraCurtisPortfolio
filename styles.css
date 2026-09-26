@@ -976,10 +976,15 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   .two-col > *, .list-cards > *, .trend-cards > * { min-width: 0; }
   .two-col > *:last-child:nth-child(odd),
   .list-cards > *:last-child:nth-child(odd),
-  .trend-cards > *:last-child:nth-child(odd) {
+  .trend-cards > *:last-child:nth-child(odd),
+  .trend-cards > .trend:last-child:nth-child(odd) {
     grid-column: 1 / -1; max-width: none; margin: 0;
   }
   .card-mini { padding: 1rem; }
+  /* Set by nav.js once a card's text wraps to 5+ lines at this narrow
+     a column - a card that long reads better full-width (and stacked
+     alone) than squeezed into half the screen. */
+  .card-mini.wide { grid-column: 1 / -1; }
 }
 
 .cs-nav-footer {
