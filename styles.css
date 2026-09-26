@@ -607,6 +607,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
     rgba(90, 70, 40, 0.16) 1.65em, rgba(90, 70, 40, 0.16) calc(1.65em + 1px)
   );
   background-position: 0 0.2em;
+  overflow-wrap: break-word;
 }
 .paper-sheet p { color: var(--ink-soft); margin-bottom: 1rem; }
 .paper-sheet h4 { margin-bottom: 0.6rem; }
@@ -640,6 +641,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
     rgba(90, 70, 40, 0.14) 1.5em, rgba(90, 70, 40, 0.14) calc(1.5em + 1px)
   );
   padding: 1.5rem 1.15rem 1.15rem;
+  overflow-wrap: break-word;
 }
 .mosaic-paper:nth-child(4n+1) { transform: rotate(-1.6deg); }
 .mosaic-paper:nth-child(4n+2) { transform: rotate(1.1deg); }
@@ -843,6 +845,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 2.5rem;
   margin-top: 2rem; padding: 1.75rem; background: var(--surface); border: 3px solid var(--ink);
   border-radius: 8px; box-shadow: 5px 5px 0 0 var(--shadow);
+  overflow-wrap: break-word;
 }
 .overview-grid .item .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 700; }
 .overview-grid .item .value { margin-top: 0.3rem; font-size: 0.98rem; }
@@ -865,6 +868,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .stat {
   flex: 1 1 200px; background: var(--surface); border: 2.5px solid var(--ink);
   border-radius: 8px; padding: 1.25rem 1.4rem; box-shadow: 3px 3px 0 0 var(--shadow);
+  overflow-wrap: break-word;
 }
 .stat .num { font-family: "Space Mono", monospace; font-weight: 700; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
@@ -878,6 +882,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .card-mini {
   background: var(--surface); border: 2.5px solid var(--ink); border-radius: 8px; padding: 1.4rem;
   box-shadow: 3px 3px 0 0 var(--shadow);
+  overflow-wrap: break-word;
 }
 .card-mini h4 { font-family: "Gome Pixel", "Space Mono", monospace; font-size: 1.25rem; margin-bottom: 0.4rem; }
 .card-mini .tag-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
@@ -1000,6 +1005,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .shot {
   background: var(--surface); border: 3px solid var(--ink); border-radius: 8px;
   box-shadow: 5px 5px 0 0 var(--shadow); overflow: hidden;
+  overflow-wrap: break-word;
 }
 .shot img { width: 100%; height: auto; display: block; }
 .shot figcaption {
