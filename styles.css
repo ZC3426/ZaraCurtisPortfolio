@@ -844,9 +844,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    sub-points, a set of design decisions, testing outcomes...) reads as
    a wall of text next to the rest of a case study's cards and callouts.
    Turned into a grid of plain card-mini boxes instead — one per point —
-   so each reads as its own distinct, scannable item. Kept uncoloured
-   (unlike .trend-cards) since most of these lists aren't a motif that
-   resurfaces elsewhere on the page the way equil's 3 research trends do. */
+   so each reads as its own distinct, scannable item. */
 .list-cards {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.25rem; margin-top: 1.25rem;
@@ -857,6 +855,46 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 @media (max-width: 700px) {
   .list-cards, .list-cards.cols-2, .list-cards.cols-3 { grid-template-columns: 1fr; }
 }
+/* Cards with no heading of their own (just a plain point) get a cycling
+   tint plus a number badge, so a run of otherwise-identical cards reads
+   as distinct, countable items rather than a grey wall — the same
+   problem .trend-cards solved for equil's 3 findings, generalised to any
+   length list. Cards that already have an <h4> (a named finding, a "How
+   Might We" theme...) read as distinct on their own, so both are scoped
+   to skip them. */
+.list-cards { counter-reset: card-num; }
+.list-cards .card-mini:not(:has(h4)) { counter-increment: card-num; }
+.list-cards .card-mini:not(:has(h4))::before {
+  content: counter(card-num);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.7rem; height: 1.7rem; border-radius: 50%; flex: 0 0 auto;
+  font-family: "Space Mono", monospace; font-weight: 700; font-size: 0.85rem;
+  margin-bottom: 0.65rem; color: #fff;
+}
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+1) { background: var(--accent-soft); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+1)::before { background: var(--accent); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+2) { background: var(--accent-2-soft); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+2)::before { background: var(--accent-2); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+3) { background: var(--yellow-soft); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+3)::before { background: var(--yellow); color: var(--ink); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+4) { background: var(--green-soft); }
+.list-cards .card-mini:not(:has(h4)):nth-child(4n+4)::before { background: var(--green); }
+
+/* Equil returns to the same three themes throughout the whole case study
+   (Cognitive load, Psychological safety, Representation) - coloured
+   consistently wherever they show up (a "How Might We" card, a design
+   decision, a wireframe's annotated category) rather than by whatever
+   position they land in within a given list. Reuses the same three
+   hues as the About page's Skills & Tools mosaic. These skip the
+   generic number badge above since the theme name already identifies
+   the card. */
+.card-mini.theme-cogload { background: #dbe8f7 !important; }
+.card-mini.theme-safety { background: #fbdcda !important; }
+.card-mini.theme-rep { background: #dcefe2 !important; }
+.card-mini.theme-cogload::before, .card-mini.theme-safety::before, .card-mini.theme-rep::before { content: none !important; }
+.shot .category.theme-cogload { color: #3a75b5; }
+.shot .category.theme-safety { color: #c94840; }
+.shot .category.theme-rep { color: #327d51; }
 
 /* Recurring "3 trends from research" motif: colour-coded so the same
    trend reads as the same trend wherever it resurfaces later in the
