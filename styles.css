@@ -455,13 +455,22 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .thumb.tone-2 { background: var(--accent-2); color: #fff; }
 .thumb.tone-3 { background: var(--yellow); color: var(--ink); }
 .thumb.tone-4 { background: var(--green); color: var(--ink); }
-.thumb.cover { background: var(--surface); padding: 1.25rem; }
-/* max-width/max-height + auto sizing, not width/height:100% +
-   object-fit — some mobile browsers mis-center a contain-fitted image
-   when it's forced to its parent's exact box inside a flex item whose
-   size also comes from aspect-ratio. Shrink-to-fit plus the parent's
-   existing flex centering sidesteps that entirely. */
-.thumb.cover img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; margin: auto; }
+.thumb.cover { background: var(--surface); position: relative; }
+/* Absolutely positioned with an explicit inset + auto margins, not a
+   flex-centered/object-fit image — that still wasn't centering
+   reliably on the user's phone even after one rework. This is the
+   oldest, most bulletproof centering technique there is (CSS2.1, no
+   flexbox or object-fit involved at all), so it doesn't depend on how
+   any particular engine resolves those newer layout models here. The
+   inset value stands in for .thumb.cover's old padding, since an
+   absolutely positioned child is inset from its ancestor's padding
+   edge, not its content edge - baking the gap into the inset itself
+   sidesteps that rather than fighting it. */
+.thumb.cover img {
+  position: absolute; inset: 1.25rem; margin: auto;
+  max-width: calc(100% - 2.5rem); max-height: calc(100% - 2.5rem);
+  width: auto; height: auto; display: block;
+}
 .project-card .info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
 .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
 .tag {
@@ -831,10 +840,6 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .two-col > *:last-child:nth-child(odd) {
   grid-column: 1 / -1; max-width: calc(50% - 0.875rem); margin: 0 auto;
 }
-@media (max-width: 700px) {
-  .two-col { grid-template-columns: 1fr; }
-  .two-col > *:last-child:nth-child(odd) { max-width: none; }
-}
 .card-mini {
   background: var(--surface); border: 2.5px solid var(--ink); border-radius: 8px; padding: 1.4rem;
   box-shadow: 3px 3px 0 0 var(--shadow);
@@ -855,9 +860,6 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .list-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
 .list-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
 .list-cards .card-mini p { margin-top: 0; max-width: none; }
-@media (max-width: 700px) {
-  .list-cards, .list-cards.cols-2, .list-cards.cols-3 { grid-template-columns: 1fr; }
-}
 /* Cards with no heading of their own (just a plain point) get a cycling
    tint plus a number badge, so a run of otherwise-identical cards reads
    as distinct, countable items rather than a grey wall — the same
@@ -907,7 +909,6 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    digit glyphs don't render correctly, so numerals never use it. */
 .trend-cards { grid-template-columns: repeat(3, 1fr); }
 .trend-cards > .trend:last-child:nth-child(odd) { grid-column: auto; max-width: none; margin: 0; }
-@media (max-width: 700px) { .trend-cards { grid-template-columns: 1fr; } }
 .card-mini.trend { border-width: 3px; }
 .card-mini.trend h4 {
   font-family: "Space Mono", monospace; font-weight: 700; font-size: 1.1rem;
@@ -921,6 +922,32 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .trend-1 { background: #f8ddc4; } .trend-1 .trend-num { background: #e2564f; }
 .trend-2 { background: #fbeec0; } .trend-2 .trend-num { background: #c98a1f; }
 .trend-3 { background: #d9ecdf; } .trend-3 .trend-num { background: #3f9c63; }
+
+/* On a phone, a set of related cards (a problem's sub-points, three
+   research findings, a pair of testing takeaways...) used to stack into
+   one long vertical column - readable, but it turns "look at these N
+   related things together" into a lot of scrolling, unlike desktop's
+   grid where they all sit in view at once. A horizontal, snap-scrolled
+   row keeps that same "glance across a related set" experience: each
+   card mostly fills the screen on its own, the next one peeks in at the
+   edge as a swipe hint, and swiping through the set stays a single,
+   contained gesture instead of scrolling the whole page. */
+@media (max-width: 700px) {
+  .two-col, .list-cards, .trend-cards {
+    display: flex; grid-template-columns: none;
+    overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    gap: 1rem; padding-bottom: 0.75rem; scrollbar-width: none;
+  }
+  .two-col::-webkit-scrollbar, .list-cards::-webkit-scrollbar, .trend-cards::-webkit-scrollbar {
+    display: none; height: 0;
+  }
+  .two-col > *, .list-cards > *, .trend-cards > * {
+    flex: 0 0 82%; scroll-snap-align: start; max-width: none; margin: 0;
+  }
+  .two-col > *:only-child,
+  .list-cards > *:only-child,
+  .trend-cards > *:only-child { flex-basis: 100%; }
+}
 
 .cs-nav-footer {
   display: flex; justify-content: space-between; align-items: center; padding: 2.5rem 0;
