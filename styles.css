@@ -171,7 +171,7 @@ header.site-nav .row {
   text-transform: uppercase; letter-spacing: 0.03em;
   white-space: nowrap; transition: color 0.2s;
 }
-.style-toggle .style-icon { width: 15px; height: 15px; flex: 0 0 auto; display: block; }
+.style-toggle .style-icon { display: none; }
 .style-toggle .style-option.business { font-family: "Inter", -apple-system, "Segoe UI", sans-serif; color: #4a4a4a; }
 .style-toggle .style-option.personal { font-family: "Gome Pixel", "Space Mono", monospace; color: #2b7a78; }
 /* Colored per active side (tan for business, teal for personal) rather
@@ -189,7 +189,6 @@ html[data-theme="personal"] .style-toggle .style-option.personal { color: #faf7f
 @media (max-width: 640px) {
   .style-toggle { top: 5.75rem; right: 1rem; }
   .style-toggle .style-option { padding: 0.55rem 1.1rem; }
-  .style-toggle .style-icon { display: none; }
 }
 nav.links { display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
 nav.links a { text-decoration: none; font-size: 0.9rem; line-height: 1; color: var(--ink-soft); transition: color 0.15s; }
