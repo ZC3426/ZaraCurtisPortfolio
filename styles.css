@@ -562,6 +562,13 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   .carousel { gap: 0.6rem; }
   .carousel-stack { max-width: min(420px, calc(100vw - 116px)); }
   .carousel-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
+  /* On a small screen the stacked cards behind the active one sit close
+     enough together to read as visual noise (overlapping thumbnails,
+     text) rather than a clear "deck" cue. Fading them out much further
+     keeps that cue as a faint hint instead of competing content. */
+  .carousel-slide[data-depth="1"] { opacity: 0.35; }
+  .carousel-slide[data-depth="2"] { opacity: 0.18; }
+  .carousel-slide[data-depth="3"] { opacity: 0.08; }
 }
 
 /* ---------- about: shared structure ----------
@@ -881,7 +888,8 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    source file is pre-cropped to end right where the baby's arm starts,
    and "bottom" keeps that line anchored so any extra cropping at short
    viewport heights eats into the empty sky/branches above the figures
-   instead of cutting back into their faces. */
+   instead of cutting back into their faces. The homepage hero runs 10%
+   more transparent than the other pages' headers, per request. */
 [data-theme="business"] .hero::before,
 [data-theme="business"] .page-hero::before,
 [data-theme="business"] .cs-hero::before {
@@ -890,6 +898,9 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background-size: cover; background-position: center bottom;
   image-rendering: auto;
   opacity: 0.32;
+}
+[data-theme="business"] .hero::before {
+  opacity: 0.22;
 }
 /* The forest ink drawing belongs here — a proper art band above "A little
    about me" on the homepage, matching where My Style shows its mountain
