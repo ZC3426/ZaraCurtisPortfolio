@@ -601,35 +601,6 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .paper-sheet ul { padding-left: 1.1rem; color: var(--ink-soft); }
 .paper-sheet li { margin-bottom: 0.4rem; }
 
-/* Skills & Tools: a scattered mosaic of individual "papers" rather than
-   one big sheet with a bullet list, since it's really a set of separate,
-   unrelated items (tools, practices) rather than one continuous thought.
-   Each paper is "held" to the file — a sticker in My Style, a pin in
-   Professional — and given a slight alternating tilt for a pinned-up,
-   collaged feel. */
-.mosaic-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem 1.5rem;
-}
-.mosaic-paper {
-  position: relative; background-color: #f5ecd2;
-  background-image: repeating-linear-gradient(
-    to bottom, transparent 0, transparent 1.5em,
-    rgba(90, 70, 40, 0.14) 1.5em, rgba(90, 70, 40, 0.14) calc(1.5em + 1px)
-  );
-  padding: 1.5rem 1.15rem 1.15rem;
-}
-.mosaic-paper:nth-child(4n+1) { transform: rotate(-1.6deg); }
-.mosaic-paper:nth-child(4n+2) { transform: rotate(1.1deg); }
-.mosaic-paper:nth-child(4n+3) { transform: rotate(-0.8deg); }
-.mosaic-paper:nth-child(4n+4) { transform: rotate(1.7deg); }
-.mosaic-paper p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
-.paper-sticker, .paper-pin { display: none; }
-@media (max-width: 900px) { .mosaic-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) {
-  .mosaic-grid { grid-template-columns: 1fr; }
-  .mosaic-paper { transform: none !important; }
-}
-
 /* ---- My Style: a pixel-art manila folder, boldly coloured ----
    Sharp, blocky edges (no border-radius, like Professional's own
    square corners) — reads as a retro/8-bit file icon rather than a
@@ -650,9 +621,8 @@ html[data-theme="personal"] .folder-tab.active {
 html[data-theme="personal"] .folder-tab[data-tab="about"] { background: #f0c48f; }
 html[data-theme="personal"] .folder-tab[data-tab="research"] { background: #e2564f; color: #fff; }
 html[data-theme="personal"] .folder-tab[data-tab="design"] { background: #eec94d; }
-/* Skills & Tools gets its own dark-brown identity, per request, rather
-   than continuing the pastel sequence the other tabs use. */
-html[data-theme="personal"] .folder-tab[data-tab="skills"] { background: #5c4033; color: #fff; }
+html[data-theme="personal"] .folder-tab[data-tab="systems"] { background: #3f9c63; color: #fff; }
+html[data-theme="personal"] .folder-tab[data-tab="tools"] { background: #4a90d9; color: #fff; }
 html[data-theme="personal"] .folder-pages {
   border-radius: 0; border: 3px solid var(--ink);
   box-shadow: 6px 6px 0 0 var(--shadow); padding: 2rem;
@@ -661,38 +631,12 @@ html[data-theme="personal"] .folder-pages {
 html[data-theme="personal"] .folder-pages[data-active="about"] { background: #f7ddb8; }
 html[data-theme="personal"] .folder-pages[data-active="research"] { background: #f3c3bf; }
 html[data-theme="personal"] .folder-pages[data-active="design"] { background: #f8ecb5; }
-html[data-theme="personal"] .folder-pages[data-active="skills"] { background: #d9c3af; }
+html[data-theme="personal"] .folder-pages[data-active="systems"] { background: #c8ead1; }
+html[data-theme="personal"] .folder-pages[data-active="tools"] { background: #c9deee; }
 html[data-theme="personal"] .paper-sheet {
   border-radius: 0; border: 3px solid var(--ink); padding: 1.75rem 2rem;
 }
 html[data-theme="personal"] .folder-contact { margin-top: 1.5rem; }
-
-/* Each mosaic paper is "held" to the file by a bold sticker label —
-   the label doubles as the paper's heading, rotated slightly like a
-   piece of washi tape or a sticker slapped on at an angle. */
-html[data-theme="personal"] .mosaic-paper {
-  border: 3px solid var(--ink); box-shadow: 4px 4px 0 0 var(--shadow); padding-top: 2rem;
-}
-html[data-theme="personal"] .paper-sticker {
-  display: block; position: absolute; top: -15px; left: 50%; z-index: 2;
-  transform: translateX(-50%) rotate(-3deg);
-  max-width: 92%; padding: 0.35rem 0.85rem; border: 2.5px solid var(--ink);
-  box-shadow: 2px 2px 0 0 var(--shadow); text-align: center;
-  font-family: "Gome Pixel", "Space Mono", monospace; font-size: 0.8rem; font-weight: 400; line-height: 1.25;
-}
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+2) .paper-sticker,
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+4) .paper-sticker,
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+5) .paper-sticker,
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+6) .paper-sticker,
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+8) .paper-sticker { color: #fff; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+1) .paper-sticker { background: #f0c48f; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+2) .paper-sticker { background: #e2564f; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+3) .paper-sticker { background: #eec94d; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+4) .paper-sticker { background: #3f9c63; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+5) .paper-sticker { background: #4a90d9; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+6) .paper-sticker { background: #b57edc; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+7) .paper-sticker { background: #f2a65a; }
-html[data-theme="personal"] .mosaic-paper:nth-child(8n+8) .paper-sticker { background: #5c4033; }
 @media (max-width: 600px) {
   html[data-theme="personal"] .folder-tab { padding: 0.55rem 0.7rem; }
   html[data-theme="personal"] .folder-tab span:not(.tab-icon) { display: none; }
@@ -718,32 +662,13 @@ html[data-theme="personal"] .mosaic-paper:nth-child(8n+8) .paper-sticker { backg
 [data-theme="business"] .folder-pages[data-active="about"] { background: #f8f2df; }
 [data-theme="business"] .folder-pages[data-active="research"] { background: #f2ecdc; }
 [data-theme="business"] .folder-pages[data-active="design"] { background: #f6f0dd; }
-[data-theme="business"] .folder-pages[data-active="skills"] { background: #f0ead9; }
+[data-theme="business"] .folder-pages[data-active="systems"] { background: #f0ead9; }
+[data-theme="business"] .folder-pages[data-active="tools"] { background: #f3eddc; }
 [data-theme="business"] .paper-sheet {
   background-color: #fdfbf1; border-radius: 0; border: 1px solid #e6dfc9;
   padding: 1.75rem 2rem; box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06);
 }
 [data-theme="business"] .folder-contact { margin-top: 1.75rem; }
-
-/* Each mosaic paper is held down with a plain pin rather than a bold
-   sticker — the label underneath stays as ordinary heading text, not a
-   coloured chip, to keep this theme's restrained, uncoloured feel. */
-[data-theme="business"] .mosaic-paper {
-  background-color: #fdfbf1; border: 1px solid #e6dfc9; box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06);
-}
-[data-theme="business"] .paper-pin {
-  display: block; position: absolute; top: -8px; left: 50%; z-index: 2;
-  transform: translateX(-50%);
-  width: 16px; height: 16px; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #d98a7f, #a13a2e 75%);
-  box-shadow: 0 2px 3px rgba(38, 43, 39, 0.35);
-}
-[data-theme="business"] .paper-sticker {
-  display: block; position: static; transform: none; max-width: none;
-  padding: 0; border: none; box-shadow: none; text-align: left; background: none !important;
-  color: var(--ink) !important; font-family: "Gome Pixel", "Space Mono", monospace;
-  font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem;
-}
 @media (max-width: 600px) {
   [data-theme="business"] .folder-tab { padding: 0.55rem 0.8rem; }
   [data-theme="business"] .paper-sheet { padding: 1.5rem 1.75rem; }
