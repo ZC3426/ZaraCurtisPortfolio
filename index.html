@@ -346,8 +346,12 @@
 
   // Swipe support: horizontal drag on the stack moves to the next/prev
   // card. A swipe suppresses the card's own link click; a plain tap
-  // still opens the project as normal.
+  // still opens the project as normal. Touch-only (pointer: coarse) —
+  // these listeners have no reason to exist for a mouse, and left
+  // unconditional they were part of what let a card get visually
+  // "caught" on the cursor after clicking an arrow on desktop.
   (function () {
+    if (!window.matchMedia('(pointer: coarse)').matches) return;
     var startX = 0, startY = 0, tracking = false, swiping = false;
 
     stack.addEventListener('touchstart', function (e) {
