@@ -1060,12 +1060,10 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 [data-theme="business"] h1, [data-theme="business"] h2, [data-theme="business"] h3, [data-theme="business"] h4,
 [data-theme="business"] .project-card h3,
-[data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3 {
+[data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
+[data-theme="business"] nav.links a.nav-btn, [data-theme="business"] nav.links a.cta {
   font-family: "Fraunces", serif;
   font-weight: 600; letter-spacing: 0.01em;
-}
-[data-theme="business"] nav.links a {
-  font-family: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 [data-theme="business"] .brand {
   font-family: "Aloevera", "Space Mono", cursive;
@@ -1132,6 +1130,28 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   opacity: 0.55;
 }
 [data-theme="business"] .mountain-band .layer { display: none; }
+
+/* ---- nav ---- */
+[data-theme="business"] header.site-nav {
+  background: rgba(251, 248, 239, 0.92);
+  border-bottom: 1px solid var(--outline);
+}
+[data-theme="business"] nav.links { gap: 1.35rem; }
+[data-theme="business"] nav.links a.cta,
+[data-theme="business"] nav.links a.nav-btn {
+  background: none; border: 2.5px solid transparent; box-shadow: none;
+  padding: 0.5rem 1.1rem; font-size: 1.15rem; letter-spacing: 0.04em;
+  min-width: 0;
+  font-weight: 700; color: var(--ink); border-radius: 0;
+  transition: transform 0.15s ease, font-weight 0.15s ease, color 0.15s ease;
+}
+[data-theme="business"] nav.links a.cta { color: var(--accent); }
+[data-theme="business"] nav.links a.nav-btn:hover, [data-theme="business"] nav.links a.nav-btn.active,
+[data-theme="business"] nav.links a.cta:hover {
+  transform: scale(1.08); box-shadow: none; background: none; font-weight: 800;
+}
+[data-theme="business"] .nav-toggle { border: 1px solid var(--outline); box-shadow: none; }
+[data-theme="business"] nav.links { border-bottom: none; }
 
 /* ---- hero ---- */
 /* The title bubble (box, padding, margin-top, border, shadow, tail) is

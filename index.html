@@ -462,7 +462,7 @@
     var phase = 0;
     parts.forEach(function (p) {
       if (p.breakStart) { phase = 1; return; }
-      var t = p.text || p.fix;
+      var t = p.text !== undefined ? p.text : p.fix;
       if (phase === 0) finalPrefix += t; else finalBreak += t;
     });
   }
