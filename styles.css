@@ -1154,43 +1154,26 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] nav.links { border-bottom: none; }
 
 /* ---- hero ---- */
-[data-theme="business"] .hero-textbox {
-  background: none; border: none; box-shadow: none; padding: 0;
-  margin: 0;
-}
-[data-theme="business"] .hero-textbox::after { display: none; }
+/* The title bubble (box, padding, margin-top, border, shadow, tail) is
+   shared between themes so the header reads as the same shape and sits
+   in the same spot regardless of theme — only font and colour (already
+   theme-variable-driven for the border/shadow here) carry the theme's
+   identity. Business used to strip this down to bare text with no box
+   at all, and to sit its About/Case-studies title noticeably lower than
+   My Style's (7.15rem vs 5.5875rem) - neither was a deliberate style
+   choice, just drift, so both are removed here rather than overridden. */
 [data-theme="business"] .hero h1 { font-size: clamp(1.6rem, 5.5vw, 3.4rem); }
 [data-theme="business"] .hero-break { display: block; }
 
-/* ---- page/case-study header title box ---- */
-[data-theme="business"] .title-box:not(.plain) {
-  background: none; border: none; box-shadow: none; padding: 0; margin: 0;
-}
-[data-theme="business"] .page-hero .title-box { margin-top: 7.15rem; }
-[data-theme="business"] .page-hero .title-box::after { display: none; }
-
-/* ---- heading space: .hero/.page-hero padding, min-height, and the
-   toggle-to-bottom-line centering are shared (theme-agnostic) above.
-   Case-study project pages keep their own, unrelated band size. ---- */
-[data-theme="business"] .cs-hero {
-  padding: 4rem 0 1.32rem; min-height: 12.4rem;
-}
-/* mobile: heading space cut by a further 40% on top of the reduction
-   above, in both styles. The About/Case-studies title-box's fixed
-   margin-top was calibrated to desktop's much taller band, which left
-   no room to breathe (or even overflowed slightly) in this much
-   shorter one — so page-hero switches to self-centering here too,
-   like .hero already does, instead of reusing that fixed offset. */
 @media (max-width: 640px) {
   .hero, .page-hero {
     padding-top: 4.25rem; padding-bottom: 1rem; min-height: 14rem;
     display: flex; flex-direction: column; justify-content: safe center;
   }
-  .page-hero .title-box,
-  [data-theme="business"] .page-hero .title-box {
-    margin-top: 0;
-  }
-  [data-theme="business"] .cs-hero { padding: 2.4rem 0 0.8rem; min-height: 7.44rem; }
+  .page-hero .title-box { margin-top: 0; }
+  /* Case-study project pages keep their own band size, shorter than
+     hero/page-hero everywhere (both themes alike). */
+  .cs-hero { padding: 2.4rem 0 0.8rem; min-height: 7.44rem; }
 }
 
 /* ---- buttons ---- */
