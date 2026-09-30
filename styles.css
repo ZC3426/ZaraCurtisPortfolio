@@ -1062,7 +1062,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 [data-theme="business"] .project-card h3,
 [data-theme="business"] .card-mini h4, [data-theme="business"] .cs-section h3,
 [data-theme="business"] nav.links a.nav-btn, [data-theme="business"] nav.links a.cta {
-  font-family: "Bona Nova", serif;
+  font-family: "Fraunces", serif;
   font-weight: 700; letter-spacing: 0.01em;
 }
 [data-theme="business"] .brand {
