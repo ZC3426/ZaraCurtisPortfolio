@@ -19,7 +19,7 @@
     });
 
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 960) {
+      if (window.innerWidth > 1120) {
         links.classList.remove('open');
         toggle.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
@@ -72,7 +72,7 @@
 
     // Containers whose children animate individually (staggered) rather
     // than the container moving as one block.
-    var STAGGER = '.page-study, .list-cards, .two-col, .stat-row, .trend-cards, .shot-row, .shot-stack, .shot-pair, .work-list';
+    var STAGGER = '.page-study, .list-cards, .two-col, .stat-row, .trend-cards, .shot-row, .shot-stack, .shot-pair, .shot-duo, .work-list';
     var targets = [];
     function add(el, delay) {
       if (!el || el.nodeType !== 1 || el.classList.contains('rv')) return;
