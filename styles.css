@@ -1093,6 +1093,43 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .media-placeholder.small { aspect-ratio: 4 / 3; padding: 1rem; font-size: 0.78rem; }
 .shot .media-placeholder { border: none; border-radius: 0; aspect-ratio: 16 / 10; }
 
+/* ---------- portal screenshot gallery (old portal) ----------
+   A side column of thumbnails next to one large viewer. Clicking a
+   thumbnail (nav.js: initPortalGallery) flies a clone of it from the
+   thumbnail's own position to the viewer's, growing to fill it, then
+   swaps the viewer's real content underneath once the clone arrives. */
+.portal-gallery { display: flex; gap: 1.25rem; align-items: stretch; }
+.portal-thumbs { display: flex; flex-direction: column; gap: 0.85rem; flex: 0 0 150px; }
+.portal-thumb {
+  display: block; width: 100%; padding: 0; border: none; background: none;
+  cursor: pointer; text-align: left; font: inherit; color: inherit;
+}
+.portal-thumb .media-placeholder {
+  border: 2.5px solid var(--ink); border-radius: 6px;
+  box-shadow: 3px 3px 0 0 var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.portal-thumb:hover .media-placeholder { transform: translateY(-2px); box-shadow: 4px 5px 0 0 var(--shadow); }
+.portal-thumb.active .media-placeholder { border-color: var(--accent); box-shadow: 3px 3px 0 0 var(--accent); }
+.portal-thumb-label { display: block; margin-top: 0.4rem; font-size: 0.78rem; font-weight: 700; color: var(--ink-soft); }
+.portal-thumb.active .portal-thumb-label { color: var(--ink); }
+.portal-viewer { flex: 1; min-width: 0; }
+.portal-viewer .media-placeholder { width: 100%; aspect-ratio: 16 / 10; font-size: 0.9rem; }
+.portal-fly {
+  position: fixed; z-index: 500; pointer-events: none;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background: var(--surface); color: var(--ink-soft); font-style: italic; font-size: 0.78rem; padding: 0.5rem;
+  border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 0 var(--shadow);
+  overflow: hidden;
+  transition: left 0.45s cubic-bezier(0.2, 0.7, 0.3, 1), top 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
+              width 0.45s cubic-bezier(0.2, 0.7, 0.3, 1), height 0.45s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+@media (max-width: 640px) {
+  .portal-gallery { flex-direction: column; }
+  .portal-thumbs { flex-direction: row; flex: 0 0 auto; overflow-x: auto; gap: 0.75rem; padding-bottom: 0.25rem; }
+  .portal-thumbs .portal-thumb { flex: 0 0 108px; }
+}
+
 /* ---------- image galleries ---------- */
 .shot-row { display: flex; gap: 1.5rem; margin-top: 1.5rem; flex-wrap: wrap; align-items: flex-start; }
 .shot-row.cols-2 .shot { flex: 1 1 320px; }

@@ -249,13 +249,67 @@
     }
   }
 
+  // A side column of screenshot thumbnails next to one large viewer.
+  // Clicking a thumbnail flies a clone of it — starting at the
+  // thumbnail's own on-screen position and size — over to the viewer's
+  // position and size, then swaps the viewer's real content in and
+  // removes the clone once it arrives, so the image reads as having
+  // glided from the thumbnail into the enlarged central view.
+  function initPortalGallery() {
+    var gallery = document.querySelector('.portal-gallery');
+    if (!gallery) return;
+    var thumbs = Array.prototype.slice.call(gallery.querySelectorAll('.portal-thumb'));
+    var viewerBox = gallery.querySelector('.portal-viewer .media-placeholder');
+    if (!thumbs.length || !viewerBox) return;
+
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        if (thumb.classList.contains('active')) return;
+        var srcBox = thumb.querySelector('.media-placeholder');
+        var label = thumb.getAttribute('data-label') || srcBox.textContent;
+        var startRect = srcBox.getBoundingClientRect();
+        var endRect = viewerBox.getBoundingClientRect();
+
+        var fly = document.createElement('div');
+        fly.className = 'portal-fly';
+        fly.textContent = srcBox.textContent;
+        fly.style.left = startRect.left + 'px';
+        fly.style.top = startRect.top + 'px';
+        fly.style.width = startRect.width + 'px';
+        fly.style.height = startRect.height + 'px';
+        document.body.appendChild(fly);
+
+        // Flip from the start rect to the end rect — forcing a reflow
+        // between setting the start position and the end position is
+        // what makes the transition actually animate between them,
+        // rather than jumping straight to the final state.
+        void fly.offsetWidth;
+        requestAnimationFrame(function () {
+          fly.style.left = endRect.left + 'px';
+          fly.style.top = endRect.top + 'px';
+          fly.style.width = endRect.width + 'px';
+          fly.style.height = endRect.height + 'px';
+        });
+
+        thumbs.forEach(function (t) { t.classList.remove('active'); });
+        thumb.classList.add('active');
+
+        setTimeout(function () {
+          viewerBox.textContent = 'Old portal — ' + label + ', anonymised';
+          fly.remove();
+        }, 460);
+      });
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initPortalGallery(); });
   } else {
     init();
     initStyleToggle();
     initPageHeadingTyping();
     initWideCards();
     initVersionSnake();
+    initPortalGallery();
   }
 })();
