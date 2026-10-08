@@ -37,13 +37,120 @@
 
     toggle.addEventListener('click', function () {
       var next = root.getAttribute('data-theme') === 'business' ? 'personal' : 'business';
-      root.setAttribute('data-theme', next);
-      toggle.setAttribute('aria-pressed', next === 'personal' ? 'true' : 'false');
-      try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
-      // Lets anything theme-dependent that already finished setting
-      // itself up on load (like the homepage's typed heading) redo that
-      // setup now, rather than sit mismatched with the new theme.
-      document.dispatchEvent(new CustomEvent('zc-theme-changed'));
+      function apply() {
+        root.setAttribute('data-theme', next);
+        toggle.setAttribute('aria-pressed', next === 'personal' ? 'true' : 'false');
+        try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
+        // Lets anything theme-dependent that already finished setting
+        // itself up on load (like the homepage's typed heading) redo that
+        // setup now, rather than sit mismatched with the new theme.
+        document.dispatchEvent(new CustomEvent('zc-theme-changed'));
+      }
+      // Cross-fade the whole page between themes where supported.
+      if (document.startViewTransition && !prefersReducedMotion()) document.startViewTransition(apply);
+      else apply();
+    });
+  }
+
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  // Scroll-driven motion for both themes: content blocks fade up as they
+  // enter the viewport (grid items staggered), the nav gains depth once
+  // the page scrolls under it, and simple percentage figures count up.
+  // Only adds classes, so without JS or IntersectionObserver everything
+  // is simply visible.
+  function initMotion() {
+    var header = document.querySelector('header.site-nav');
+    if (header) {
+      var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 8); };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    if (prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+
+    // Containers whose children animate individually (staggered) rather
+    // than the container moving as one block.
+    var STAGGER = '.page-study, .list-cards, .two-col, .stat-row, .trend-cards, .shot-row, .shot-stack, .shot-pair, .work-list';
+    var targets = [];
+    function add(el, delay) {
+      if (!el || el.nodeType !== 1 || el.classList.contains('rv')) return;
+      el.style.setProperty('--rv-delay', delay + 'ms');
+      el.classList.add('rv');
+      targets.push(el);
+    }
+    function collect(parent) {
+      Array.prototype.forEach.call(parent.children, function (child) {
+        if (child.matches('script, style, .style-toggle, .back, .title-box')) return;
+        if (child.matches(STAGGER)) {
+          var j = 0;
+          Array.prototype.forEach.call(child.children, function (gc) {
+            if (gc.matches(STAGGER)) collect(gc);
+            else add(gc, Math.min(j++, 5) * 90);
+          });
+        } else {
+          add(child, 0);
+        }
+      });
+    }
+
+    // Case-study hero content arrives in sequence on load (the title types
+    // itself in, so it's left alone).
+    var heroBits = document.querySelectorAll('.cs-hero .lede, .cs-hero .cs-links, .cs-hero .overview-grid, .cs-hero .device-row > *');
+    Array.prototype.forEach.call(heroBits, function (el, k) { add(el, 120 + k * 110); });
+
+    var roots = document.querySelectorAll(
+      'main > section:not(.hero):not(.page-hero):not(.cs-hero):not(.mountain-band) > .wrap, main > .wrap'
+    );
+    Array.prototype.forEach.call(roots, collect);
+    if (!targets.length) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        reveal(e.target);
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+    function reveal(el) {
+      el.classList.add('rv-in');
+      var delay = parseInt(el.style.getPropertyValue('--rv-delay'), 10) || 0;
+      // Hand the element back its own transitions (hover lifts, etc.)
+      // once the reveal has finished.
+      setTimeout(function () {
+        el.classList.remove('rv', 'rv-in');
+        el.style.removeProperty('--rv-delay');
+      }, delay + 1000);
+      countUp(el);
+    }
+
+    targets.forEach(function (el) {
+      // Anything already scrolled past (e.g. arriving via a back button
+      // mid-page) shows immediately rather than waiting off-screen.
+      if (el.getBoundingClientRect().bottom < 0) { el.classList.remove('rv'); return; }
+      io.observe(el);
+    });
+  }
+
+  // Counts a plain "NN%" figure up from zero as it's revealed.
+  function countUp(scope) {
+    var nums = scope.matches('.metrics-table td.num, .stat .num') ? [scope]
+      : scope.querySelectorAll('.metrics-table td.num, .stat .num');
+    Array.prototype.forEach.call(nums, function (el) {
+      var m = /^(\d{1,3})%$/.exec(el.textContent.trim());
+      if (!m || el.dataset.counted) return;
+      el.dataset.counted = '1';
+      var target = parseInt(m[1], 10), start = null, DUR = 1100;
+      function frame(t) {
+        if (start === null) start = t;
+        var p = Math.min((t - start) / DUR, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + '%';
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     });
   }
 
@@ -199,7 +306,7 @@
         var r = t.getBoundingClientRect();
         return (r.left + r.right) / 2 - rowRect.left;
       });
-      var startX = -40, endX = rowRect.width + 40;
+      var startX = -40, endX = rowRect.width + 40 + SEGMENTS * SEG_GAP;
       var DURATION = 2800;
 
       // Segments start stacked single-file off the left edge, each one
@@ -360,7 +467,7 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initPortalGallery(); initLightbox(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initPortalGallery(); initLightbox(); initMotion(); });
   } else {
     init();
     initStyleToggle();
@@ -369,5 +476,6 @@
     initVersionSnake();
     initPortalGallery();
     initLightbox();
+    initMotion();
   }
 })();

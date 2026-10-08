@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/png" href="assets/brand/dino.png" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -92,9 +93,9 @@
               <p>
                 I recently led the end-to-end design of a business customer portal for a gas and
                 power company who turn over half a billion pounds a year, taking it from a
-                clunky tool used by around 30 people a month to 14 redesigned pages and a full
-                design system, all in two months. I work across user research, testing, UI and
-                design systems, and I use AI tools throughout my process to research, prototype.
+                clunky tool used by around 30 people a month to 17 redesigned pages and a full
+                design system, all in three months. I work across user research, testing, UI and
+                design systems, and I use AI tools throughout my process to research and prototype.
                 I am, and have been, an AI native in many ways, but I am sure to use it with
                 intention and steer to retain creative expression and a human touch.
               </p>
@@ -236,54 +237,51 @@
   var wrap = document.querySelector('.folder-pages');
   if (!tabs.length) return;
 
-  // The pages are wildly different lengths (About's four paragraphs vs.
-  // a short list), so switching tabs used to resize the whole folder —
-  // and everything below it on the page — every time, which read as a
-  // jolt. Lock the folder to the height of its tallest page up front so
-  // switching only ever swaps content, never the page's layout.
-  function lockFolderHeight() {
-    if (!wrap) return;
-    wrap.style.minHeight = '';
-    var maxH = 0;
-    pages.forEach(function (p) {
-      var isActive = p.classList.contains('active');
-      if (!isActive) {
-        p.style.position = 'absolute';
-        p.style.visibility = 'hidden';
-        p.style.display = 'block';
-        p.style.width = '100%';
-      }
-      maxH = Math.max(maxH, p.scrollHeight);
-      if (!isActive) {
-        p.style.position = '';
-        p.style.visibility = '';
-        p.style.display = '';
-        p.style.width = '';
-      }
+  // The pages are very different lengths (About's paragraphs vs. the
+  // Skills mosaic). Locking the folder to the tallest page left a big
+  // empty block under About, so instead the folder animates its height
+  // from one page to the other: no jolt, and no dead space.
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(target) {
+    tabs.forEach(function (t) {
+      var active = t.getAttribute('data-tab') === target;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
     });
-    wrap.style.minHeight = maxH + 'px';
+    pages.forEach(function (p) {
+      p.classList.toggle('active', p.getAttribute('data-page') === target);
+    });
+    if (wrap) wrap.setAttribute('data-active', target);
   }
 
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
       var target = tab.getAttribute('data-tab');
-      tabs.forEach(function (t) {
-        var active = t === tab;
-        t.classList.toggle('active', active);
-        t.setAttribute('aria-selected', active ? 'true' : 'false');
-      });
-      pages.forEach(function (p) {
-        p.classList.toggle('active', p.getAttribute('data-page') === target);
-      });
-      if (wrap) wrap.setAttribute('data-active', target);
+      if (!wrap || reduce) { show(target); return; }
+      var from = wrap.offsetHeight;
+      show(target);
+      var to = wrap.offsetHeight;
+      if (from === to) return;
+      wrap.style.height = from + 'px';
+      wrap.style.overflow = 'hidden';
+      void wrap.offsetHeight;
+      wrap.style.transition = 'height 0.45s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease';
+      wrap.style.height = to + 'px';
+      // A newer click supersedes this animation's cleanup.
+      var token = (wrap._heightAnim = (wrap._heightAnim || 0) + 1);
+      var finished = false;
+      var done = function (e) {
+        if (finished || wrap._heightAnim !== token || (e && e.propertyName !== 'height')) return;
+        finished = true;
+        wrap.removeEventListener('transitionend', done);
+        wrap.style.height = '';
+        wrap.style.overflow = '';
+        wrap.style.transition = '';
+      };
+      wrap.addEventListener('transitionend', done);
+      setTimeout(done, 600);
     });
-  });
-
-  lockFolderHeight();
-  var resizeTimer;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(lockFolderHeight, 150);
   });
 })();
 
