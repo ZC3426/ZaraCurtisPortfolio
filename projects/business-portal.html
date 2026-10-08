@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<script>(function(){try{var s=localStorage.getItem('zc-site-style');document.documentElement.setAttribute('data-theme', s==='personal'?'personal':'business');}catch(e){document.documentElement.setAttribute('data-theme','business');}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Business Customer Portal Redesign — Zara Curtis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap row">
+    <div class="brand-group">
+      <a class="brand" href="../index.html"><span class="brand-icon"><img src="../assets/brand/dino.png" alt="" /><svg class="brand-hat" viewBox="0 0 40 26" aria-hidden="true"><ellipse cx="20" cy="21.5" rx="15" ry="3.2" fill="#8a8f94"/><path d="M11 21 12.5 6a2 2 0 0 1 2-1.8h9a2 2 0 0 1 2 1.8L27 21Z" fill="#8a8f94"/></svg><svg class="brand-monocle" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5" fill="none" stroke="#8a8f94" stroke-width="2.2"/><path d="M18 17 q3 3 1 6" fill="none" stroke="#8a8f94" stroke-width="1.6" stroke-linecap="round"/></svg><svg class="brand-bowtie" viewBox="0 0 24 16" aria-hidden="true"><path d="M2 2 L10 6 L10 10 L2 14 Z" fill="#8a8f94"/><path d="M22 2 L14 6 L14 10 L22 14 Z" fill="#8a8f94"/><rect x="10" y="5.5" width="4" height="5" fill="#6b7176"/></svg></span><span class="brand-name">Zara Curtis</span></a>
+    </div>
+    <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="links">
+      <a href="../index.html" class="nav-btn">Home</a>
+      <a href="../about.html" class="nav-btn">About Me</a>
+      <a href="../case-studies.html" class="nav-btn active">Case studies</a>
+      <a href="https://www.linkedin.com/in/zaracurtis" target="_blank" rel="noopener" class="nav-btn">LinkedIn</a>
+      <a href="https://zarasink.substack.com/" target="_blank" rel="noopener" class="nav-btn">Substack</a>
+      <a href="mailto:Zaracurtis@gmail.com" class="cta">Contact me</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="cs-hero bg-hd-landscape">
+    <button type="button" class="style-toggle" aria-label="Toggle site style">
+      <span class="style-option personal">
+        <svg class="style-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1" fill="currentColor" stroke="none"/><path d="M8 14.5c1.2 1.4 2.6 2 4 2s2.8-.6 4-2"/></svg>
+        <span class="style-label">My Style</span>
+      </span>
+      <span class="style-option business">
+        <svg class="style-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="11" rx="1.5"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+        <span class="style-label">Professional</span>
+      </span>
+      <span class="style-thumb" aria-hidden="true"></span>
+    </button>
+    <div class="wrap">
+      <a class="back" href="../case-studies.html">← All case studies</a>
+      <div class="title-box plain"><h1>Business Customer Portal Redesign</h1></div>
+      <p class="lede" style="margin-top:1rem;">Rebuilding self-service for gas and power customers.</p>
+
+      <div class="overview-grid">
+        <div class="item"><div class="label">Role</div><div class="value">Product Designer (end-to-end)</div></div>
+        <div class="item"><div class="label">Team</div><div class="value">Project Manager, Engineer, QA</div></div>
+        <div class="item"><div class="label">Timeline</div><div class="value">2 months</div></div>
+        <div class="item"><div class="label">Scope</div><div class="value">[X] pages plus a design system, and a first iteration of a Managing Agent portal (deprioritised)</div></div>
+        <div class="item"><div class="label">Status</div><div class="value">Launching [month]; impact metrics to follow</div></div>
+        <div class="item"><div class="label">Tools</div><div class="value">Claude Code, Figma, Git, the company community hub [plus Jira / Miro / Confluence only if hands-on]</div></div>
+      </div>
+
+      <div class="media-placeholder wide" style="margin-top:2rem;">Hero: a 60–90 second silent walkthrough video, or a composite of the final Dashboard, Invoices and Meter readings pages</div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Results</span>
+      <h2>Results so far</h2>
+      <div class="stat-row">
+        <div class="stat"><div class="num">95%</div><div class="desc">of testers answered the key invoice questions after iteration</div></div>
+        <div class="stat"><div class="num">15% → 100%</div><div class="desc">testers who could submit a meter reading, before vs after iteration</div></div>
+        <div class="stat"><div class="num">95%</div><div class="desc">of testers found all usage information in 3 seconds or less</div></div>
+        <div class="stat"><div class="num">WCAG</div><div class="desc">audit completed, with fixes to colour contrast and text size, and legal requirements built into the final designs</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Problem</span>
+      <h2>An unreliable portal that pushed customers to the phone</h2>
+      <div class="media-placeholder" style="margin-top:1.5rem;">Old portal, anonymised — the most cluttered or confusing screen</div>
+      <p>The old portal was used by only around [30] customers a month. It technically let people do everything they needed, but the site often crashed, invoices and documents were hard to find, and meter readings regularly failed to send. Most customers phoned customer service instead. Most calls were about meter reads, VAT queries and invoice queries.</p>
+      <p>Our goal was to let customers help themselves, so the company wouldn't need to keep hiring in metering, customer service and credit as it grew.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Research</span>
+      <h2>Who we designed for</h2>
+      <p>Our primary customers were businesses buying gas and power directly, not through a broker. I started from customer service call data, which showed what they needed most: submitting readings, tracking usage, viewing site information, changing tenancy, requesting VAT changes, paying invoices and downloading documents. The PM and I then met stakeholders to learn what they wanted, which industry terms to keep, and which were internal-only and would confuse users.</p>
+      <p>Managing Agents and brokers have much larger portfolios, so I designed a first iteration of a Managing Agent portal. It was then deprioritised to focus on direct customers, and the design system and layouts were built so it can be picked up later.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Constraints</span>
+      <h2>Constraints</h2>
+      <div class="list-cards cols-3">
+        <div class="card-mini"><h4>Dense data</h4><p>Sites, meter reads, invoices and usage all needed a lot of information on screen.</p></div>
+        <div class="card-mini"><h4>Two months</h4><p>Development started early: the engineer began building before my designs were finished, so I worked in priority order and stayed in close contact.</p></div>
+        <div class="card-mini"><h4>Stakeholder trust</h4><p>The business had been through several product and delivery teams in recent years. I couldn't test with real customers yet, so I relied on stakeholders and customer service, who handle customer queries every day.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Process</span>
+      <h2>How we worked</h2>
+      <p>The PM built rough functional prototypes in Claude to show what each page needed to do, so stakeholders could react to something working instead of a document. They were good for agreeing functionality but not for usability. My job was to turn them into something people could actually use, and I built and refined every design in Claude Code.</p>
+      <p>I used AI to generate code and layout options, and made the decisions myself: what to build, what to test, and what to throw away. The versions are:</p>
+      <div class="list-cards">
+        <div class="card-mini"><h4>V1</h4><p>The PM's prototype, built from research and requirements.</p></div>
+        <div class="card-mini"><h4>V1.2</h4><p>Updated for changed requirements.</p></div>
+        <div class="card-mini"><h4>V1.5</h4><p>My first iteration.</p></div>
+        <div class="card-mini"><h4>V2</h4><p>My second iteration, after testing.</p></div>
+        <div class="card-mini"><h4>Final</h4><p>The colour redesign.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Testing &amp; iteration</span>
+      <h2>Making dense data readable</h2>
+      <p>This was the hardest part of the project. I tested each page in rounds of 5 people, and whenever 3 or more struggled with a task, I went back and iterated. In total I tested with 30 people from across the business, from HR to Credit Control. Most had never used the portal, which gave me honest usability data.</p>
+      <p>Earlier rounds ran on working prototypes, so testers could really enter readings and pay invoices, not just react to screens. I also tested all functionality on the live host the engineer built, using live data, so I could check how pages worked and where the built UI differed from my designs.</p>
+
+      <h3>Invoices</h3>
+      <div class="shot-row cols-2">
+        <figure class="shot"><div class="media-placeholder">V1 (PM prototype)</div><figcaption>V1 — the PM's prototype, a drop-down table.</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">V2</div><figcaption>V2 — rows turned into cards, outstanding invoices split out.</figcaption></figure>
+      </div>
+      <p>Customers typically have a few accounts with a few sites each, so the first version used a drop-down table. Stakeholders wanted the VAT question visible outside the table, while the team wanted it inside, where users already see VAT. We included both. VAT queries were one of the most common reasons for calling, which is why its placement mattered.</p>
+      <p>Testing showed that users didn't realise rows could expand, got stuck on outstanding invoices when trying to view all, and struggled to pay selected invoices.</p>
+      <p><strong>What I changed:</strong> I turned rows into cards so they looked clickable, moved outstanding invoices into their own simple table, and renamed the main button "Pay all" to encourage full payment, a key business requirement. I kept a separate payment button so customers in credit can still pay.</p>
+      <p><strong>Result:</strong> 95% of testers answered the key questions.</p>
+
+      <h3>Meter readings</h3>
+      <div class="shot-row cols-2">
+        <figure class="shot"><div class="media-placeholder">V1</div><figcaption>V1 — a drop-down table, which confused users.</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">Final</div><figcaption>Final — a full table, which testers understood instantly.</figcaption></figure>
+      </div>
+      <p>The first version was also a drop-down table, and it confused users in the same way. I had to cover long meters, day and night registers, and corrected meters. I avoided a full table at first because I thought it would look cluttered. But our customers understood meter readings far better than I did, and they entered readings quickly in a full table. So I went with that.</p>
+      <p><strong>Result:</strong> at first only 15% of testers could submit readings. After iterating, 100% could.</p>
+
+      <h3>Usage</h3>
+      <div class="shot-row cols-2">
+        <figure class="shot"><div class="media-placeholder">V1</div><figcaption>V1 — data scattered across the page, no clear message on how usage was going.</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">Final</div><figcaption>Final — cost vs forecast and target combined into one card, top sites as a pie chart.</figcaption></figure>
+      </div>
+      <p>The original scattered data across the page with no clear message about how usage was going. I combined cost vs forecast and target into one card and turned top sites into a pie chart. I removed sites needing attention, because it wasn't actionable here and the dashboard already surfaces it. I made the gas/power toggle and site selector sticky, and added a toggle between energy units and pounds so users can connect usage to cost.</p>
+      <p><strong>Result:</strong> 95% of testers found all the information in 3 seconds or less.</p>
+
+      <h3>Sites</h3>
+      <div class="shot-row cols-3">
+        <figure class="shot"><div class="media-placeholder">V1</div><figcaption>V1</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">Final — group-by</div><figcaption>Final, showing group-by.</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">Individual site</div><figcaption>An individual site page.</figcaption></figure>
+      </div>
+      <p>Sites had to work grouped by account or individually, and stakeholders wanted everything visible. A table wasn't an option after the earlier testing, so I used cards. Some feedback suggested users identify sites by account, so I added a group-by option.</p>
+      <p>Individual site pages have a sticky header so users always know where they are. Customers can also now do things that used to mean a phone call: report a change of tenancy, add site contacts, add property and site references, add site-level data to improve usage predictions, and view past meter readings. I expect these, together with clearer meter reading and invoice flows, to take pressure off the team.</p>
+
+      <h3>Documents, Support, Consolidated Billing, Settings</h3>
+      <div class="media-placeholder" style="margin-top:1.5rem;">One strip per page, V1 to Final, or one combined strip</div>
+      <p>These were more straightforward: grouping information logically and applying the design system so they matched the rest. Documents moved from a card-based page to a searchable, filterable list with counts, grouped by time period, so customers with many sites can find a specific letter quickly.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">The dashboard</span>
+      <h2>The dashboard</h2>
+      <div class="media-placeholder wide" style="margin-top:1.5rem;">Both dashboard versions, 10–15 seconds, muted — optionally the inherited-system dashboard next to the website-style one</div>
+      <p>The dashboard went through the most direction changes. It started with upsells, but stakeholders didn't want any, so I removed them and added the information they asked for. They then decided the existing design system, created by the designer before me, didn't suit the brand, and asked for a new dashboard. With the freedom to leave that system behind, I matched the company website, using an edited version of its new design system, and produced two versions.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Design system</span>
+      <h2>The design system</h2>
+      <p>I inherited a design system from the designer before me. It was bland, so I extended it with more colour, new responsive components and new visuals. I started by maintaining the existing system in Figma, then moved to iterating on it myself in code, using Git, Claude and a repo hosted on the company's community hub. That hub meant the PM, engineer and stakeholders all worked from the same components. The engineer took the code and the designs, which is why handoff could start while I was still designing. The dashboard is the exception: it uses a modified version of the website's system.</p>
+
+      <h3>Adding colour</h3>
+      <div class="shot-row cols-3">
+        <figure class="shot"><div class="media-placeholder">Before / after</div><figcaption>Page 1, before and after.</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">Before / after</div><figcaption>Page 2, before and after.</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder">Before / after</div><figcaption>Page 3, before and after.</figcaption></figure>
+      </div>
+      <p>Stakeholder feedback was that the pages felt too similar and plain. I added a colourful header and footer and redesigned the cards, so each page has its own look while staying one product. [Update once next week's header change lands.]</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Accessibility</span>
+      <h2>Accessibility and compliance</h2>
+      <p>I audited the portal against WCAG [version and level] and fixed issues with colour contrast and text size, among others. [One example, e.g. a grey that failed contrast, or a minimum text size you set.] I also worked with legal on required additions: [what legal added, e.g. wording, links, notices].</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Delivery</span>
+      <h2>Delivery and QA</h2>
+      <p>Engineering handoff began before my designs were finished, because development moved so fast. QA happened at the end of the project, and I supported it by [checking builds against designs, logging issues, triaging, etc.].</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Impact</span>
+      <h2>Expected impact</h2>
+      <p>After launch I'll track monthly logins, self-service meter reading submissions, and call and email volume, then update this case study with real numbers.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <h3>Reflections</h3>
+      <div class="list-cards cols-3">
+        <div class="card-mini"><h4>One unified prototype</h4><p>Each page was built as a separate prototype and wired together later. One shared prototype would have been easier to test and hand over.</p></div>
+        <div class="card-mini"><h4>Design system first</h4><p>I built it alongside the pages, reactively. Building it first would have saved rework, especially when brand direction changed.</p></div>
+        <div class="card-mini"><h4>Stakeholders earlier</h4><p>Brand direction changed late, and earlier involvement would have caught it sooner.</p></div>
+      </div>
+
+      <div class="shot-row cols-3" style="margin-top:2rem;">
+        <figure class="shot"><div class="media-placeholder small">Final view</div><figcaption>Final views gallery</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder small">Final view</div><figcaption>Final views gallery</figcaption></figure>
+        <figure class="shot"><div class="media-placeholder small">Final view</div><figcaption>Final views gallery</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap cs-nav-footer">
+    <a class="btn ghost" href="../case-studies.html">← All case studies</a>
+    <a class="btn primary" href="sketchscroll.html">Next: Sketchscroll →</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    © <span id="year"></span> Zara Curtis. Based in the UK &amp; Ireland.
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<script src="../nav.js" defer></script>
+</body>
+</html>
