@@ -307,8 +307,60 @@
     });
   }
 
+  // Dense UI screenshots stay hard to read even at full content width on
+  // a phone, so any large case-study screenshot opens full-screen.
+  function initLightbox() {
+    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img');
+    if (!imgs.length) return;
+    var box = null, lastFocus = null;
+
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    function close() {
+      if (!box) return;
+      var b = box; box = null;
+      b.classList.remove('open');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function () { b.remove(); }, 200);
+      if (lastFocus) lastFocus.focus();
+    }
+    function open(img) {
+      lastFocus = img;
+      box = document.createElement('div');
+      box.className = 'lightbox';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.setAttribute('aria-label', img.alt || 'Enlarged screenshot');
+      var big = document.createElement('img');
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      if (img.closest('.shot.phone')) big.className = 'phone';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'lightbox-close';
+      btn.setAttribute('aria-label', 'Close');
+      btn.textContent = '×';
+      box.appendChild(big);
+      box.appendChild(btn);
+      box.addEventListener('click', close);
+      document.addEventListener('keydown', onKey);
+      document.body.appendChild(box);
+      var opened = box;
+      requestAnimationFrame(function () { opened.classList.add('open'); });
+      btn.focus();
+    }
+
+    Array.prototype.forEach.call(imgs, function (img) {
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      img.addEventListener('click', function () { open(img); });
+      img.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+      });
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initPortalGallery(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initPortalGallery(); initLightbox(); });
   } else {
     init();
     initStyleToggle();
@@ -316,5 +368,6 @@
     initWideCards();
     initVersionSnake();
     initPortalGallery();
+    initLightbox();
   }
 })();

@@ -1036,8 +1036,11 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   position: absolute; left: 0; right: 0; bottom: 0; height: 16px;
   overflow: hidden; pointer-events: none;
 }
+/* Parked off the track's left edge (which clips) until nav.js plays
+   the run, so no stray segment shows before it starts. */
 .snake-seg {
   position: absolute; top: 2px; left: 0; width: 12px; height: 12px;
+  transform: translateX(-200px);
   border-radius: 3px; background: var(--accent-2); border: 2px solid var(--ink);
 }
 .snake-seg:first-child { background: var(--green); }
@@ -1153,6 +1156,81 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .shot-row.cols-3 .shot figcaption { flex: 1; display: flex; flex-direction: column; }
 .shot.wide { flex-basis: 100%; }
 .shot-row .shot.mobile { flex: 0 0 auto; width: 220px; align-self: flex-start; }
+
+/* ---------- large screenshots ----------
+   Dense UI screenshots are unreadable at gallery-thumbnail size, so
+   these give each one the full content width, framed by a thin even
+   padding rather than a caption bar. .shot-pair puts a desktop shot
+   beside its phone counterpart; --pair sets the desktop column as a
+   multiple of the phone column (desktop aspect ÷ phone aspect), which
+   makes both images render at the same height at any width — so
+   neither card is left with empty space under its image. */
+.shot-stack { display: grid; gap: 1.75rem; margin-top: 1.5rem; }
+.shot-pair {
+  display: grid; grid-template-columns: minmax(0, var(--pair, 3.7fr)) minmax(0, 1fr);
+  gap: 1.5rem; align-items: stretch; margin-top: 1.5rem;
+}
+/* Both cards share the row's height; the caption sits at the foot of
+   each, so the small mismatch in image heights doesn't show as a gap
+   under the shorter card. */
+.shot-pair .shot { display: flex; flex-direction: column; }
+.shot-pair .shot figcaption { margin-top: auto; }
+.shot-pair .shot.phone img { margin: 0 auto; }
+
+/* Click/tap any large screenshot to open it full-screen (nav.js). */
+.shot-stack .shot img, .shot-pair .shot img { cursor: zoom-in; }
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
+  padding: 2rem; background: rgba(20, 18, 15, 0.86); cursor: zoom-out;
+  opacity: 0; transition: opacity 0.2s ease;
+}
+.lightbox.open { opacity: 1; }
+.lightbox img {
+  max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); background: #fff;
+}
+.lightbox img.phone { background: transparent; box-shadow: none; }
+.lightbox-close {
+  position: absolute; top: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  border: none; background: #fff; color: #222; font-size: 1.4rem; line-height: 1; cursor: pointer;
+}
+@media (max-width: 700px) { .lightbox { padding: 0.75rem; } }
+.shot-stack + .shot-pair, .shot-pair + .shot-stack, .shot-stack + .shot-stack { margin-top: 1.75rem; }
+.shot-stack .shot, .shot-pair .shot { padding: 0.75rem; }
+.shot-stack .shot img, .shot-pair .shot img { border-radius: 4px; }
+.shot-stack .shot:not(.phone) img, .shot-pair .shot:not(.phone) img { outline: 1px solid var(--outline); }
+.shot-stack .shot figcaption, .shot-pair .shot figcaption,
+[data-theme="business"] .shot-stack .shot figcaption, [data-theme="business"] .shot-pair .shot figcaption {
+  border-top: none; padding: 0.7rem 0.15rem 0.05rem; font-size: 0.88rem; line-height: 1.5;
+}
+.shot .ver {
+  display: inline-block; margin-right: 0.45rem; padding: 0.1rem 0.5rem; border-radius: 100px;
+  font-family: "Space Mono", monospace; font-weight: 700; font-size: 0.68rem;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink);
+  background: var(--accent-soft); vertical-align: 0.1em;
+}
+.shot .ver.pm { background: var(--yellow-soft); }
+.shot .ver.final { background: var(--green-soft); }
+
+/* Each page studied in "Making dense data readable" gets its own
+   divided block, so five pages' worth of images and text read as five
+   distinct stories instead of one undifferentiated scroll. */
+.page-study { margin-top: 3rem; padding-top: 2.25rem; border-top: 2px dashed var(--outline); }
+.page-study > h3:first-child { margin-top: 0; }
+[data-theme="business"] .page-study { border-top-style: solid; border-top-width: 1px; }
+
+.outcome {
+  margin-top: 1.25rem; padding: 0.85rem 1.1rem; border-radius: 0 8px 8px 0;
+  border-left: 5px solid var(--green); background: var(--green-soft); color: var(--ink);
+}
+.outcome strong { font-weight: 700; }
+
+@media (max-width: 700px) {
+  .shot-pair { grid-template-columns: 1fr; }
+  .shot-pair .shot.phone { width: 100%; max-width: 260px; margin: 0 auto; }
+  .shot-stack .shot, .shot-pair .shot { padding: 0.5rem; }
+  .page-study { margin-top: 2.25rem; padding-top: 1.75rem; }
+}
 
 /* ---------- plain device showcase (no card chrome) ---------- */
 .device-row {
@@ -1369,6 +1447,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   box-shadow: none; background: var(--accent-soft);
 }
 [data-theme="business"] .cs-section { border-bottom: 1px solid var(--outline); }
+[data-theme="business"] .cs-section:last-of-type { border-bottom: none; }
 [data-theme="business"] .cs-hero, [data-theme="business"] .page-hero { border-bottom: 1px solid var(--outline); }
 [data-theme="business"] section.alt { border-top: 1px solid var(--outline); border-bottom: 1px solid var(--outline); }
 [data-theme="business"] .cs-nav-footer { border-top: 1px solid var(--outline); }
