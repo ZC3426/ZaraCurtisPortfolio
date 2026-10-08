@@ -153,8 +153,9 @@
       <p>Earlier rounds ran on working prototypes, so testers could really enter readings and pay invoices, not just react to screens. I also tested all functionality on the live host the engineer built, using live data, so I could check how pages worked and where the built UI differed from my designs.</p>
 
       <h3>Invoices</h3>
-      <div class="shot-row cols-2">
-        <figure class="shot"><div class="media-placeholder">V1 (PM prototype)</div><figcaption>V1 — the PM's prototype, a drop-down table.</figcaption></figure>
+      <div class="shot-row cols-3">
+        <figure class="shot"><img src="../assets/business-portal/invoices-v1-expanded.webp" alt="V1 invoices prototype with an account row expanded, showing VAT inside the table and an unallocated payments panel" width="2000" height="991" loading="eager" /><figcaption>V1 — a row expanded, showing VAT inside the table and unallocated payments.</figcaption></figure>
+        <figure class="shot"><img src="../assets/business-portal/invoices-v1-collapsed.webp" alt="V1 invoices prototype collapsed, with a separate All Invoices table below" width="2000" height="991" loading="eager" /><figcaption>V1 — collapsed by default; rows didn't read as expandable.</figcaption></figure>
         <figure class="shot"><div class="media-placeholder">V2</div><figcaption>V2 — rows turned into cards, outstanding invoices split out.</figcaption></figure>
       </div>
       <p>Customers typically have a few accounts with a few sites each, so the first version used a drop-down table. Stakeholders wanted the VAT question visible outside the table, while the team wanted it inside, where users already see VAT. We included both. VAT queries were one of the most common reasons for calling, which is why its placement mattered.</p>
@@ -164,7 +165,7 @@
 
       <h3>Meter readings</h3>
       <div class="shot-row cols-2">
-        <figure class="shot"><div class="media-placeholder">V1</div><figcaption>V1 — a drop-down table, which confused users.</figcaption></figure>
+        <figure class="shot"><img src="../assets/business-portal/meter-readings-v1.webp" alt="V1 meter readings prototype, a step-by-step submit-readings flow with an upcoming-readings progress bar" width="2000" height="996" loading="eager" /><figcaption>V1 — first iteration.</figcaption></figure>
         <figure class="shot"><div class="media-placeholder">Final</div><figcaption>Final — a full table, which testers understood instantly.</figcaption></figure>
       </div>
       <p>The first version was also a drop-down table, and it confused users in the same way. I had to cover long meters, day and night registers, and corrected meters. I avoided a full table at first because I thought it would look cluttered. But our customers understood meter readings far better than I did, and they entered readings quickly in a full table. So I went with that.</p>
@@ -173,7 +174,7 @@
       <h3>Usage</h3>
       <div class="shot-row cols-2">
         <figure class="shot"><div class="media-placeholder">V1</div><figcaption>V1 — data scattered across the page, no clear message on how usage was going.</figcaption></figure>
-        <figure class="shot"><div class="media-placeholder">Final</div><figcaption>Final — cost vs forecast and target combined into one card, top sites as a pie chart.</figcaption></figure>
+        <figure class="shot"><img src="../assets/business-portal/usage-final.webp" alt="Final usage page with usage-over-time chart, cost vs forecast ring, top sites ranked, usage target and time-of-day breakdown" width="2000" height="991" loading="eager" /><figcaption>Final — cost vs forecast and usage target combined, top sites ranked, sticky filters.</figcaption></figure>
       </div>
       <p>The original scattered data across the page with no clear message about how usage was going. I combined cost vs forecast and target into one card and turned top sites into a pie chart. I removed sites needing attention, because it wasn't actionable here and the dashboard already surfaces it. I made the gas/power toggle and site selector sticky, and added a toggle between energy units and pounds so users can connect usage to cost.</p>
       <p><strong>Result:</strong> 95% of testers found all the information in 3 seconds or less.</p>
@@ -181,7 +182,7 @@
       <h3>Sites</h3>
       <div class="shot-row cols-3">
         <figure class="shot"><div class="media-placeholder">V1</div><figcaption>V1</figcaption></figure>
-        <figure class="shot"><div class="media-placeholder">Final — group-by</div><figcaption>Final, showing group-by.</figcaption></figure>
+        <figure class="shot"><img src="../assets/business-portal/sites-final-groupby.webp" alt="Final sites page grouped by account, with status, product and contract-end columns, and filters for fuel, status and group" width="2000" height="991" loading="eager" /><figcaption>Final — grouped by account, with status, product and contract-end at a glance.</figcaption></figure>
         <figure class="shot"><div class="media-placeholder">Individual site</div><figcaption>An individual site page.</figcaption></figure>
       </div>
       <p>Sites had to work grouped by account or individually, and stakeholders wanted everything visible. A table wasn't an option after the earlier testing, so I used cards. Some feedback suggested users identify sites by account, so I added a group-by option.</p>
