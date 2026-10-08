@@ -872,6 +872,43 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 }
 .stat .num { font-family: "Space Mono", monospace; font-weight: 700; font-size: 2.1rem; color: var(--accent); }
 .stat .desc { margin-top: 0.35rem; font-size: 0.86rem; color: var(--ink-soft); }
+
+/* A set of results as a page torn from a notebook, each metric written
+   on its own ruled line — reuses the folder system's lined-paper
+   background/theme split, but as its own class so the About page's
+   mobile "strip all paper-sheet chrome" rule doesn't also catch this. */
+.metrics-paper {
+  margin-top: 1.5rem; padding: 1.5rem 1.75rem;
+  background-color: #f5ecd2;
+  background-image: repeating-linear-gradient(
+    to bottom, transparent 0, transparent 2.1rem,
+    rgba(90, 70, 40, 0.18) 2.1rem, rgba(90, 70, 40, 0.18) calc(2.1rem + 1px)
+  );
+  background-position: 0 0.5rem;
+  border: 3px solid var(--ink); border-radius: 4px;
+  box-shadow: 5px 5px 0 0 var(--shadow);
+  transform: rotate(-0.5deg);
+  overflow-wrap: break-word;
+}
+[data-theme="business"] .metrics-paper {
+  background-color: #fdfbf1; border: 1px solid #e6dfc9; border-radius: 0;
+  box-shadow: 0 6px 18px rgba(38, 43, 39, 0.06); transform: rotate(-0.25deg);
+}
+.metrics-table { width: 100%; border-collapse: collapse; }
+.metrics-table tr + tr { border-top: 1px dashed rgba(90, 70, 40, 0.3); }
+.metrics-table td { padding: 0.4rem 0.5rem; vertical-align: top; line-height: 2.1rem; }
+.metrics-table td.num {
+  font-family: "Space Mono", monospace; font-weight: 700; font-size: 1.1rem;
+  white-space: nowrap; width: 1%; padding-right: 1.5rem; color: var(--accent);
+}
+.metrics-table td.desc { font-style: italic; color: var(--ink-soft); }
+@media (max-width: 640px) {
+  .metrics-paper { transform: none; padding: 1.25rem; }
+  .metrics-table, .metrics-table tbody, .metrics-table tr, .metrics-table td { display: block; width: auto; }
+  .metrics-table tr { padding: 0.6rem 0; }
+  .metrics-table td { padding: 0.05rem 0; line-height: 1.5; }
+  .metrics-table td.num { padding-right: 0; margin-bottom: 0.1rem; }
+}
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-top: 1.5rem; }
 /* An odd one out left dangling in the left column, unbalanced against
    the pairs above it — centre it under them instead, same size as the
@@ -963,6 +1000,40 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .trend-2 { background: #fbeec0; } .trend-2 .trend-num { background: #c98a1f; }
 .trend-3 { background: #d9ecdf; } .trend-3 .trend-num { background: #3f9c63; }
 
+/* The project's versions (How we worked), evenly spaced in one row on
+   desktop. A small Snake-game chain slides along the bottom of the row
+   once it scrolls into view (nav.js), and each tile pops up briefly as
+   the head passes beneath it — JS only plays this on the single-row
+   (desktop) layout, since the segments' track is measured against the
+   tiles' actual x-positions and wouldn't line up once the row wraps. */
+.version-row {
+  margin-top: 1.25rem; padding-bottom: 1.75rem; position: relative;
+}
+/* The snake track is appended as a sibling of .version-tiles (not a
+   grid child), so it can't throw off the tiles' :nth-child/:last-child
+   count — which the mobile odd-one-out rule below depends on. */
+.version-tiles {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem;
+}
+.version-tiles .card-mini {
+  position: relative; z-index: 1;
+  transition: transform 0.22s ease-out, box-shadow 0.22s ease-out;
+}
+.version-tiles .card-mini.pop {
+  transform: translateY(-7px) scale(1.045);
+  box-shadow: 6px 8px 0 0 var(--shadow);
+  z-index: 2;
+}
+.snake-track {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 16px;
+  overflow: hidden; pointer-events: none;
+}
+.snake-seg {
+  position: absolute; top: 2px; left: 0; width: 12px; height: 12px;
+  border-radius: 3px; background: var(--accent-2); border: 2px solid var(--ink);
+}
+.snake-seg:first-child { background: var(--green); }
+
 /* On a phone, a set of related cards (a problem's sub-points, three
    research findings, a pair of testing takeaways...) stays a 2-column
    mosaic rather than a single column: two cards per row, and if the
@@ -972,17 +1043,20 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    instead of 1. */
 @media (max-width: 700px) {
   .wrap { padding: 0 1rem; }
-  .two-col, .list-cards, .list-cards.cols-2, .list-cards.cols-3, .trend-cards {
+  .two-col, .list-cards, .list-cards.cols-2, .list-cards.cols-3, .trend-cards, .version-tiles {
     grid-template-columns: repeat(2, 1fr); gap: 0.85rem;
   }
+  .version-row { padding-bottom: 0; }
+  .snake-track { display: none; }
   /* Grid items default to min-width:auto, so a track can still grow
      past its 1fr share to fit an unbroken word/phrase - min-width:0
      lets the card's own text wrap within its column instead. */
-  .two-col > *, .list-cards > *, .trend-cards > * { min-width: 0; }
+  .two-col > *, .list-cards > *, .trend-cards > *, .version-tiles > * { min-width: 0; }
   .two-col > *:last-child:nth-child(odd),
   .list-cards > *:last-child:nth-child(odd),
   .trend-cards > *:last-child:nth-child(odd),
-  .trend-cards > .trend:last-child:nth-child(odd) {
+  .trend-cards > .trend:last-child:nth-child(odd),
+  .version-tiles > *:last-child:nth-child(odd) {
     grid-column: 1 / -1; max-width: none; margin: 0;
   }
   .card-mini { padding: 1rem; }

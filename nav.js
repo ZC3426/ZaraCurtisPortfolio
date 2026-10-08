@@ -164,12 +164,98 @@
     });
   }
 
+  // How we worked's five version tiles (V1 -> Final): once the row
+  // scrolls into view, a small Snake-style chain slides under them in
+  // sequence, and each tile pops up briefly as the head passes beneath
+  // it. Segment positions are measured against each tile's real
+  // on-screen center, so this only plays on the single-row (desktop)
+  // layout .version-row uses above 700px — on the 2-column mobile
+  // mosaic the track wouldn't line up under anything, so CSS hides the
+  // track there and this skips playing entirely.
+  function initVersionSnake() {
+    var row = document.querySelector('.version-row');
+    if (!row) return;
+    var tiles = Array.prototype.slice.call(row.querySelectorAll('.card-mini'));
+    if (!tiles.length) return;
+
+    var track = document.createElement('div');
+    track.className = 'snake-track';
+    var SEGMENTS = 6, SEG_GAP = 13;
+    var segs = [];
+    for (var i = 0; i < SEGMENTS; i++) {
+      var seg = document.createElement('span');
+      seg.className = 'snake-seg';
+      track.appendChild(seg);
+      segs.push(seg);
+    }
+    row.appendChild(track);
+
+    var played = false;
+    function play() {
+      if (played) return;
+      played = true;
+      var rowRect = row.getBoundingClientRect();
+      var centers = tiles.map(function (t) {
+        var r = t.getBoundingClientRect();
+        return (r.left + r.right) / 2 - rowRect.left;
+      });
+      var startX = -40, endX = rowRect.width + 40;
+      var DURATION = 2800;
+
+      // Segments start stacked single-file off the left edge, each one
+      // trailing the next by SEG_GAP, then all animate the same net
+      // distance to the mirrored offset past the right edge — a growing
+      // transition-delay per segment is what makes the tail visibly
+      // lag the head instead of the whole chain moving as one block.
+      segs.forEach(function (seg, i) {
+        seg.style.transition = 'none';
+        seg.style.transform = 'translateX(' + (startX - i * SEG_GAP) + 'px)';
+      });
+      void track.offsetWidth;
+      requestAnimationFrame(function () {
+        segs.forEach(function (seg, i) {
+          seg.style.transition = 'transform ' + DURATION + 'ms linear';
+          seg.style.transitionDelay = (i * 55) + 'ms';
+          seg.style.transform = 'translateX(' + (endX - i * SEG_GAP) + 'px)';
+        });
+      });
+
+      var totalDist = endX - startX;
+      centers.forEach(function (cx, i) {
+        var t = ((cx - startX) / totalDist) * DURATION;
+        setTimeout(function () {
+          tiles[i].classList.add('pop');
+          setTimeout(function () { tiles[i].classList.remove('pop'); }, 420);
+        }, Math.max(0, t - 150));
+      });
+    }
+
+    function maybePlay() {
+      if (window.innerWidth > 700) play();
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && window.innerWidth > 700) {
+            play();
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      io.observe(row);
+    } else {
+      maybePlay();
+    }
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); });
   } else {
     init();
     initStyleToggle();
     initPageHeadingTyping();
     initWideCards();
+    initVersionSnake();
   }
 })();
