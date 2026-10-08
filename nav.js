@@ -259,20 +259,24 @@
     var gallery = document.querySelector('.portal-gallery');
     if (!gallery) return;
     var thumbs = Array.prototype.slice.call(gallery.querySelectorAll('.portal-thumb'));
-    var viewerBox = gallery.querySelector('.portal-viewer .media-placeholder');
-    if (!thumbs.length || !viewerBox) return;
+    var viewerImg = gallery.querySelector('.portal-viewer-img img');
+    if (!thumbs.length || !viewerImg) return;
 
     thumbs.forEach(function (thumb) {
       thumb.addEventListener('click', function () {
         if (thumb.classList.contains('active')) return;
-        var srcBox = thumb.querySelector('.media-placeholder');
-        var label = thumb.getAttribute('data-label') || srcBox.textContent;
-        var startRect = srcBox.getBoundingClientRect();
-        var endRect = viewerBox.getBoundingClientRect();
+        var thumbImg = thumb.querySelector('.portal-thumb-img img');
+        var src = thumb.getAttribute('data-img');
+        var alt = thumbImg.alt;
+        var startRect = thumbImg.getBoundingClientRect();
+        var endRect = gallery.querySelector('.portal-viewer-img').getBoundingClientRect();
 
         var fly = document.createElement('div');
         fly.className = 'portal-fly';
-        fly.textContent = srcBox.textContent;
+        var flyImg = document.createElement('img');
+        flyImg.src = src;
+        flyImg.alt = '';
+        fly.appendChild(flyImg);
         fly.style.left = startRect.left + 'px';
         fly.style.top = startRect.top + 'px';
         fly.style.width = startRect.width + 'px';
@@ -295,7 +299,8 @@
         thumb.classList.add('active');
 
         setTimeout(function () {
-          viewerBox.textContent = 'Old portal — ' + label + ', anonymised';
+          viewerImg.src = src;
+          viewerImg.alt = alt;
           fly.remove();
         }, 460);
       });
