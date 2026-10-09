@@ -362,12 +362,21 @@
   // position and size, then swaps the viewer's real content in and
   // removes the clone once it arrives, so the image reads as having
   // glided from the thumbnail into the enlarged central view.
-  // Old portal "console": three cartridges below a screen. Picking one
-  // sends a copy of it on one continuous eased path up to the slot and
-  // into it (the slot sits in front, and the part above the slot line
-  // is clipped away, so it disappears inside), then the screen cross-
-  // fades to that page once it has loaded. The copy lives inside the
-  // console, so scrolling mid-animation can't knock it out of place.
+  // Old portal "console" (My Style): three cartridges below a screen.
+  // Picking one plays it like real hardware:
+  //   1. eject: the screen goes black and the inserted cartridge slides
+  //      down out of the slot (bottom first), tips upright and settles
+  //      back into its bay;
+  //   2. insert: the new one lifts out of its bay, is carried upright to
+  //      just under the slot, leans back a little, dips (anticipation)
+  //      and is pushed in, top edge first. It keeps its colour; the slot
+  //      (a mask cut at the slot line) covers it, and only a thin shadow
+  //      from the slot falls on the part at its mouth;
+  //   3. the screen holds black a moment, then the page comes on.
+  // A real cartridge and its moving copy are never visible together: the
+  // bay copy hides on the frame the moving one appears, and reappears on
+  // the frame the moving one lands. Professional shows the same markup
+  // as a plain gallery that just cross-fades.
   function initConsole() {
     var consoleEl = document.querySelector('.console');
     if (!consoleEl) return;
@@ -379,45 +388,57 @@
     if (!carts.length || !screenImg || !slot) return;
     var busy = false;
     var canAnimate = typeof Element.prototype.animate === 'function';
+    var LAY = 24, INSERT_MS = 1800, EJECT_MS = 1200, BLACK = 140, HOLD = 450, ON = 160;
 
-    function setInserted(cart) {
+    // Decode every cartridge label and screen image up front, so the
+    // first insert is as smooth as the rest (no decode stall mid-flight).
+    if (canAnimate) {
       carts.forEach(function (c) {
-        var wasIn = c.classList.contains('is-in');
-        var isIn = c === cart;
-        c.classList.toggle('is-in', isIn);
-        c.setAttribute('aria-pressed', isIn ? 'true' : 'false');
-        if (wasIn && !isIn && !prefersReducedMotion() && document.documentElement.getAttribute('data-theme') !== 'business') {
-          c.classList.remove('returning'); void c.offsetWidth; c.classList.add('returning');
-          c.addEventListener('animationend', function done() { c.classList.remove('returning'); c.removeEventListener('animationend', done); });
-        }
+        var pre = new Image();
+        pre.src = c.getAttribute('data-img');
+        if (pre.decode) pre.decode().catch(function () {});
+        var lab = c.querySelector('img');
+        if (lab) { lab.loading = 'eager'; if (lab.decode) lab.decode().catch(function () {}); }
       });
     }
-    function showPage(cart, fade) {
-      var src = cart.getAttribute('data-img');
-      var label = cart.getAttribute('data-label');
-      var alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
-      if (now) now.textContent = label;
-      if (!fade || !canAnimate) { screenImg.src = src; screenImg.alt = alt; return; }
+
+    function isBusiness() { return document.documentElement.getAttribute('data-theme') === 'business'; }
+
+    // Toggle a cartridge's "in the console" state with no transition, so
+    // it hides/reappears on exactly this frame.
+    function setIn(c, isIn) {
+      c.style.transition = 'none';
+      c.classList.toggle('is-in', isIn);
+      c.setAttribute('aria-pressed', isIn ? 'true' : 'false');
+      void c.offsetWidth;
+      c.style.transition = '';
+    }
+    function label(c) { return c.getAttribute('data-label'); }
+    function setScreen(c) {
+      screenImg.src = c.getAttribute('data-img');
+      screenImg.alt = 'Old portal ' + label(c).toLowerCase() + ' page, anonymised';
+      if (now) now.textContent = label(c);
+    }
+
+    // Professional: a plain gallery that cross-fades.
+    function crossFade(c) {
       var next = new Image();
       next.className = 'console-fade';
       next.alt = '';
-      next.src = src;
+      next.src = c.getAttribute('data-img');
+      if (now) now.textContent = label(c);
       var ready = next.decode ? next.decode().catch(function () {}) : Promise.resolve();
       ready.then(function () {
         display.appendChild(next);
         next.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: 'ease-out', fill: 'forwards' }).onfinish = function () {
-          screenImg.src = src; screenImg.alt = alt;
+          setScreen(c);
           var settle = screenImg.decode ? screenImg.decode().catch(function () {}) : Promise.resolve();
           settle.then(function () { next.remove(); });
         };
       });
     }
 
-    // My Style: once the cartridge seats, the screen goes black, holds
-    // for a moment while the console "reads" it, then the page comes on.
-    function powerOn(cart, preload, done) {
-      var src = cart.getAttribute('data-img');
-      var label = cart.getAttribute('data-label');
+    function blackScreen() {
       var boot = display.querySelector('.console-boot');
       if (!boot) {
         boot = document.createElement('div');
@@ -426,115 +447,163 @@
         display.appendChild(boot);
       }
       boot.getAnimations().forEach(function (x) { x.cancel(); });
-      var ready = preload.decode ? preload.decode().catch(function () {}) : Promise.resolve();
-      var BLACK = 140, HOLD = 450, ON = 160;
       boot.style.opacity = '0';
       boot.animate([{ opacity: 0 }, { opacity: 1 }], { duration: BLACK, easing: 'ease-in', fill: 'forwards' }).onfinish = function (e) {
         boot.style.opacity = '1';
         e.target.cancel();
-        // The page loads in behind the black.
-        ready.then(function () {
-          screenImg.src = src;
-          screenImg.alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
-          if (now) now.textContent = label;
-          var shown = screenImg.decode ? screenImg.decode().catch(function () {}) : Promise.resolve();
-          return shown;
-        }).then(function () {
-          setTimeout(function () {
-            boot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ON, easing: 'ease-out', fill: 'forwards' }).onfinish = function (e2) {
-              boot.style.opacity = '0';
-              e2.target.cancel();
-              if (done) done();
-            };
-          }, HOLD);
-        });
+      };
+      return boot;
+    }
+    function screenOn(boot, c, done) {
+      var pre = new Image();
+      pre.src = c.getAttribute('data-img');
+      var ready = pre.decode ? pre.decode().catch(function () {}) : Promise.resolve();
+      ready.then(function () {
+        setScreen(c);
+        return screenImg.decode ? screenImg.decode().catch(function () {}) : null;
+      }).then(function () {
+        setTimeout(function () {
+          boot.getAnimations().forEach(function (x) { x.cancel(); });
+          boot.style.opacity = '1';
+          boot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ON, easing: 'ease-out', fill: 'forwards' }).onfinish = function (e) {
+            boot.style.opacity = '0';
+            e.target.cancel();
+            done();
+          };
+        }, HOLD);
+      });
+    }
+
+    // Geometry shared by insert and eject: everything is measured in the
+    // console's own coordinates, so scrolling mid-animation can't break it.
+    function geometry(c) {
+      var box = consoleEl.getBoundingClientRect();
+      var bay = c.parentNode.getBoundingClientRect();     // the cartridge's resting box
+      var to = slot.getBoundingClientRect();
+      var slotLine = to.top + to.height / 2 - box.top;
+      return {
+        box: box, bay: bay, slotLine: slotLine,
+        left: bay.left - box.left, top0: bay.top - box.top - slotLine,
+        dx: (to.left + to.width / 2) - (bay.left + bay.width / 2),
+        w: bay.width, h: bay.height
       };
     }
+    // A masked moving copy of a cartridge; everything above the mask's
+    // top edge (the slot line) is cut off.
+    function makeFly(c, g) {
+      var mask = document.createElement('div');
+      mask.className = 'cart-mask';
+      mask.style.top = g.slotLine + 'px';
+      var fly = c.cloneNode(true);
+      fly.removeAttribute('aria-label');
+      fly.removeAttribute('aria-pressed');
+      fly.setAttribute('aria-hidden', 'true');
+      fly.setAttribute('tabindex', '-1');
+      fly.classList.remove('is-in', 'returning');
+      fly.classList.add('cart-fly');
+      fly.style.setProperty('--cart-c', getComputedStyle(c).getPropertyValue('--cart-c'));
+      fly.style.left = (g.left + 12) + 'px';   // the mask reaches 12px past the console each side
+      fly.style.top = g.top0 + 'px';
+      fly.style.width = g.w + 'px';
+      fly.style.height = g.h + 'px';
+      var shade = document.createElement('span');
+      shade.className = 'cart-shade';
+      fly.appendChild(shade);
+      mask.appendChild(fly);
+      consoleEl.appendChild(mask);
+      return { mask: mask, fly: fly, shade: shade };
+    }
+    // Plays a path of [offset, x, y, tilt, scale, easing-to-next] on the
+    // copy, with the slot's shadow kept on the slot line throughout.
+    function play(f, g, path, ms) {
+      var frames = path.map(function (p) {
+        var k = { offset: p[0], transform: 'translate(' + p[1] + 'px, ' + p[2] + 'px) rotateX(' + p[3] + 'deg) scale(' + p[4] + ')' };
+        if (p[5]) k.easing = p[5];
+        return k;
+      });
+      var shadeFrames = path.map(function (p) {
+        var k = { offset: p[0], transform: 'translateY(' + (-(g.top0 + p[2])) + 'px)', opacity: p[3] > 0 ? 1 : 0 };
+        if (p[5]) k.easing = p[5];
+        return k;
+      });
+      f.shade.animate(shadeFrames, { duration: ms, fill: 'forwards' });
+      return f.fly.animate(frames, { duration: ms, fill: 'forwards' }).finished;
+    }
+
+    function eject(c) {
+      var g = geometry(c);
+      var rest = -g.top0 + 3;                // upright, top edge just under the slot
+      var inside = rest - g.h - 14;          // fully inside the slot
+      var f = makeFly(c, g);
+      return play(f, g, [
+        [0,    g.dx, inside, LAY, 1,    'cubic-bezier(0.3, 0.4, 0.35, 1)'],
+        [0.36, g.dx, rest,   LAY, 1,    'ease-in-out'],
+        [0.46, g.dx, rest,   0,   1,    'cubic-bezier(0.45, 0, 0.2, 1)'],
+        [1,    0,    0,      0,   1]
+      ], EJECT_MS).then(function () {
+        setIn(c, false);                     // the real one reappears where the copy landed
+        f.mask.remove();
+      });
+    }
+    function insert(c) {
+      var g = geometry(c);
+      var rest = -g.top0 + 3;
+      var f = makeFly(c, g);
+      setIn(c, true);                        // hide the bay copy on the same frame
+      return play(f, g, [
+        [0,    0,    0,                0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
+        [0.12, 0,    -12,              0,   1.04, 'cubic-bezier(0.45, 0, 0.25, 1)'],
+        [0.42, g.dx, rest,             0,   1,    'cubic-bezier(0.4, 0, 0.3, 1)'],
+        [0.55, g.dx, rest,             LAY, 1,    'ease-in-out'],
+        [0.62, g.dx, rest + 3,         LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
+        [1,    g.dx, rest - g.h - 14,  LAY, 1]
+      ], INSERT_MS).then(function () {
+        f.mask.remove();
+        var unit = consoleEl.querySelector('.console-unit');
+        if (unit) unit.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 180, easing: 'ease-out' });
+      });
+    }
+
+    // Warm up: build the moving copy (mask, perspective, tilt) once,
+    // invisibly, so the browser has its layers ready before the first tap.
+    function warmUp() {
+      if (!canAnimate || isBusiness() || busy) return;
+      var c = carts.filter(function (x) { return !x.classList.contains('is-in'); })[0];
+      if (!c) return;
+      var g = geometry(c), f = makeFly(c, g);
+      f.mask.style.opacity = '0';
+      play(f, g, [[0, 0, 0, 0, 1], [1, g.dx, -g.top0, LAY, 1]], 120).then(function () { f.mask.remove(); });
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(function () { setTimeout(warmUp, 300); });
+    else setTimeout(warmUp, 1200);
 
     carts.forEach(function (cart) {
       cart.addEventListener('click', function () {
         if (busy || cart.classList.contains('is-in')) return;
-        // Professional shows these as a plain gallery: just cross-fade.
-        if (document.documentElement.getAttribute('data-theme') === 'business') {
-          setInserted(cart); showPage(cart, !prefersReducedMotion()); return;
+        var current = carts.filter(function (c) { return c.classList.contains('is-in'); })[0];
+        if (isBusiness()) {
+          if (current) setIn(current, false);
+          setIn(cart, true);
+          if (prefersReducedMotion() || !canAnimate) setScreen(cart); else crossFade(cart);
+          return;
         }
-        if (prefersReducedMotion() || !canAnimate) { setInserted(cart); showPage(cart, false); return; }
+        if (prefersReducedMotion() || !canAnimate) {
+          if (current) setIn(current, false);
+          setIn(cart, true);
+          setScreen(cart);
+          return;
+        }
         busy = true;
         consoleEl.classList.add('busy');
-        var preload = new Image();
-        preload.src = cart.getAttribute('data-img');
-        var box = consoleEl.getBoundingClientRect();
-        var from = cart.getBoundingClientRect();
-        var to = slot.getBoundingClientRect();
-        var slotLine = to.top + to.height / 2 - box.top;
-
-        // Everything above the mask's top edge (the slot line) is hidden,
-        // and the cartridge darkens as it goes into the slot.
-        var mask = document.createElement('div');
-        mask.className = 'cart-mask';
-        mask.style.top = slotLine + 'px';
-
-        var fly = cart.cloneNode(true);
-        fly.removeAttribute('aria-label');
-        fly.setAttribute('aria-hidden', 'true');
-        fly.setAttribute('tabindex', '-1');
-        fly.classList.remove('is-in', 'returning');
-        fly.classList.add('cart-fly');
-        fly.style.setProperty('--cart-c', getComputedStyle(cart).getPropertyValue('--cart-c'));
-        fly.style.left = (from.left - box.left) + 'px';
-        fly.style.top = (from.top - box.top - slotLine) + 'px';
-        fly.style.width = from.width + 'px';
-        fly.style.height = from.height + 'px';
-        mask.appendChild(fly);
-        consoleEl.appendChild(mask);
-        setInserted(cart);
-
-        // Lift it out, carry it over upright to just under the slot, lean
-        // it back a little (pivoting on its bottom edge), dip a touch
-        // (anticipation), then push it up so the top edge goes into the
-        // black first and the rest follows. It keeps its colour the whole
-        // way: the slot (a mask) covers it, and the only shading is a
-        // thin shadow cast by the slot onto the part right at its mouth.
-        var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
-        var top0 = from.top - box.top - slotLine;       // its top edge, below the slot line
-        var h = from.height;
-        var LAY = 24;                                    // a gentle lean back
-        var rest = -top0 + 3;                            // top edge just under the slot
-        var path = [                                     // [offset, y, tilt, scale, easing to next]
-          [0,    0,               0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
-          [0.12, -12,             0,   1.04, 'cubic-bezier(0.45, 0, 0.25, 1)'],
-          [0.42, rest,            0,   1,    'cubic-bezier(0.4, 0, 0.3, 1)'],
-          [0.55, rest,            LAY, 1,    'ease-in-out'],
-          [0.62, rest + 3,        LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
-          [1,    rest - h - 14,   LAY, 1]
-        ];
-        var frames = path.map(function (p) {
-          var x = p[0] < 0.42 ? 0 : dx;                  // it travels across during the carry
-          var f = { offset: p[0], transform: 'translate(' + x + 'px, ' + p[1] + 'px) rotateX(' + p[2] + 'deg) scale(' + p[3] + ')' };
-          if (p[4]) f.easing = p[4];
-          return f;
+        var boot = blackScreen();
+        (current ? eject(current) : Promise.resolve()).then(function () {
+          return insert(cart);
+        }).then(function () {
+          screenOn(boot, cart, function () {
+            consoleEl.classList.remove('busy');
+            busy = false;
+          });
         });
-        var anim = fly.animate(frames, { duration: 1800, fill: 'forwards' });
-
-        // The slot's shadow on the cartridge: a thin band that stays at
-        // the slot line while the cartridge slides past it, so only the
-        // part about to go in is shaded, and it leaves with the cartridge.
-        var shade = document.createElement('span');
-        shade.className = 'cart-shade';
-        fly.appendChild(shade);
-        shade.animate(path.map(function (p) {
-          var f = { offset: p[0], transform: 'translateY(' + (-(top0 + p[1])) + 'px)', opacity: p[0] >= 0.55 ? 1 : 0 };
-          if (p[4]) f.easing = p[4];
-          return f;
-        }), { duration: 1800, fill: 'forwards' });
-
-        anim.onfinish = function () {
-          mask.remove();
-          // The console takes the cartridge with a small click.
-          var bezel = consoleEl.querySelector('.console-unit');
-          if (bezel) bezel.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 180, easing: 'ease-out' });
-          powerOn(cart, preload, function () { consoleEl.classList.remove('busy'); busy = false; });
-        };
       });
     });
   }
