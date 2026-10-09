@@ -362,54 +362,86 @@
   // position and size, then swaps the viewer's real content in and
   // removes the clone once it arrives, so the image reads as having
   // glided from the thumbnail into the enlarged central view.
-  function initPortalGallery() {
-    var gallery = document.querySelector('.portal-gallery');
-    if (!gallery) return;
-    var thumbs = Array.prototype.slice.call(gallery.querySelectorAll('.portal-thumb'));
-    var viewerImg = gallery.querySelector('.portal-viewer-img img');
-    if (!thumbs.length || !viewerImg) return;
+  // Old portal "console": three cartridges below a screen. Picking one
+  // flies a copy of it up to the slot under the screen, slides it in
+  // (the part above the slot line clipped away, so it disappears into
+  // the console), switches the screen off and back on with the new page,
+  // and drops the previously inserted cartridge back into its bay.
+  function initConsole() {
+    var consoleEl = document.querySelector('.console');
+    if (!consoleEl) return;
+    var carts = Array.prototype.slice.call(consoleEl.querySelectorAll('.cartridge'));
+    var screenImg = consoleEl.querySelector('.console-display img');
+    var slot = consoleEl.querySelector('.console-slot');
+    var now = consoleEl.querySelector('.console-now strong');
+    if (!carts.length || !screenImg || !slot) return;
+    var busy = false;
 
-    thumbs.forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        if (thumb.classList.contains('active')) return;
-        var thumbImg = thumb.querySelector('.portal-thumb-img img');
-        var src = thumb.getAttribute('data-img');
-        var alt = thumbImg.alt;
-        var startRect = thumbImg.getBoundingClientRect();
-        var endRect = gallery.querySelector('.portal-viewer-img').getBoundingClientRect();
+    function swapScreen(cart) {
+      screenImg.src = cart.getAttribute('data-img');
+      var label = cart.getAttribute('data-label');
+      screenImg.alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
+      if (now) now.textContent = label;
+    }
+    function setInserted(cart) {
+      carts.forEach(function (c) {
+        var wasIn = c.classList.contains('is-in');
+        var isIn = c === cart;
+        c.classList.toggle('is-in', isIn);
+        c.setAttribute('aria-pressed', isIn ? 'true' : 'false');
+        if (wasIn && !isIn) {
+          c.classList.remove('returning'); void c.offsetWidth; c.classList.add('returning');
+          c.addEventListener('animationend', function done() { c.classList.remove('returning'); c.removeEventListener('animationend', done); });
+        }
+      });
+    }
+    function screenOn() {
+      screenImg.classList.remove('screen-off');
+      screenImg.classList.add('screen-on');
+      screenImg.addEventListener('animationend', function done() { screenImg.classList.remove('screen-on'); screenImg.removeEventListener('animationend', done); });
+    }
 
-        var fly = document.createElement('div');
-        fly.className = 'portal-fly';
-        var flyImg = document.createElement('img');
-        flyImg.src = src;
-        flyImg.alt = '';
-        fly.appendChild(flyImg);
-        fly.style.left = startRect.left + 'px';
-        fly.style.top = startRect.top + 'px';
-        fly.style.width = startRect.width + 'px';
-        fly.style.height = startRect.height + 'px';
+    carts.forEach(function (cart) {
+      cart.addEventListener('click', function () {
+        if (busy || cart.classList.contains('is-in')) return;
+        if (prefersReducedMotion()) { swapScreen(cart); setInserted(cart); return; }
+        busy = true;
+        consoleEl.classList.add('busy');
+        var from = cart.getBoundingClientRect();
+        var slotRect = slot.getBoundingClientRect();
+
+        var fly = cart.cloneNode(true);
+        fly.removeAttribute('aria-label');
+        fly.setAttribute('aria-hidden', 'true');
+        fly.classList.add('cart-fly');
+        fly.style.setProperty('--cart-c', getComputedStyle(cart).getPropertyValue('--cart-c'));
+        fly.style.left = from.left + 'px';
+        fly.style.top = from.top + 'px';
+        fly.style.width = from.width + 'px';
+        fly.style.height = from.height + 'px';
         document.body.appendChild(fly);
+        setInserted(cart);
 
-        // Flip from the start rect to the end rect — forcing a reflow
-        // between setting the start position and the end position is
-        // what makes the transition actually animate between them,
-        // rather than jumping straight to the final state.
+        // 1. Travel: the cartridge's top edge lines up with the slot.
         void fly.offsetWidth;
         requestAnimationFrame(function () {
-          fly.style.left = endRect.left + 'px';
-          fly.style.top = endRect.top + 'px';
-          fly.style.width = endRect.width + 'px';
-          fly.style.height = endRect.height + 'px';
+          fly.style.left = (slotRect.left + slotRect.width / 2 - from.width / 2) + 'px';
+          fly.style.top = (slotRect.top + slotRect.height / 2) + 'px';
         });
-
-        thumbs.forEach(function (t) { t.classList.remove('active'); });
-        thumb.classList.add('active');
-
+        // 2. Insert: slides up into the slot while the screen goes off.
         setTimeout(function () {
-          viewerImg.src = src;
-          viewerImg.alt = alt;
+          fly.classList.add('inserting');
+          screenImg.classList.remove('screen-on');
+          screenImg.classList.add('screen-off');
+        }, 470);
+        // 3. New page comes on; tidy up.
+        setTimeout(function () {
+          swapScreen(cart);
+          screenOn();
           fly.remove();
-        }, 460);
+          consoleEl.classList.remove('busy');
+          busy = false;
+        }, 470 + 400);
       });
     });
   }
@@ -417,7 +449,7 @@
   // Dense UI screenshots stay hard to read even at full content width on
   // a phone, so any large case-study screenshot opens full-screen.
   function initLightbox() {
-    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img, .shot-trio .shot img');
+    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img, .shot-trio .shot img, .console-display img');
     if (!imgs.length) return;
     var box = null, lastFocus = null;
 
@@ -467,14 +499,14 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initPortalGallery(); initLightbox(); initMotion(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); });
   } else {
     init();
     initStyleToggle();
     initPageHeadingTyping();
     initWideCards();
     initVersionSnake();
-    initPortalGallery();
+    initConsole();
     initLightbox();
     initMotion();
   }

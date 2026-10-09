@@ -81,23 +81,33 @@
     <div class="wrap">
       <span class="kicker">Problem</span>
       <h2>An unreliable portal that pushed customers to the phone</h2>
-      <div class="portal-gallery" style="margin-top:1.5rem;">
-        <div class="portal-thumbs">
-          <button type="button" class="portal-thumb active" data-img="../assets/business-portal/old-portal-dashboard.webp" data-label="Dashboard">
-            <div class="portal-thumb-img"><img src="../assets/business-portal/old-portal-dashboard.webp" alt="Old portal dashboard, anonymised" width="2000" height="992" loading="eager" /></div>
-            <span class="portal-thumb-label">Dashboard</span>
-          </button>
-          <button type="button" class="portal-thumb" data-img="../assets/business-portal/old-portal-usage.webp" data-label="My Usage">
-            <div class="portal-thumb-img"><img src="../assets/business-portal/old-portal-usage.webp" alt="Old portal usage page showing a 'No data found' error" width="2000" height="998" loading="eager" /></div>
-            <span class="portal-thumb-label">My Usage</span>
-          </button>
-          <button type="button" class="portal-thumb" data-img="../assets/business-portal/old-portal-meter-reading.webp" data-label="Enter Meter Reading">
-            <div class="portal-thumb-img"><img src="../assets/business-portal/old-portal-meter-reading.webp" alt="Old portal enter-meter-reading modal with digital, imperial and dial meter help" width="2000" height="991" loading="eager" /></div>
-            <span class="portal-thumb-label">Enter Meter Reading</span>
-          </button>
+      <div class="console" style="margin-top:1.5rem;">
+        <div class="console-unit">
+          <div class="console-bezel">
+            <div class="console-display"><img src="../assets/business-portal/old-portal-dashboard.webp" alt="Old portal dashboard, anonymised" /></div>
+          </div>
+          <div class="console-base" aria-hidden="true"><span class="console-led"></span><span class="console-slot"></span><span class="console-led"></span></div>
+          <p class="console-now" aria-live="polite">Now showing: <strong>Dashboard</strong></p>
         </div>
-        <div class="portal-viewer">
-          <div class="portal-viewer-img"><img src="../assets/business-portal/old-portal-dashboard.webp" alt="Old portal dashboard, anonymised" width="2000" height="992" loading="eager" /></div>
+        <div class="cartridges" role="group" aria-label="Old portal pages">
+          <div class="cart-bay">
+            <button type="button" class="cartridge is-in" data-img="../assets/business-portal/old-portal-dashboard.webp" data-label="Dashboard" aria-pressed="true" aria-label="Show the old Dashboard page">
+              <span class="cart-label"><img src="../assets/business-portal/old-portal-dashboard.webp" alt="" loading="lazy" /></span>
+              <span class="cart-name">Dashboard</span>
+            </button>
+          </div>
+          <div class="cart-bay">
+            <button type="button" class="cartridge" data-img="../assets/business-portal/old-portal-usage.webp" data-label="My Usage" aria-pressed="false" aria-label="Show the old My Usage page">
+              <span class="cart-label"><img src="../assets/business-portal/old-portal-usage.webp" alt="" loading="lazy" /></span>
+              <span class="cart-name">My Usage</span>
+            </button>
+          </div>
+          <div class="cart-bay">
+            <button type="button" class="cartridge" data-img="../assets/business-portal/old-portal-meter-reading.webp" data-label="Enter Meter Reading" aria-pressed="false" aria-label="Show the old Enter Meter Reading page">
+              <span class="cart-label"><img src="../assets/business-portal/old-portal-meter-reading.webp" alt="" loading="lazy" /></span>
+              <span class="cart-name">Enter Meter Reading</span>
+            </button>
+          </div>
         </div>
       </div>
       <p>The old portal was used by only around 30 customers a month. It technically let people do everything they needed, but the site often crashed, invoices and documents were hard to find, and meter readings regularly failed to send. Most customers phoned customer service instead. Most calls were about meter reads, VAT queries and invoice queries.</p>
@@ -217,6 +227,7 @@
         </div>
         <p>Some feedback suggested users identify sites by account, so I added a group-by option.</p>
         <div class="shot-stack">
+          <figure class="shot"><img src="../assets/business-portal/sites-v2-all.webp" alt="V2 sites page on the All Sites view: one line per site with account number, site ref, MPXN, contract end and status, under All Fuels, Power and Gas filters" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v2">V2</span>All sites, one line each and not grouped by account.</figcaption></figure>
           <figure class="shot"><img src="../assets/business-portal/sites-final.png" alt="Final sites page with an All Sites / By Account toggle, sites grouped under each account with site ref, MPRN and status" width="1920" height="988" loading="lazy" /><figcaption><span class="ver v2">V2</span>Grouped by account, with each account's status summarised in its header.</figcaption></figure>
         </div>
         <p>Individual site pages have a sticky header so users always know where they are. Customers can also now do things that used to mean a phone call: report a change of tenancy, add site contacts, add property and site references, add site-level data to improve usage predictions, and view past meter readings. I expect these, together with clearer meter reading and invoice flows, to take pressure off the team.</p>

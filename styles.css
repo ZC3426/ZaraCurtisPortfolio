@@ -1091,46 +1091,109 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   [data-theme="business"] .soon-label::before { animation: none; }
 }
 
-/* ---------- portal screenshot gallery (old portal) ----------
-   A side column of thumbnails next to one large viewer. Clicking a
-   thumbnail (nav.js: initPortalGallery) flies a clone of it from the
-   thumbnail's own position to the viewer's, growing to fill it, then
-   swaps the viewer's real content underneath once the clone arrives. */
-.portal-gallery { display: flex; gap: 1.25rem; align-items: stretch; }
-.portal-thumbs { display: flex; flex-direction: column; gap: 0.85rem; flex: 0 0 150px; }
-.portal-thumb {
-  display: block; width: 100%; padding: 0; border: none; background: none;
-  cursor: pointer; text-align: left; font: inherit; color: inherit;
+/* ---------- old portal: a screen and three cartridges ----------
+   The old portal plays on a monitor; its three pages sit below as
+   cartridges. Picking one flies it up into the slot under the screen
+   (nav.js: initConsole), the screen switches off and on, and the
+   previously inserted cartridge drops back into its bay. */
+.console { display: flex; flex-direction: column; align-items: center; }
+.console-unit { width: 100%; max-width: 880px; }
+.console-bezel {
+  padding: 16px; background: #d8d1bd; border: 3px solid var(--ink); border-radius: 14px;
+  box-shadow: 6px 6px 0 0 var(--shadow);
 }
-.portal-thumb-img {
-  aspect-ratio: 4 / 3; overflow: hidden;
-  border: 2.5px solid var(--ink); border-radius: 6px;
-  box-shadow: 3px 3px 0 0 var(--shadow);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+.console-display {
+  position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+  background: #0e100d; border: 3px solid var(--ink); border-radius: 6px;
 }
-.portal-thumb-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-.portal-thumb:hover .portal-thumb-img { transform: translateY(-2px); box-shadow: 4px 5px 0 0 var(--shadow); }
-.portal-thumb.active .portal-thumb-img { border-color: var(--accent); box-shadow: 3px 3px 0 0 var(--accent); }
-.portal-thumb-label { display: block; margin-top: 0.4rem; font-size: 0.78rem; font-weight: 700; color: var(--ink-soft); }
-.portal-thumb.active .portal-thumb-label { color: var(--ink); }
-.portal-viewer { flex: 1; min-width: 0; }
-.portal-viewer-img {
-  width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
-  border: 3px solid var(--ink); border-radius: 8px; box-shadow: 5px 5px 0 0 var(--shadow);
+.console-display img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
+  transform-origin: center; cursor: zoom-in;
 }
-.portal-viewer-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
-.portal-fly {
-  position: fixed; z-index: 500; pointer-events: none;
-  overflow: hidden;
-  border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 5px 5px 0 0 var(--shadow);
-  transition: left 0.45s cubic-bezier(0.2, 0.7, 0.3, 1), top 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
-              width 0.45s cubic-bezier(0.2, 0.7, 0.3, 1), height 0.45s cubic-bezier(0.2, 0.7, 0.3, 1);
+/* Faint scanlines over the picture. */
+.console-display::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px);
 }
-.portal-fly img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.console-base { display: flex; justify-content: center; align-items: center; gap: 0.9rem; margin-top: 12px; }
+.console-slot {
+  width: 220px; height: 14px; background: #2b2722; border-radius: 3px;
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.55);
+}
+.console-led {
+  width: 10px; height: 10px; border-radius: 50%; background: #52b788; border: 2px solid var(--ink);
+  transition: background-color 0.2s;
+}
+.console.busy .console-led { background: var(--yellow); }
+.console-now { margin-top: 0.7rem; text-align: center; font-size: 0.88rem; color: var(--ink-soft); }
+.console-now strong { color: var(--ink); }
+
+.cartridges { display: flex; justify-content: center; gap: 1.5rem; width: 100%; margin-top: 1.75rem; }
+.cart-bay { position: relative; flex: 0 1 180px; min-width: 0; }
+/* The empty bay left behind while a cartridge is in the console. */
+.cart-bay::before {
+  content: ""; position: absolute; inset: 0;
+  border: 2.5px dashed var(--ink-soft); border-radius: 10px 10px 4px 4px; opacity: 0.45;
+}
+.cartridge {
+  position: relative; z-index: 1; display: block; width: 100%;
+  padding: 12px 12px 24px; margin: 0;
+  background: var(--cart-c, #8e93a0); color: #fff; text-align: left; font: inherit; cursor: pointer;
+  border: 3px solid var(--ink); border-radius: 10px 10px 4px 4px; box-shadow: 4px 4px 0 0 var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.25s ease;
+}
+.cart-bay:nth-child(1) .cartridge { --cart-c: #5f86d6; }
+.cart-bay:nth-child(2) .cartridge { --cart-c: #e0705f; }
+.cart-bay:nth-child(3) .cartridge { --cart-c: #4fa77a; }
+/* Grip ridges along the bottom edge. */
+.cartridge::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 7px; height: 8px;
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.28) 0 3px, transparent 3px 7px);
+}
+.cartridge:hover, .cartridge:focus-visible { transform: translateY(-4px); box-shadow: 4px 8px 0 0 var(--shadow); }
+.cart-label {
+  display: block; aspect-ratio: 4 / 3; overflow: hidden;
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 4px;
+}
+.cart-label img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.cart-name {
+  display: block; margin-top: 9px; font-family: "Gome Pixel", "Space Mono", monospace;
+  font-size: 0.9rem; line-height: 1.2; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+}
+.cartridge.is-in { opacity: 0; transform: translateY(-24px); pointer-events: none; }
+.cartridge.returning { animation: cart-return 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes cart-return { from { opacity: 0; transform: translateY(-36px); } to { opacity: 1; transform: none; } }
+/* The flying copy: travels to the slot, then slides up into it while
+   the part above the slot line is clipped away. */
+.cart-fly {
+  position: fixed; z-index: 500; pointer-events: none; margin: 0;
+  transition: left 0.45s cubic-bezier(0.22, 1, 0.36, 1), top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cart-fly.inserting { transition: transform 0.38s ease-in, clip-path 0.38s ease-in; transform: translateY(-100%); clip-path: inset(100% 0 0 0); }
+/* Screen switching off and on: a CRT collapse to a line, then back. */
+.console-display img.screen-off { animation: crt-off 0.3s ease-in forwards; }
+.console-display img.screen-on { animation: crt-on 0.45s ease-out; }
+@keyframes crt-off {
+  0% { transform: scale(1, 1); filter: brightness(1); }
+  60% { transform: scale(1, 0.01); filter: brightness(2.5); }
+  100% { transform: scale(0, 0.01); filter: brightness(3); }
+}
+@keyframes crt-on {
+  0% { transform: scale(0.02, 0.01); filter: brightness(3); }
+  40% { transform: scale(1, 0.01); filter: brightness(2.5); }
+  100% { transform: scale(1, 1); filter: brightness(1); }
+}
 @media (max-width: 640px) {
-  .portal-gallery { flex-direction: column; }
-  .portal-thumbs { flex-direction: row; flex: 0 0 auto; overflow-x: auto; gap: 0.75rem; padding-bottom: 0.25rem; }
-  .portal-thumbs .portal-thumb { flex: 0 0 108px; }
+  .console-bezel { padding: 9px; border-radius: 10px; box-shadow: 4px 4px 0 0 var(--shadow); }
+  .console-slot { width: 38%; height: 11px; }
+  .cartridges { gap: 0.75rem; margin-top: 1.4rem; }
+  .cart-bay { flex: 1 1 0; }
+  .cartridge { padding: 7px 7px 18px; border-width: 2.5px; }
+  .cartridge::after { left: 9px; right: 9px; bottom: 5px; height: 6px; }
+  .cart-name { font-size: 0.72rem; margin-top: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cartridge.returning, .console-display img.screen-off, .console-display img.screen-on { animation: none; }
 }
 
 /* ---------- image galleries ---------- */
@@ -1587,13 +1650,41 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
 [data-theme="business"] .shot-stack .shot:not(.phone) img,
 [data-theme="business"] .shot-pair .shot:not(.phone) img,
 [data-theme="business"] .shot-duo .shot img { outline: 1px solid var(--card-line); }
-[data-theme="business"] .portal-thumb-img { border: 1px solid var(--card-line); border-radius: 0; box-shadow: none; }
-[data-theme="business"] .portal-thumb:hover .portal-thumb-img { transform: translateY(-2px); box-shadow: none; border-color: var(--ink); }
-[data-theme="business"] .portal-thumb.active .portal-thumb-img { border-color: var(--outline); box-shadow: 0 0 0 2px var(--outline); }
-[data-theme="business"] .portal-thumb-label { font-weight: 600; }
-[data-theme="business"] .portal-viewer-img { border: 1px solid var(--card-line); border-radius: 0; box-shadow: none; }
-[data-theme="business"] .portal-fly { border: 1px solid var(--ink); border-radius: 0; box-shadow: 0 16px 40px rgba(26, 26, 26, 0.18); }
 [data-theme="business"] .snake-seg { border: none; border-radius: 1px; }
+/* Old portal console: a dark, square monitor and flat graphite
+   cartridges with a coloured top edge; the screen cross-fades. */
+[data-theme="business"] .console-bezel { padding: 14px; background: var(--ink); border: none; border-radius: 3px; box-shadow: 0 18px 40px rgba(26, 26, 26, 0.16); }
+[data-theme="business"] .console-display { border: none; border-radius: 0; background: #111; }
+[data-theme="business"] .console-display::after { display: none; }
+[data-theme="business"] .console-slot { width: 200px; height: 6px; background: var(--ink); border-radius: 0; box-shadow: none; }
+[data-theme="business"] .console-led { width: 7px; height: 7px; border: none; border-radius: 0; background: var(--outline); }
+[data-theme="business"] .console.busy .console-led { background: var(--yellow); }
+[data-theme="business"] .console-now { font-family: var(--mono) !important; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; }
+[data-theme="business"] .cart-bay::before { border: 1px dashed var(--card-line); border-radius: 0; opacity: 1; }
+[data-theme="business"] .cartridge {
+  background: #232323; border: none; border-top: 3px solid var(--cart-c); border-radius: 2px 2px 0 0;
+  box-shadow: none; padding: 11px 11px 22px;
+}
+[data-theme="business"] .cart-bay:nth-child(1) .cartridge { --cart-c: var(--accent); }
+[data-theme="business"] .cart-bay:nth-child(2) .cartridge { --cart-c: var(--accent-2); }
+[data-theme="business"] .cart-bay:nth-child(3) .cartridge { --cart-c: var(--green); }
+[data-theme="business"] .cartridge::after { background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 6px); height: 6px; }
+[data-theme="business"] .cartridge:hover, [data-theme="business"] .cartridge:focus-visible { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(26, 26, 26, 0.18); }
+[data-theme="business"] .cart-label { border: none; border-radius: 0; }
+[data-theme="business"] .cart-name {
+  font-family: var(--mono) !important; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; text-shadow: none; color: #f2f2ee;
+}
+[data-theme="business"] .console-display img.screen-off { animation: screen-off 0.25s ease-in forwards; }
+[data-theme="business"] .console-display img.screen-on { animation: screen-on 0.4s ease-out; }
+@keyframes screen-off { to { opacity: 0; transform: scale(0.985); } }
+@keyframes screen-on { from { opacity: 0; transform: scale(1.015); } to { opacity: 1; transform: none; } }
+@media (max-width: 640px) {
+  [data-theme="business"] .console-bezel { padding: 8px; }
+  [data-theme="business"] .console-slot { width: 38%; }
+  [data-theme="business"] .cartridge { padding: 7px 7px 17px; }
+  [data-theme="business"] .cart-name { font-size: 0.6rem; letter-spacing: 0.06em; }
+}
 /* Coming-soon slots: fine hatching, like the etchings, and a square tag. */
 [data-theme="business"] .shot.coming-soon .media-placeholder {
   border-radius: 0; animation: none;
@@ -1683,7 +1774,6 @@ html[data-theme="personal"] header.site-nav.scrolled { box-shadow: 0 6px 18px rg
 /* Large screenshots ease up a touch on hover in Professional. */
 [data-theme="business"] .shot-stack .shot img,
 [data-theme="business"] .shot-pair .shot img,
-[data-theme="business"] .portal-viewer-img img { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
 [data-theme="business"] .shot-stack .shot:hover img,
 [data-theme="business"] .shot-pair .shot:hover img { transform: scale(1.012); }
 
