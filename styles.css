@@ -1741,6 +1741,27 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
   .carousel-arrow.next { justify-self: start; }
   .carousel-slide > * { transition: opacity 0.35s ease; }
   .carousel-slide:not([data-depth="0"]) > * { opacity: 0; }
+  /* Previous / next case study as full-width buttons. */
+  .cs-nav-footer { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+  .cs-nav-footer .btn { justify-content: center; }
+}
+
+/* Phones: wide screenshots are small, so say they open full-size. */
+@media (max-width: 700px) {
+  .shot-stack .shot:has(> img), .shot-pair .shot:not(.phone):has(> img),
+  .shot-duo .shot:has(> img), .console-display { position: relative; }
+  .shot-stack .shot:has(> img)::before, .shot-pair .shot:not(.phone):has(> img)::before,
+  .shot-duo .shot:has(> img)::before, .console-display::before {
+    content: "Tap to enlarge"; position: absolute; top: 0.9rem; right: 0.9rem; z-index: 2; pointer-events: none;
+    padding: 0.32rem 0.5rem; border-radius: 3px; background: rgba(26, 26, 26, 0.78); color: #fff;
+    font-family: "Space Mono", monospace; font-size: 0.66rem; font-weight: 700; line-height: 1;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .console-display::before { top: 0.5rem; right: 0.5rem; }
+  html[data-theme="business"] .shot-stack .shot:has(> img)::before,
+  html[data-theme="business"] .shot-pair .shot:not(.phone):has(> img)::before,
+  html[data-theme="business"] .shot-duo .shot:has(> img)::before,
+  html[data-theme="business"] .console-display::before { font-family: var(--mono) !important; border-radius: 0; }
 }
 
 /* =====================================================================
