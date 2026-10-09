@@ -413,10 +413,8 @@
       });
     }
 
-    // My Style: once the cartridge seats, the console boots it like a
-    // real cartridge: the screen goes black, the cartridge's name scrolls
-    // down to the middle (a start-up logo), holds a beat, then the game
-    // (the page) cuts in.
+    // My Style: once the cartridge seats, the screen goes black, holds
+    // for a moment while the console "reads" it, then the page comes on.
     function powerOn(cart, preload, done) {
       var src = cart.getAttribute('data-img');
       var label = cart.getAttribute('data-label');
@@ -425,17 +423,11 @@
         boot = document.createElement('div');
         boot.className = 'console-boot';
         boot.setAttribute('aria-hidden', 'true');
-        boot.appendChild(document.createElement('span'));
         display.appendChild(boot);
       }
-      var logo = boot.firstChild;
-      logo.textContent = label;
       boot.getAnimations().forEach(function (x) { x.cancel(); });
-      logo.getAnimations().forEach(function (x) { x.cancel(); });
       var ready = preload.decode ? preload.decode().catch(function () {}) : Promise.resolve();
-      var BLACK = 120, WAIT = 200, DROP = 700, HOLD = 380;
-
-      // Screen to black; the name waits above, then scrolls down.
+      var BLACK = 140, HOLD = 450, ON = 160;
       boot.style.opacity = '0';
       boot.animate([{ opacity: 0 }, { opacity: 1 }], { duration: BLACK, easing: 'ease-in', fill: 'forwards' }).onfinish = function (e) {
         boot.style.opacity = '1';
@@ -445,21 +437,17 @@
           screenImg.src = src;
           screenImg.alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
           if (now) now.textContent = label;
-        });
-      };
-      var drop = display.clientHeight / 2 + 40;
-      logo.animate([
-        { transform: 'translateY(' + (-drop) + 'px)' },
-        { transform: 'translateY(0)' }
-      ], { duration: DROP, delay: BLACK + WAIT, easing: 'cubic-bezier(0.25, 0.6, 0.35, 1)', fill: 'both' }).onfinish = function () {
-        setTimeout(function () {
           var shown = screenImg.decode ? screenImg.decode().catch(function () {}) : Promise.resolve();
-          shown.then(function () {
-            // The game cuts in.
-            boot.style.opacity = '0';
-            if (done) done();
-          });
-        }, HOLD);
+          return shown;
+        }).then(function () {
+          setTimeout(function () {
+            boot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: ON, easing: 'ease-out', fill: 'forwards' }).onfinish = function (e2) {
+              boot.style.opacity = '0';
+              e2.target.cancel();
+              if (done) done();
+            };
+          }, HOLD);
+        });
       };
     }
 
