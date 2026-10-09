@@ -413,33 +413,54 @@
       });
     }
 
-    // My Style: once the cartridge seats, the screen goes black, holds
-    // for a beat, then comes on in two stages: a brief translucent
-    // flicker, then the full picture, like an old set warming up.
+    // My Style: once the cartridge seats, the console boots it like a
+    // real cartridge: the screen goes black, the cartridge's name scrolls
+    // down to the middle (a start-up logo), holds a beat, then the game
+    // (the page) cuts in.
     function powerOn(cart, preload, done) {
       var src = cart.getAttribute('data-img');
       var label = cart.getAttribute('data-label');
-      var BLACK = 120, HOLD = 300, HALF = 50;
-      screenImg.style.transition = 'opacity ' + BLACK + 'ms ease-in';
-      screenImg.style.opacity = '0';
+      var boot = display.querySelector('.console-boot');
+      if (!boot) {
+        boot = document.createElement('div');
+        boot.className = 'console-boot';
+        boot.setAttribute('aria-hidden', 'true');
+        boot.appendChild(document.createElement('span'));
+        display.appendChild(boot);
+      }
+      var logo = boot.firstChild;
+      logo.textContent = label;
+      boot.getAnimations().forEach(function (x) { x.cancel(); });
+      logo.getAnimations().forEach(function (x) { x.cancel(); });
       var ready = preload.decode ? preload.decode().catch(function () {}) : Promise.resolve();
-      setTimeout(function () {
+      var BLACK = 120, WAIT = 200, DROP = 700, HOLD = 380;
+
+      // Screen to black; the name waits above, then scrolls down.
+      boot.style.opacity = '0';
+      boot.animate([{ opacity: 0 }, { opacity: 1 }], { duration: BLACK, easing: 'ease-in', fill: 'forwards' }).onfinish = function (e) {
+        boot.style.opacity = '1';
+        e.target.cancel();
+        // The page loads in behind the black.
         ready.then(function () {
-          screenImg.style.transition = 'none';
           screenImg.src = src;
           screenImg.alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
           if (now) now.textContent = label;
+        });
+      };
+      var drop = display.clientHeight / 2 + 40;
+      logo.animate([
+        { transform: 'translateY(' + (-drop) + 'px)' },
+        { transform: 'translateY(0)' }
+      ], { duration: DROP, delay: BLACK + WAIT, easing: 'cubic-bezier(0.25, 0.6, 0.35, 1)', fill: 'both' }).onfinish = function () {
+        setTimeout(function () {
           var shown = screenImg.decode ? screenImg.decode().catch(function () {}) : Promise.resolve();
           shown.then(function () {
-            screenImg.style.opacity = '0.4';
-            setTimeout(function () {
-              screenImg.style.opacity = '';
-              screenImg.style.transition = '';
-              if (done) done();
-            }, HALF);
+            // The game cuts in.
+            boot.style.opacity = '0';
+            if (done) done();
           });
-        });
-      }, BLACK + HOLD);
+        }, HOLD);
+      };
     }
 
     carts.forEach(function (cart) {
@@ -480,26 +501,26 @@
         consoleEl.appendChild(mask);
         setInserted(cart);
 
-        // Lift out of the bay, carry over under the slot, tip back until
-        // it lies flat (nearly edge-on, a thin strip lined up with the
-        // slot, in perspective), then slide it in.
+        // Lift out of the bay, turn from vertical to horizontal while
+        // carrying it over, line it up lengthways under the slot, then
+        // push it in.
         var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
-        var under = -(from.top - box.top - slotLine);   // top edge at the slot line
-        var h = from.height;
-        var flatY = under - h / 2 + 8;                   // centre just under the slot
-        function pose(x, y, rx, s, light) {
-          return { transform: 'translate(' + x + 'px, ' + y + 'px) rotateX(' + rx + 'deg) scale(' + s + ')', filter: 'brightness(' + light + ')' };
+        var under = -(from.top - box.top - slotLine);   // unturned top edge at the slot line
+        var w = from.width, h = from.height;
+        var lined = under - h / 2 + w / 2;               // turned: its top edge at the slot line
+        function pose(x, y, turn, s, light) {
+          return { transform: 'translate(' + x + 'px, ' + y + 'px) rotate(' + turn + 'deg) scale(' + s + ')', filter: 'brightness(' + light + ')' };
         }
         var frames = [
           pose(0, 0, 0, 1, 1),
           pose(0, -12, 0, 1.04, 1),
-          pose(dx, under + 26, 0, 1, 1),
-          pose(dx, flatY, 84, 1, 0.9),
-          pose(dx, flatY, 84, 1, 0.9),
-          pose(dx, flatY - 26, 84, 1, 0.25)
+          pose(dx, lined + 28, -90, 1, 1),
+          pose(dx, lined, -90, 1, 1),
+          pose(dx, lined, -90, 1, 1),
+          pose(dx, lined - w - 4, -90, 1, 0.25)
         ];
-        var at = [0, 0.12, 0.42, 0.66, 0.74, 1];
-        var ease = ['cubic-bezier(0.3, 0, 0.3, 1)', 'cubic-bezier(0.45, 0, 0.25, 1)', 'cubic-bezier(0.4, 0, 0.2, 1)', 'linear', 'cubic-bezier(0.5, 0, 0.75, 0)'];
+        var at = [0, 0.12, 0.46, 0.6, 0.67, 1];
+        var ease = ['cubic-bezier(0.3, 0, 0.3, 1)', 'cubic-bezier(0.45, 0, 0.25, 1)', 'cubic-bezier(0.4, 0, 0.2, 1)', 'linear', 'cubic-bezier(0.5, 0, 0.6, 1)'];
         frames.forEach(function (f, i) { f.offset = at[i]; if (ease[i]) f.easing = ease[i]; });
         var anim = fly.animate(frames, { duration: 1700, fill: 'forwards' });
 
