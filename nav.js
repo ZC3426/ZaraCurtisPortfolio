@@ -426,6 +426,13 @@
         var box = consoleEl.getBoundingClientRect();
         var from = cart.getBoundingClientRect();
         var to = slot.getBoundingClientRect();
+        var slotLine = to.top + to.height / 2 - box.top;
+
+        // Everything above the mask's top edge (the slot line) is hidden,
+        // and the cartridge darkens as it goes into the slot.
+        var mask = document.createElement('div');
+        mask.className = 'cart-mask';
+        mask.style.top = slotLine + 'px';
 
         var fly = cart.cloneNode(true);
         fly.removeAttribute('aria-label');
@@ -435,28 +442,33 @@
         fly.classList.add('cart-fly');
         fly.style.setProperty('--cart-c', getComputedStyle(cart).getPropertyValue('--cart-c'));
         fly.style.left = (from.left - box.left) + 'px';
-        fly.style.top = (from.top - box.top) + 'px';
+        fly.style.top = (from.top - box.top - slotLine) + 'px';
         fly.style.width = from.width + 'px';
         fly.style.height = from.height + 'px';
-        consoleEl.appendChild(fly);
+        mask.appendChild(fly);
+        consoleEl.appendChild(mask);
         setInserted(cart);
 
+        // Lift out of the bay, carry over to sit just under the slot,
+        // pause to line up, then push all the way in.
         var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
-        var dy = (to.top + to.height / 2) - from.top;
+        var under = -(from.top - box.top - slotLine);   // top edge at the slot line
         var h = from.height;
-        var DURATION = 1000;
         var anim = fly.animate([
-          { transform: 'translate(0px, 0px)', clipPath: 'inset(0px 0px 0px 0px)', offset: 0 },
-          { transform: 'translate(' + dx + 'px, ' + dy + 'px)', clipPath: 'inset(0px 0px 0px 0px)', offset: 0.58 },
-          { transform: 'translate(' + dx + 'px, ' + (dy - h) + 'px)', clipPath: 'inset(' + h + 'px 0px 0px 0px)', offset: 1 }
-        ], { duration: DURATION, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' });
+          { transform: 'translate(0px, 0px) scale(1)', filter: 'brightness(1)', offset: 0, easing: 'cubic-bezier(0.3, 0, 0.3, 1)' },
+          { transform: 'translate(0px, -12px) scale(1.04)', filter: 'brightness(1)', offset: 0.14, easing: 'cubic-bezier(0.45, 0, 0.25, 1)' },
+          { transform: 'translate(' + dx + 'px, ' + (under + 6) + 'px) scale(1)', filter: 'brightness(1)', offset: 0.5, easing: 'ease-out' },
+          { transform: 'translate(' + dx + 'px, ' + under + 'px) scale(1)', filter: 'brightness(1)', offset: 0.6, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' },
+          { transform: 'translate(' + dx + 'px, ' + (under - h - 4) + 'px) scale(1)', filter: 'brightness(0.25)', offset: 1 }
+        ], { duration: 1400, fill: 'forwards' });
 
-        // The page starts fading in as the cartridge seats itself.
-        setTimeout(function () { showPage(cart, true); }, DURATION * 0.7);
         anim.onfinish = function () {
-          fly.remove();
-          consoleEl.classList.remove('busy');
-          busy = false;
+          mask.remove();
+          // The console takes the cartridge with a small click.
+          var bezel = consoleEl.querySelector('.console-unit');
+          if (bezel) bezel.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 180, easing: 'ease-out' });
+          showPage(cart, true);
+          setTimeout(function () { consoleEl.classList.remove('busy'); busy = false; }, 420);
         };
       });
     });
