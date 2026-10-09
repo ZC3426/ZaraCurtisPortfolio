@@ -30,7 +30,7 @@ html[data-theme="business"] {
   --ink-soft: #5f5f5a;
   --body-ink: #3d3d39;
   --line: #dedcd5;
-  --card-line: rgba(26, 26, 26, 0.16);
+  --card-line: rgba(26, 26, 26, 0.08);
   --accent: #2f5fd0;
   --accent-soft: #e6ecfa;
   --accent-2: #d64541;
@@ -44,9 +44,11 @@ html[data-theme="business"] {
   --forest: #173d2b;
   --shadow: rgba(26, 26, 26, 0.08);
   --grey-light: #8a8983;
-  --sans: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Space Mono", ui-monospace, Menlo, monospace;
-  --radius: 2px;
+  --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --radius: 14px;
+  --soft-shadow: 0 1px 2px rgba(26, 26, 26, 0.04), 0 6px 22px rgba(26, 26, 26, 0.06);
+  --soft-shadow-hover: 0 2px 6px rgba(26, 26, 26, 0.05), 0 18px 40px rgba(26, 26, 26, 0.12);
 }
 
 @font-face {
@@ -179,7 +181,7 @@ header.site-nav .row {
   white-space: nowrap; transition: color 0.2s;
 }
 .style-toggle .style-icon { display: none; }
-.style-toggle .style-option.business { font-family: "Space Grotesk", "Helvetica Neue", Arial, sans-serif; color: #4a4a4a; }
+.style-toggle .style-option.business { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; color: #4a4a4a; }
 .style-toggle .style-option.personal { font-family: "Gome Pixel", "Space Mono", monospace; color: #2b7a78; }
 /* Colored per active side (tan for business, teal for personal) rather
    than a flat neutral pill, per the "background for X should be Y"
@@ -1692,6 +1694,109 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
 /* ---- footer ---- */
 [data-theme="business"] footer.site-footer { color: var(--ink-soft); font-size: 0.75rem; border-top: 1px solid var(--line); }
 [data-theme="business"] .cs-nav-footer { border-top: 1px solid var(--line); }
+
+/* ---- softened: a few Apple-like touches over the editorial base ----
+   Rounded cards and panels with soft shadows instead of hard ink rules,
+   pill buttons, a frosted hairline nav, frosted title panels over the
+   etchings, and a softly stacked carousel. Colour, etchings and layout
+   stay as they are. */
+[data-theme="business"] h1, [data-theme="business"] h2 { letter-spacing: -0.025em; }
+[data-theme="business"] .kicker,
+[data-theme="business"] .section-head .kicker,
+[data-theme="business"] .cs-section .kicker { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; }
+[data-theme="business"] header.site-nav {
+  background: rgba(247, 246, 242, 0.78);
+  -webkit-backdrop-filter: saturate(170%) blur(18px); backdrop-filter: saturate(170%) blur(18px);
+  border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+}
+[data-theme="business"] nav.links a.nav-btn, [data-theme="business"] nav.links a.cta { border-radius: 999px; }
+[data-theme="business"] nav.links a.nav-btn:hover { box-shadow: none; background: rgba(26, 26, 26, 0.05); }
+[data-theme="business"] nav.links a.nav-btn.active { box-shadow: none; background: var(--green-soft); color: var(--forest); }
+[data-theme="business"] .nav-toggle { border: 1px solid rgba(26, 26, 26, 0.12); border-radius: 12px; box-shadow: var(--soft-shadow); }
+@media (max-width: 1120px) {
+  [data-theme="business"] nav.links { background: rgba(247, 246, 242, 0.97); border-bottom: 1px solid rgba(26, 26, 26, 0.08); }
+  [data-theme="business"] nav.links a.nav-btn { border-radius: 0; background: none; }
+  [data-theme="business"] nav.links a.nav-btn.active { background: none; box-shadow: inset 3px 0 0 var(--outline); }
+  [data-theme="business"] nav.links a.cta { border-radius: 999px; }
+}
+html[data-theme="business"] .style-toggle { border-color: rgba(26, 26, 26, 0.1); border-radius: 999px; box-shadow: var(--soft-shadow); }
+html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
+[data-theme="business"] .page-hero, [data-theme="business"] .cs-hero { border-bottom: 1px solid rgba(26, 26, 26, 0.08); }
+[data-theme="business"] .hero-textbox,
+[data-theme="business"] .page-hero .title-box {
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+  border-color: rgba(255, 255, 255, 0.9); border-radius: 20px; box-shadow: 0 14px 36px rgba(26, 26, 26, 0.1);
+}
+[data-theme="business"] .cs-hero .back { text-transform: none; letter-spacing: 0; font-size: 0.9rem; font-weight: 500; }
+[data-theme="business"] .overview-grid,
+[data-theme="business"] .stat,
+[data-theme="business"] .metrics-paper { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .card-mini,
+[data-theme="business"] .shot,
+[data-theme="business"] .project-card { border-radius: var(--radius); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .section-head + * .card-mini, [data-theme="business"] .card-mini { border-color: var(--card-line); }
+/* Numbered and themed cards: soft tints in place of the top rules. */
+[data-theme="business"] .list-cards .card-mini:not(:has(h4)) { border-top: 1px solid var(--card-line); }
+[data-theme="business"] .list-cards .card-mini:not(:has(h4)):nth-child(4n+1) { background: #f1f5fd; }
+[data-theme="business"] .list-cards .card-mini:not(:has(h4)):nth-child(4n+2) { background: #fdf2f1; }
+[data-theme="business"] .list-cards .card-mini:not(:has(h4)):nth-child(4n+3) { background: #fdf8e8; }
+[data-theme="business"] .list-cards .card-mini:not(:has(h4)):nth-child(4n+4) { background: #eef7f1; }
+[data-theme="business"] .list-cards .card-mini:not(:has(h4))::before { border-radius: 50%; }
+[data-theme="business"] .card-mini.theme-cogload { background: #eef3fb !important; border-top: 1px solid var(--card-line); }
+[data-theme="business"] .card-mini.theme-safety { background: #fcf0ef !important; border-top: 1px solid var(--card-line); }
+[data-theme="business"] .card-mini.theme-rep { background: #eef7f1 !important; border-top: 1px solid var(--card-line); }
+[data-theme="business"] .trend-1 { background: #fdf2ee; border-top: 1px solid var(--card-line); }
+[data-theme="business"] .trend-2 { background: #fdf8e8; border-top: 1px solid var(--card-line); }
+[data-theme="business"] .trend-3 { background: #eef7f1; border-top: 1px solid var(--card-line); }
+[data-theme="business"] .trend-num { border-radius: 50%; }
+[data-theme="business"] .shot .ver, [data-theme="business"] .shot .label { border-radius: 999px; }
+[data-theme="business"] .shot-stack .shot img, [data-theme="business"] .shot-pair .shot img,
+[data-theme="business"] .shot-duo .shot img { border-radius: 8px; }
+[data-theme="business"] .shot.coming-soon .media-placeholder { border-radius: 8px; }
+[data-theme="business"] .soon-label { border-radius: 999px; border-color: rgba(26, 26, 26, 0.14); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .soon-label::before { border-radius: 50%; }
+[data-theme="business"] .cs-section blockquote { border-radius: 4px var(--radius) var(--radius) 4px; box-shadow: var(--soft-shadow); }
+[data-theme="business"] .outcome { border-radius: 4px 12px 12px 4px; }
+/* Buttons: pills. */
+[data-theme="business"] .btn { border-radius: 999px; }
+[data-theme="business"] .btn.ghost { border-color: rgba(26, 26, 26, 0.22); }
+[data-theme="business"] .btn.ghost:hover { background: rgba(26, 26, 26, 0.05); color: var(--ink); border-color: rgba(26, 26, 26, 0.35); }
+[data-theme="business"] .btn.primary:hover { background: #18492f; border-color: #18492f; }
+/* Project cards: lift on a soft shadow. */
+[data-theme="business"] .project-card:hover,
+[data-theme="business"] .carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:not(.exit-right):not(.entering):not(.enter-from-right):hover {
+  transform: translateY(-5px); border-color: var(--card-line); box-shadow: var(--soft-shadow-hover);
+}
+[data-theme="business"] .thumb.cover img { border-radius: 8px; box-shadow: 0 6px 20px rgba(26, 26, 26, 0.1); }
+[data-theme="business"] .project-card .arrow { text-transform: none; letter-spacing: 0; font-size: 0.9rem; font-weight: 600; }
+[data-theme="business"] .carousel-slide[data-depth="1"]:not(.exit-right):not(.enter-from-right) { transform: translateY(14px) scale(0.95); }
+[data-theme="business"] .carousel-slide[data-depth="2"]:not(.exit-right):not(.enter-from-right) { transform: translateY(28px) scale(0.9); }
+[data-theme="business"] .carousel-slide[data-depth="3"]:not(.exit-right):not(.enter-from-right) { transform: translateY(42px) scale(0.85); }
+[data-theme="business"] .carousel-arrow { border-radius: 50%; border-color: rgba(26, 26, 26, 0.12); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .carousel-dots .dot { height: 7px; width: 7px; border-radius: 999px; }
+[data-theme="business"] .carousel-dots .dot.active { width: 22px; }
+[data-theme="business"] .contact-box { border-radius: 24px; }
+[data-theme="business"] .folder-tab { border-radius: 12px 12px 0 0; }
+[data-theme="business"] .folder-tab.active { border-top: 1px solid var(--card-line); }
+[data-theme="business"] .folder-pages,
+[data-theme="business"] .folder-pages[data-active="about"],
+[data-theme="business"] .folder-pages[data-active="skills"] { border-radius: 0 var(--radius) var(--radius) var(--radius); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .paper-sheet, [data-theme="business"] .mosaic-paper { border-radius: 10px; }
+[data-theme="business"] .portal-viewer-img, [data-theme="business"] .console-bezel { border-radius: 18px; }
+[data-theme="business"] .console-display { border-radius: 8px; }
+[data-theme="business"] .console-slot { border-radius: 999px; }
+[data-theme="business"] .console-led { border-radius: 50%; }
+[data-theme="business"] .cartridge { border-radius: 10px 10px 4px 4px; }
+[data-theme="business"] .cart-label { border-radius: 4px; }
+[data-theme="business"] .cart-bay::before { border-radius: 10px 10px 4px 4px; }
+[data-theme="business"] .cart-name { text-transform: none; letter-spacing: 0; font-size: 0.78rem; font-weight: 600; }
+[data-theme="business"] .console-now { text-transform: none; letter-spacing: 0; font-size: 0.85rem; }
+@media (max-width: 640px) {
+  [data-theme="business"] .console-bezel { border-radius: 12px; }
+  [data-theme="business"] .cart-name { font-size: 0.68rem; }
+}
+[data-theme="business"] footer.site-footer { border-top: 1px solid rgba(26, 26, 26, 0.08); }
 
 /* =====================================================================
    PHONES (both themes)
