@@ -1913,6 +1913,20 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
   html[data-theme="business"] .shot-duo .shot:has(> img)::before { font-family: var(--mono) !important; border-radius: 0; }
 }
 
+/* ---------- soot sprites (My Style homepage, phones; soot.js) ---------- */
+.soot-layer { position: absolute; top: 0; left: 0; width: 100%; height: 0; overflow: visible; pointer-events: none; z-index: 30; }
+.soot { position: absolute; left: 0; top: 0; width: 30px; height: 30px; will-change: transform; }
+.soot-body, .soot-breathe { width: 100%; height: 100%; transform-origin: 50% 100%; }
+.soot-breathe { animation: soot-breathe 1.5s ease-in-out infinite alternate; animation-delay: var(--breathe-delay, 0s); }
+@keyframes soot-breathe { from { transform: scale(1, 1); } to { transform: scale(1.05, 0.95); } }
+.soot svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.soot-eyes { transform-box: fill-box; transform-origin: center; }
+.soot-pupils { transition: transform 0.25s ease; }
+.soot-shadow {
+  position: absolute; left: 18%; right: 18%; bottom: -2px; height: 5px; border-radius: 50%;
+  background: rgba(34, 31, 26, 0.2); filter: blur(1px);
+}
+
 /* =====================================================================
    MOTION (both themes)
    Scroll reveals use opacity plus the independent `translate` property,
