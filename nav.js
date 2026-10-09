@@ -502,29 +502,43 @@
         setInserted(cart);
 
         // Lift it out, carry it over upright to just under the slot, lean
-        // it back a little (pivoting on its bottom edge), then push it up
-        // so the top edge goes into the black first and the rest follows.
+        // it back a little (pivoting on its bottom edge), dip a touch
+        // (anticipation), then push it up so the top edge goes into the
+        // black first and the rest follows. It keeps its colour the whole
+        // way: the slot (a mask) covers it, and the only shading is a
+        // thin shadow cast by the slot onto the part right at its mouth.
         var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
-        var under = -(from.top - box.top - slotLine);   // upright: top edge at the slot line
+        var top0 = from.top - box.top - slotLine;       // its top edge, below the slot line
         var h = from.height;
-        var LAY = 24;                                   // a gentle lean back
-        var rest = under + 3;                           // upright, top edge just under the slot
-        function pose(x, y, tilt, s, light) {
-          return { transform: 'translate(' + x + 'px, ' + y + 'px) rotateX(' + tilt + 'deg) scale(' + s + ')', filter: 'brightness(' + light + ')' };
-        }
-        var frames = [
-          pose(0, 0, 0, 1, 1),
-          pose(0, -12, 0, 1.04, 1),
-          pose(dx, rest, 0, 1, 1),
-          pose(dx, rest, LAY, 1, 1),
-          pose(dx, rest, LAY, 1, 1),
-          pose(dx, rest - h * 0.35, LAY, 1, 0.7),
-          pose(dx, rest - h - 14, LAY, 1, 0.3)
+        var LAY = 24;                                    // a gentle lean back
+        var rest = -top0 + 3;                            // top edge just under the slot
+        var path = [                                     // [offset, y, tilt, scale, easing to next]
+          [0,    0,               0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
+          [0.12, -12,             0,   1.04, 'cubic-bezier(0.45, 0, 0.25, 1)'],
+          [0.42, rest,            0,   1,    'cubic-bezier(0.4, 0, 0.3, 1)'],
+          [0.55, rest,            LAY, 1,    'ease-in-out'],
+          [0.62, rest + 3,        LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
+          [1,    rest - h - 14,   LAY, 1]
         ];
-        var at = [0, 0.12, 0.4, 0.55, 0.62, 0.8, 1];
-        var ease = ['cubic-bezier(0.3, 0, 0.3, 1)', 'cubic-bezier(0.45, 0, 0.25, 1)', 'cubic-bezier(0.4, 0, 0.3, 1)', 'linear', 'cubic-bezier(0.5, 0, 1, 1)', 'linear'];
-        frames.forEach(function (f, i) { f.offset = at[i]; if (ease[i]) f.easing = ease[i]; });
+        var frames = path.map(function (p) {
+          var x = p[0] < 0.42 ? 0 : dx;                  // it travels across during the carry
+          var f = { offset: p[0], transform: 'translate(' + x + 'px, ' + p[1] + 'px) rotateX(' + p[2] + 'deg) scale(' + p[3] + ')' };
+          if (p[4]) f.easing = p[4];
+          return f;
+        });
         var anim = fly.animate(frames, { duration: 1800, fill: 'forwards' });
+
+        // The slot's shadow on the cartridge: a thin band that stays at
+        // the slot line while the cartridge slides past it, so only the
+        // part about to go in is shaded, and it leaves with the cartridge.
+        var shade = document.createElement('span');
+        shade.className = 'cart-shade';
+        fly.appendChild(shade);
+        shade.animate(path.map(function (p) {
+          var f = { offset: p[0], transform: 'translateY(' + (-(top0 + p[1])) + 'px)', opacity: p[0] >= 0.55 ? 1 : 0 };
+          if (p[4]) f.easing = p[4];
+          return f;
+        }), { duration: 1800, fill: 'forwards' });
 
         anim.onfinish = function () {
           mask.remove();

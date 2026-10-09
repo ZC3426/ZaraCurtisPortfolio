@@ -1195,7 +1195,12 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
    slot line, so whatever passes above it is simply cut off (works in
    every browser, unlike animating clip-path); it darkens as it goes in. */
 .cart-mask { position: absolute; z-index: 5; left: 0; right: 0; bottom: 0; overflow: hidden; pointer-events: none; perspective: 650px; perspective-origin: 50% 0; }
-.cart-fly { position: absolute; z-index: 1; pointer-events: none; margin: 0; will-change: transform, filter; transform-origin: 50% 100%; backface-visibility: hidden; }
+.cart-fly { position: absolute; z-index: 1; pointer-events: none; margin: 0; will-change: transform; transform-origin: 50% 100%; backface-visibility: hidden; overflow: hidden; }
+/* The slot's shadow falling on the cartridge just below its mouth. */
+.cart-shade {
+  position: absolute; left: 0; right: 0; top: 0; height: 22px; z-index: 3; pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0) 100%);
+}
 @media (max-width: 640px) {
   /* Nearly edge to edge, with a thin bezel. */
   .console-unit { width: calc(100% + 1.25rem); max-width: none; margin: 0 -0.625rem; }
