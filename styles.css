@@ -446,7 +446,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
    JS adds that class right after an arrow/dot click and removes it on
    the next real mouse movement, so hover still works, just not for a
    position the cursor never chose. */
-.carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:hover {
+.carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:not(.exit-right):not(.entering):not(.enter-from-right):hover {
   transform: translate(-6px, -12px) scale(1.03);
   box-shadow: 6px 6px 0 0 var(--shadow), 0 22px 32px rgba(34, 31, 26, 0.22);
 }
@@ -554,6 +554,13 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 }
 .carousel-slide.exit-right { transform: translateX(260%) rotate(10deg); opacity: 1; z-index: 70; }
 .carousel-slide.enter-from-right { transform: translateX(260%) rotate(-10deg); opacity: 1; z-index: 70; }
+/* A card gliding off (or back in) ignores the mouse entirely: it sweeps
+   right under the cursor sitting on the Next arrow, and if it could be
+   hovered, the hover lift (more specific than the glide) would take over
+   its transform and stop it mid-flight. */
+.carousel-stack .carousel-slide.exit-right,
+.carousel-stack .carousel-slide.entering,
+.carousel-stack .carousel-slide.enter-from-right { pointer-events: none; }
 .carousel-arrow {
   position: static; flex: 0 0 auto;
   width: 52px; height: 52px; border-radius: 50%;
@@ -1459,7 +1466,7 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
 /* ---- project cards & carousel ---- */
 [data-theme="business"] .project-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
 [data-theme="business"] .project-card:hover,
-[data-theme="business"] .carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:hover {
+[data-theme="business"] .carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:not(.exit-right):not(.entering):not(.enter-from-right):hover {
   transform: translate(-3px, -3px); border-color: var(--ink); box-shadow: 5px 5px 0 0 var(--ink);
 }
 [data-theme="business"] .project-card .thumb { border-bottom: 1px solid var(--card-line); font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
