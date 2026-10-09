@@ -386,7 +386,7 @@
         var isIn = c === cart;
         c.classList.toggle('is-in', isIn);
         c.setAttribute('aria-pressed', isIn ? 'true' : 'false');
-        if (wasIn && !isIn && !prefersReducedMotion()) {
+        if (wasIn && !isIn && !prefersReducedMotion() && document.documentElement.getAttribute('data-theme') !== 'business') {
           c.classList.remove('returning'); void c.offsetWidth; c.classList.add('returning');
           c.addEventListener('animationend', function done() { c.classList.remove('returning'); c.removeEventListener('animationend', done); });
         }
@@ -416,6 +416,10 @@
     carts.forEach(function (cart) {
       cart.addEventListener('click', function () {
         if (busy || cart.classList.contains('is-in')) return;
+        // Professional shows these as a plain gallery: just cross-fade.
+        if (document.documentElement.getAttribute('data-theme') === 'business') {
+          setInserted(cart); showPage(cart, !prefersReducedMotion()); return;
+        }
         if (prefersReducedMotion() || !canAnimate) { setInserted(cart); showPage(cart, false); return; }
         busy = true;
         consoleEl.classList.add('busy');

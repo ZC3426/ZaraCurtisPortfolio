@@ -44,9 +44,9 @@ html[data-theme="business"] {
   --forest: #173d2b;
   --shadow: rgba(26, 26, 26, 0.08);
   --grey-light: #8a8983;
-  --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --radius: 14px;
+  --sans: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --radius: 20px;
   --soft-shadow: 0 1px 2px rgba(26, 26, 26, 0.04), 0 6px 22px rgba(26, 26, 26, 0.06);
   --soft-shadow-hover: 0 2px 6px rgba(26, 26, 26, 0.05), 0 18px 40px rgba(26, 26, 26, 0.12);
 }
@@ -181,7 +181,7 @@ header.site-nav .row {
   white-space: nowrap; transition: color 0.2s;
 }
 .style-toggle .style-icon { display: none; }
-.style-toggle .style-option.business { font-family: "Inter", "Helvetica Neue", Arial, sans-serif; color: #4a4a4a; }
+.style-toggle .style-option.business { font-family: "Geist", "Helvetica Neue", Arial, sans-serif; color: #4a4a4a; }
 .style-toggle .style-option.personal { font-family: "Gome Pixel", "Space Mono", monospace; color: #2b7a78; }
 /* Colored per active side (tan for business, teal for personal) rather
    than a flat neutral pill, per the "background for X should be Y"
@@ -955,6 +955,19 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    The number badge is Space Mono, not the heading font — Gome Pixel's
    digit glyphs don't render correctly, so numerals never use it. */
 .trend-cards { grid-template-columns: repeat(3, 1fr); }
+/* My Style, Equil: the colour moves to each card's border (and badge),
+   with a plain card, so a page of coloured cards isn't overwhelming. */
+html[data-theme="personal"] .page-equil .list-cards .card-mini:not(:has(h4)) { background: var(--surface); border-color: var(--card-c, var(--ink)); }
+html[data-theme="personal"] .page-equil .list-cards .card-mini:not(:has(h4)):nth-child(4n+1) { --card-c: #3b6ce4; }
+html[data-theme="personal"] .page-equil .list-cards .card-mini:not(:has(h4)):nth-child(4n+2) { --card-c: #ea4747; }
+html[data-theme="personal"] .page-equil .list-cards .card-mini:not(:has(h4)):nth-child(4n+3) { --card-c: #e3ad12; }
+html[data-theme="personal"] .page-equil .list-cards .card-mini:not(:has(h4)):nth-child(4n+4) { --card-c: #3f9c63; }
+html[data-theme="personal"] .page-equil .card-mini.theme-cogload { background: var(--surface) !important; border-color: #3a75b5; }
+html[data-theme="personal"] .page-equil .card-mini.theme-safety { background: var(--surface) !important; border-color: #c94840; }
+html[data-theme="personal"] .page-equil .card-mini.theme-rep { background: var(--surface) !important; border-color: #327d51; }
+html[data-theme="personal"] .page-equil .trend-1 { background: var(--surface); border-color: #e2564f; }
+html[data-theme="personal"] .page-equil .trend-2 { background: var(--surface); border-color: #c98a1f; }
+html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); border-color: #3f9c63; }
 .trend-cards > .trend:last-child:nth-child(odd) { grid-column: auto; max-width: none; margin: 0; }
 .card-mini.trend { border-width: 3px; }
 .card-mini.trend h4 {
@@ -1712,7 +1725,7 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
 [data-theme="business"] nav.links a.nav-btn, [data-theme="business"] nav.links a.cta { border-radius: 999px; }
 [data-theme="business"] nav.links a.nav-btn:hover { box-shadow: none; background: rgba(26, 26, 26, 0.05); }
 [data-theme="business"] nav.links a.nav-btn.active { box-shadow: none; background: var(--green-soft); color: var(--forest); }
-[data-theme="business"] .nav-toggle { border: 1px solid rgba(26, 26, 26, 0.12); border-radius: 12px; box-shadow: var(--soft-shadow); }
+[data-theme="business"] .nav-toggle { border: 1px solid rgba(26, 26, 26, 0.12); border-radius: 14px; box-shadow: var(--soft-shadow); }
 @media (max-width: 1120px) {
   [data-theme="business"] nav.links { background: rgba(247, 246, 242, 0.97); border-bottom: 1px solid rgba(26, 26, 26, 0.08); }
   [data-theme="business"] nav.links a.nav-btn { border-radius: 0; background: none; }
@@ -1726,7 +1739,7 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
 [data-theme="business"] .page-hero .title-box {
   background: rgba(255, 255, 255, 0.8);
   -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
-  border-color: rgba(255, 255, 255, 0.9); border-radius: 20px; box-shadow: 0 14px 36px rgba(26, 26, 26, 0.1);
+  border-color: rgba(255, 255, 255, 0.9); border-radius: 26px; box-shadow: 0 14px 36px rgba(26, 26, 26, 0.1);
 }
 [data-theme="business"] .cs-hero .back { text-transform: none; letter-spacing: 0; font-size: 0.9rem; font-weight: 500; }
 [data-theme="business"] .overview-grid,
@@ -1752,12 +1765,12 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
 [data-theme="business"] .trend-num { border-radius: 50%; }
 [data-theme="business"] .shot .ver, [data-theme="business"] .shot .label { border-radius: 999px; }
 [data-theme="business"] .shot-stack .shot img, [data-theme="business"] .shot-pair .shot img,
-[data-theme="business"] .shot-duo .shot img { border-radius: 8px; }
-[data-theme="business"] .shot.coming-soon .media-placeholder { border-radius: 8px; }
+[data-theme="business"] .shot-duo .shot img { border-radius: 12px; }
+[data-theme="business"] .shot.coming-soon .media-placeholder { border-radius: 12px; }
 [data-theme="business"] .soon-label { border-radius: 999px; border-color: rgba(26, 26, 26, 0.14); box-shadow: var(--soft-shadow); }
 [data-theme="business"] .soon-label::before { border-radius: 50%; }
-[data-theme="business"] .cs-section blockquote { border-radius: 4px var(--radius) var(--radius) 4px; box-shadow: var(--soft-shadow); }
-[data-theme="business"] .outcome { border-radius: 4px 12px 12px 4px; }
+[data-theme="business"] .cs-section blockquote { border-radius: 6px var(--radius) var(--radius) 6px; box-shadow: var(--soft-shadow); }
+[data-theme="business"] .outcome { border-radius: 6px 16px 16px 6px; }
 /* Buttons: pills. */
 [data-theme="business"] .btn { border-radius: 999px; }
 [data-theme="business"] .btn.ghost { border-color: rgba(26, 26, 26, 0.22); }
@@ -1768,7 +1781,7 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
 [data-theme="business"] .carousel-stack:not(.suppress-hover) .carousel-slide[data-depth="0"]:not(.exit-right):not(.entering):not(.enter-from-right):hover {
   transform: translateY(-5px); border-color: var(--card-line); box-shadow: var(--soft-shadow-hover);
 }
-[data-theme="business"] .thumb.cover img { border-radius: 8px; box-shadow: 0 6px 20px rgba(26, 26, 26, 0.1); }
+[data-theme="business"] .thumb.cover img { border-radius: 12px; box-shadow: 0 6px 20px rgba(26, 26, 26, 0.1); }
 [data-theme="business"] .project-card .arrow { text-transform: none; letter-spacing: 0; font-size: 0.9rem; font-weight: 600; }
 [data-theme="business"] .carousel-slide[data-depth="1"]:not(.exit-right):not(.enter-from-right) { transform: translateY(14px) scale(0.95); }
 [data-theme="business"] .carousel-slide[data-depth="2"]:not(.exit-right):not(.enter-from-right) { transform: translateY(28px) scale(0.9); }
@@ -1776,13 +1789,13 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
 [data-theme="business"] .carousel-arrow { border-radius: 50%; border-color: rgba(26, 26, 26, 0.12); box-shadow: var(--soft-shadow); }
 [data-theme="business"] .carousel-dots .dot { height: 7px; width: 7px; border-radius: 999px; }
 [data-theme="business"] .carousel-dots .dot.active { width: 22px; }
-[data-theme="business"] .contact-box { border-radius: 24px; }
-[data-theme="business"] .folder-tab { border-radius: 12px 12px 0 0; }
+[data-theme="business"] .contact-box { border-radius: 30px; }
+[data-theme="business"] .folder-tab { border-radius: 16px 16px 0 0; }
 [data-theme="business"] .folder-tab.active { border-top: 1px solid var(--card-line); }
 [data-theme="business"] .folder-pages,
 [data-theme="business"] .folder-pages[data-active="about"],
 [data-theme="business"] .folder-pages[data-active="skills"] { border-radius: 0 var(--radius) var(--radius) var(--radius); box-shadow: var(--soft-shadow); }
-[data-theme="business"] .paper-sheet, [data-theme="business"] .mosaic-paper { border-radius: 10px; }
+[data-theme="business"] .paper-sheet, [data-theme="business"] .mosaic-paper { border-radius: 16px; }
 [data-theme="business"] .portal-viewer-img, [data-theme="business"] .console-bezel { border-radius: 18px; }
 [data-theme="business"] .console-display { border-radius: 8px; }
 [data-theme="business"] .console-slot { border-radius: 999px; }
@@ -1797,6 +1810,43 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
   [data-theme="business"] .cart-name { font-size: 0.68rem; }
 }
 [data-theme="business"] footer.site-footer { border-top: 1px solid rgba(26, 26, 26, 0.08); }
+
+/* ---- old portal: a plain gallery in Professional ----
+   Same markup as My Style's console, laid out as thumbnails beside a
+   large viewer (a row underneath on phones); picking one cross-fades
+   the viewer, with no cartridge animation (nav.js). */
+[data-theme="business"] .console { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+[data-theme="business"] .console-unit { grid-column: 2; grid-row: 1; max-width: none; }
+[data-theme="business"] .console-bezel { padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; }
+[data-theme="business"] .console-display { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); background: #fff; }
+[data-theme="business"] .console-base { display: none; }
+[data-theme="business"] .console-now { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
+[data-theme="business"] .cartridges { grid-column: 1; grid-row: 1; flex-direction: column; justify-content: flex-start; gap: 0.9rem; margin-top: 0; }
+[data-theme="business"] .cart-bay { flex: none; width: 100%; }
+[data-theme="business"] .cart-bay::before { display: none; }
+[data-theme="business"] .cartridge {
+  padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; color: var(--ink);
+}
+[data-theme="business"] .cartridge::after { display: none; }
+[data-theme="business"] .cartridge:hover, [data-theme="business"] .cartridge:focus-visible { transform: none; box-shadow: none; }
+[data-theme="business"] .cartridge.is-in { opacity: 1; transform: none; }
+[data-theme="business"] .cartridge.returning { animation: none; }
+[data-theme="business"] .cart-label {
+  border: 1px solid var(--card-line); border-radius: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+[data-theme="business"] .cartridge:hover .cart-label { transform: translateY(-2px); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .cartridge.is-in .cart-label { border-color: var(--outline); box-shadow: 0 0 0 3px rgba(31, 92, 63, 0.18); }
+[data-theme="business"] .cart-name { margin-top: 0.45rem; color: var(--ink-soft); font-size: 0.8rem; font-weight: 500; }
+[data-theme="business"] .cartridge.is-in .cart-name { color: var(--ink); font-weight: 600; }
+@media (max-width: 640px) {
+  [data-theme="business"] .console { grid-template-columns: minmax(0, 1fr); gap: 0.9rem; }
+  [data-theme="business"] .console-unit { grid-column: 1; grid-row: 1; width: 100%; margin: 0; }
+  [data-theme="business"] .cartridges { grid-column: 1; grid-row: 2; flex-direction: row; gap: 0.75rem; }
+  [data-theme="business"] .cart-bay { flex: 1 1 0; }
+  [data-theme="business"] .cart-label { border-radius: 10px; }
+  [data-theme="business"] .cart-name { font-size: 0.72rem; }
+}
 
 /* =====================================================================
    PHONES (both themes)
