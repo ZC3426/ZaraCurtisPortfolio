@@ -72,7 +72,7 @@
 
     // Containers whose children animate individually (staggered) rather
     // than the container moving as one block.
-    var STAGGER = '.page-study, .list-cards, .two-col, .stat-row, .trend-cards, .shot-row, .shot-stack, .shot-pair, .shot-duo, .work-list';
+    var STAGGER = '.page-study, .list-cards, .two-col, .stat-row, .trend-cards, .shot-row, .shot-stack, .shot-pair, .shot-duo, .shot-trio, .work-list';
     var targets = [];
     function add(el, delay) {
       if (!el || el.nodeType !== 1 || el.classList.contains('rv')) return;
@@ -417,7 +417,7 @@
   // Dense UI screenshots stay hard to read even at full content width on
   // a phone, so any large case-study screenshot opens full-screen.
   function initLightbox() {
-    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img');
+    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img, .shot-trio .shot img');
     if (!imgs.length) return;
     var box = null, lastFocus = null;
 
