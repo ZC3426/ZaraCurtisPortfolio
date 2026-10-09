@@ -413,6 +413,35 @@
       });
     }
 
+    // My Style: once the cartridge seats, the screen goes black, holds
+    // for a beat, then comes on in two stages: a brief translucent
+    // flicker, then the full picture, like an old set warming up.
+    function powerOn(cart, preload, done) {
+      var src = cart.getAttribute('data-img');
+      var label = cart.getAttribute('data-label');
+      var BLACK = 120, HOLD = 300, HALF = 50;
+      screenImg.style.transition = 'opacity ' + BLACK + 'ms ease-in';
+      screenImg.style.opacity = '0';
+      var ready = preload.decode ? preload.decode().catch(function () {}) : Promise.resolve();
+      setTimeout(function () {
+        ready.then(function () {
+          screenImg.style.transition = 'none';
+          screenImg.src = src;
+          screenImg.alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
+          if (now) now.textContent = label;
+          var shown = screenImg.decode ? screenImg.decode().catch(function () {}) : Promise.resolve();
+          shown.then(function () {
+            screenImg.style.opacity = '0.4';
+            setTimeout(function () {
+              screenImg.style.opacity = '';
+              screenImg.style.transition = '';
+              if (done) done();
+            }, HALF);
+          });
+        });
+      }, BLACK + HOLD);
+    }
+
     carts.forEach(function (cart) {
       cart.addEventListener('click', function () {
         if (busy || cart.classList.contains('is-in')) return;
@@ -423,6 +452,8 @@
         if (prefersReducedMotion() || !canAnimate) { setInserted(cart); showPage(cart, false); return; }
         busy = true;
         consoleEl.classList.add('busy');
+        var preload = new Image();
+        preload.src = cart.getAttribute('data-img');
         var box = consoleEl.getBoundingClientRect();
         var from = cart.getBoundingClientRect();
         var to = slot.getBoundingClientRect();
@@ -467,8 +498,7 @@
           // The console takes the cartridge with a small click.
           var bezel = consoleEl.querySelector('.console-unit');
           if (bezel) bezel.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 180, easing: 'ease-out' });
-          showPage(cart, true);
-          setTimeout(function () { consoleEl.classList.remove('busy'); busy = false; }, 420);
+          powerOn(cart, preload, function () { consoleEl.classList.remove('busy'); busy = false; });
         };
       });
     });
