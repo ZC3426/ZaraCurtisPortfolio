@@ -1096,7 +1096,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    cartridges. Picking one flies it up into the slot under the screen
    (nav.js: initConsole), the screen switches off and on, and the
    previously inserted cartridge drops back into its bay. */
-.console { display: flex; flex-direction: column; align-items: center; }
+.console { position: relative; display: flex; flex-direction: column; align-items: center; }
 .console-unit { width: 100%; max-width: 880px; }
 .console-bezel {
   padding: 16px; background: #d8d1bd; border: 3px solid var(--ink); border-radius: 14px;
@@ -1110,12 +1110,13 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
   transform-origin: center; cursor: zoom-in;
 }
-/* Faint scanlines over the picture. */
-.console-display::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px);
+/* The incoming page, faded in over the current one once it has loaded. */
+.console-display .console-fade {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: top; pointer-events: none;
 }
-.console-base { display: flex; justify-content: center; align-items: center; gap: 0.9rem; margin-top: 12px; }
+/* The slot sits in front of the flying cartridge, so it disappears into it. */
+.console-base { position: relative; z-index: 6; display: flex; justify-content: center; align-items: center; gap: 0.9rem; margin-top: 12px; }
 .console-slot {
   width: 220px; height: 14px; background: #2b2722; border-radius: 3px;
   box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.55);
@@ -1163,28 +1164,13 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .cartridge.is-in { opacity: 0; transform: translateY(-24px); pointer-events: none; }
 .cartridge.returning { animation: cart-return 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
 @keyframes cart-return { from { opacity: 0; transform: translateY(-36px); } to { opacity: 1; transform: none; } }
-/* The flying copy: travels to the slot, then slides up into it while
-   the part above the slot line is clipped away. */
-.cart-fly {
-  position: fixed; z-index: 500; pointer-events: none; margin: 0;
-  transition: left 0.45s cubic-bezier(0.22, 1, 0.36, 1), top 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.cart-fly.inserting { transition: transform 0.38s ease-in, clip-path 0.38s ease-in; transform: translateY(-100%); clip-path: inset(100% 0 0 0); }
-/* Screen switching off and on: a CRT collapse to a line, then back. */
-.console-display img.screen-off { animation: crt-off 0.3s ease-in forwards; }
-.console-display img.screen-on { animation: crt-on 0.45s ease-out; }
-@keyframes crt-off {
-  0% { transform: scale(1, 1); filter: brightness(1); }
-  60% { transform: scale(1, 0.01); filter: brightness(2.5); }
-  100% { transform: scale(0, 0.01); filter: brightness(3); }
-}
-@keyframes crt-on {
-  0% { transform: scale(0.02, 0.01); filter: brightness(3); }
-  40% { transform: scale(1, 0.01); filter: brightness(2.5); }
-  100% { transform: scale(1, 1); filter: brightness(1); }
-}
+/* The flying copy (nav.js animates it with transforms only). */
+.cart-fly { position: absolute; z-index: 5; pointer-events: none; margin: 0; will-change: transform, clip-path; }
 @media (max-width: 640px) {
-  .console-bezel { padding: 9px; border-radius: 10px; box-shadow: 4px 4px 0 0 var(--shadow); }
+  /* Nearly edge to edge, with a thin bezel. */
+  .console-unit { width: calc(100% + 1.25rem); max-width: none; margin: 0 -0.625rem; }
+  .console-bezel { padding: 4px; border-width: 2px; border-radius: 8px; box-shadow: 3px 3px 0 0 var(--shadow); }
+  .console-display { border-width: 1.5px; border-radius: 4px; }
   .console-slot { width: 38%; height: 11px; }
   .cartridges { gap: 0.75rem; margin-top: 1.4rem; }
   .cart-bay { flex: 1 1 0; }
@@ -1193,7 +1179,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   .cart-name { font-size: 0.72rem; margin-top: 6px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .cartridge.returning, .console-display img.screen-off, .console-display img.screen-on { animation: none; }
+  .cartridge.returning { animation: none; }
 }
 
 /* ---------- image galleries ---------- */
@@ -1655,7 +1641,6 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
    cartridges with a coloured top edge; the screen cross-fades. */
 [data-theme="business"] .console-bezel { padding: 14px; background: var(--ink); border: none; border-radius: 3px; box-shadow: 0 18px 40px rgba(26, 26, 26, 0.16); }
 [data-theme="business"] .console-display { border: none; border-radius: 0; background: #111; }
-[data-theme="business"] .console-display::after { display: none; }
 [data-theme="business"] .console-slot { width: 200px; height: 6px; background: var(--ink); border-radius: 0; box-shadow: none; }
 [data-theme="business"] .console-led { width: 7px; height: 7px; border: none; border-radius: 0; background: var(--outline); }
 [data-theme="business"] .console.busy .console-led { background: var(--yellow); }
@@ -1675,12 +1660,8 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
   font-family: var(--mono) !important; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.1em; text-shadow: none; color: #f2f2ee;
 }
-[data-theme="business"] .console-display img.screen-off { animation: screen-off 0.25s ease-in forwards; }
-[data-theme="business"] .console-display img.screen-on { animation: screen-on 0.4s ease-out; }
-@keyframes screen-off { to { opacity: 0; transform: scale(0.985); } }
-@keyframes screen-on { from { opacity: 0; transform: scale(1.015); } to { opacity: 1; transform: none; } }
 @media (max-width: 640px) {
-  [data-theme="business"] .console-bezel { padding: 8px; }
+  [data-theme="business"] .console-bezel { padding: 4px; }
   [data-theme="business"] .console-slot { width: 38%; }
   [data-theme="business"] .cartridge { padding: 7px 7px 17px; }
   [data-theme="business"] .cart-name { font-size: 0.6rem; letter-spacing: 0.06em; }
@@ -1749,19 +1730,17 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
 /* Phones: wide screenshots are small, so say they open full-size. */
 @media (max-width: 700px) {
   .shot-stack .shot:has(> img), .shot-pair .shot:not(.phone):has(> img),
-  .shot-duo .shot:has(> img), .console-display { position: relative; }
+  .shot-duo .shot:has(> img) { position: relative; }
   .shot-stack .shot:has(> img)::before, .shot-pair .shot:not(.phone):has(> img)::before,
-  .shot-duo .shot:has(> img)::before, .console-display::before {
+  .shot-duo .shot:has(> img)::before {
     content: "Tap to enlarge"; position: absolute; top: 0.9rem; right: 0.9rem; z-index: 2; pointer-events: none;
     padding: 0.32rem 0.5rem; border-radius: 3px; background: rgba(26, 26, 26, 0.78); color: #fff;
     font-family: "Space Mono", monospace; font-size: 0.66rem; font-weight: 700; line-height: 1;
     text-transform: uppercase; letter-spacing: 0.06em;
   }
-  .console-display::before { top: 0.5rem; right: 0.5rem; }
   html[data-theme="business"] .shot-stack .shot:has(> img)::before,
   html[data-theme="business"] .shot-pair .shot:not(.phone):has(> img)::before,
-  html[data-theme="business"] .shot-duo .shot:has(> img)::before,
-  html[data-theme="business"] .console-display::before { font-family: var(--mono) !important; border-radius: 0; }
+  html[data-theme="business"] .shot-duo .shot:has(> img)::before { font-family: var(--mono) !important; border-radius: 0; }
 }
 
 /* =====================================================================

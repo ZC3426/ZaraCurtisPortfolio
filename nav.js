@@ -363,85 +363,97 @@
   // removes the clone once it arrives, so the image reads as having
   // glided from the thumbnail into the enlarged central view.
   // Old portal "console": three cartridges below a screen. Picking one
-  // flies a copy of it up to the slot under the screen, slides it in
-  // (the part above the slot line clipped away, so it disappears into
-  // the console), switches the screen off and back on with the new page,
-  // and drops the previously inserted cartridge back into its bay.
+  // sends a copy of it on one continuous eased path up to the slot and
+  // into it (the slot sits in front, and the part above the slot line
+  // is clipped away, so it disappears inside), then the screen cross-
+  // fades to that page once it has loaded. The copy lives inside the
+  // console, so scrolling mid-animation can't knock it out of place.
   function initConsole() {
     var consoleEl = document.querySelector('.console');
     if (!consoleEl) return;
     var carts = Array.prototype.slice.call(consoleEl.querySelectorAll('.cartridge'));
-    var screenImg = consoleEl.querySelector('.console-display img');
+    var display = consoleEl.querySelector('.console-display');
+    var screenImg = display && display.querySelector('img');
     var slot = consoleEl.querySelector('.console-slot');
     var now = consoleEl.querySelector('.console-now strong');
     if (!carts.length || !screenImg || !slot) return;
     var busy = false;
+    var canAnimate = typeof Element.prototype.animate === 'function';
 
-    function swapScreen(cart) {
-      screenImg.src = cart.getAttribute('data-img');
-      var label = cart.getAttribute('data-label');
-      screenImg.alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
-      if (now) now.textContent = label;
-    }
     function setInserted(cart) {
       carts.forEach(function (c) {
         var wasIn = c.classList.contains('is-in');
         var isIn = c === cart;
         c.classList.toggle('is-in', isIn);
         c.setAttribute('aria-pressed', isIn ? 'true' : 'false');
-        if (wasIn && !isIn) {
+        if (wasIn && !isIn && !prefersReducedMotion()) {
           c.classList.remove('returning'); void c.offsetWidth; c.classList.add('returning');
           c.addEventListener('animationend', function done() { c.classList.remove('returning'); c.removeEventListener('animationend', done); });
         }
       });
     }
-    function screenOn() {
-      screenImg.classList.remove('screen-off');
-      screenImg.classList.add('screen-on');
-      screenImg.addEventListener('animationend', function done() { screenImg.classList.remove('screen-on'); screenImg.removeEventListener('animationend', done); });
+    function showPage(cart, fade) {
+      var src = cart.getAttribute('data-img');
+      var label = cart.getAttribute('data-label');
+      var alt = 'Old portal ' + label.toLowerCase() + ' page, anonymised';
+      if (now) now.textContent = label;
+      if (!fade || !canAnimate) { screenImg.src = src; screenImg.alt = alt; return; }
+      var next = new Image();
+      next.className = 'console-fade';
+      next.alt = '';
+      next.src = src;
+      var ready = next.decode ? next.decode().catch(function () {}) : Promise.resolve();
+      ready.then(function () {
+        display.appendChild(next);
+        next.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: 'ease-out', fill: 'forwards' }).onfinish = function () {
+          screenImg.src = src; screenImg.alt = alt;
+          var settle = screenImg.decode ? screenImg.decode().catch(function () {}) : Promise.resolve();
+          settle.then(function () { next.remove(); });
+        };
+      });
     }
 
     carts.forEach(function (cart) {
       cart.addEventListener('click', function () {
         if (busy || cart.classList.contains('is-in')) return;
-        if (prefersReducedMotion()) { swapScreen(cart); setInserted(cart); return; }
+        if (prefersReducedMotion() || !canAnimate) { setInserted(cart); showPage(cart, false); return; }
         busy = true;
         consoleEl.classList.add('busy');
+        var box = consoleEl.getBoundingClientRect();
         var from = cart.getBoundingClientRect();
-        var slotRect = slot.getBoundingClientRect();
+        var to = slot.getBoundingClientRect();
 
         var fly = cart.cloneNode(true);
         fly.removeAttribute('aria-label');
         fly.setAttribute('aria-hidden', 'true');
+        fly.setAttribute('tabindex', '-1');
+        fly.classList.remove('is-in', 'returning');
         fly.classList.add('cart-fly');
         fly.style.setProperty('--cart-c', getComputedStyle(cart).getPropertyValue('--cart-c'));
-        fly.style.left = from.left + 'px';
-        fly.style.top = from.top + 'px';
+        fly.style.left = (from.left - box.left) + 'px';
+        fly.style.top = (from.top - box.top) + 'px';
         fly.style.width = from.width + 'px';
         fly.style.height = from.height + 'px';
-        document.body.appendChild(fly);
+        consoleEl.appendChild(fly);
         setInserted(cart);
 
-        // 1. Travel: the cartridge's top edge lines up with the slot.
-        void fly.offsetWidth;
-        requestAnimationFrame(function () {
-          fly.style.left = (slotRect.left + slotRect.width / 2 - from.width / 2) + 'px';
-          fly.style.top = (slotRect.top + slotRect.height / 2) + 'px';
-        });
-        // 2. Insert: slides up into the slot while the screen goes off.
-        setTimeout(function () {
-          fly.classList.add('inserting');
-          screenImg.classList.remove('screen-on');
-          screenImg.classList.add('screen-off');
-        }, 470);
-        // 3. New page comes on; tidy up.
-        setTimeout(function () {
-          swapScreen(cart);
-          screenOn();
+        var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+        var dy = (to.top + to.height / 2) - from.top;
+        var h = from.height;
+        var DURATION = 1000;
+        var anim = fly.animate([
+          { transform: 'translate(0px, 0px)', clipPath: 'inset(0px 0px 0px 0px)', offset: 0 },
+          { transform: 'translate(' + dx + 'px, ' + dy + 'px)', clipPath: 'inset(0px 0px 0px 0px)', offset: 0.58 },
+          { transform: 'translate(' + dx + 'px, ' + (dy - h) + 'px)', clipPath: 'inset(' + h + 'px 0px 0px 0px)', offset: 1 }
+        ], { duration: DURATION, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', fill: 'forwards' });
+
+        // The page starts fading in as the cartridge seats itself.
+        setTimeout(function () { showPage(cart, true); }, DURATION * 0.7);
+        anim.onfinish = function () {
           fly.remove();
           consoleEl.classList.remove('busy');
           busy = false;
-        }, 470 + 400);
+        };
       });
     });
   }
