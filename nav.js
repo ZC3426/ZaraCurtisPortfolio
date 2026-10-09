@@ -480,18 +480,28 @@
         consoleEl.appendChild(mask);
         setInserted(cart);
 
-        // Lift out of the bay, carry over to sit just under the slot,
-        // pause to line up, then push all the way in.
+        // Lift out of the bay, carry over under the slot, tip back until
+        // it lies flat (nearly edge-on, a thin strip lined up with the
+        // slot, in perspective), then slide it in.
         var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
         var under = -(from.top - box.top - slotLine);   // top edge at the slot line
         var h = from.height;
-        var anim = fly.animate([
-          { transform: 'translate(0px, 0px) scale(1)', filter: 'brightness(1)', offset: 0, easing: 'cubic-bezier(0.3, 0, 0.3, 1)' },
-          { transform: 'translate(0px, -12px) scale(1.04)', filter: 'brightness(1)', offset: 0.14, easing: 'cubic-bezier(0.45, 0, 0.25, 1)' },
-          { transform: 'translate(' + dx + 'px, ' + (under + 6) + 'px) scale(1)', filter: 'brightness(1)', offset: 0.5, easing: 'ease-out' },
-          { transform: 'translate(' + dx + 'px, ' + under + 'px) scale(1)', filter: 'brightness(1)', offset: 0.6, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' },
-          { transform: 'translate(' + dx + 'px, ' + (under - h - 4) + 'px) scale(1)', filter: 'brightness(0.25)', offset: 1 }
-        ], { duration: 1400, fill: 'forwards' });
+        var flatY = under - h / 2 + 8;                   // centre just under the slot
+        function pose(x, y, rx, s, light) {
+          return { transform: 'translate(' + x + 'px, ' + y + 'px) rotateX(' + rx + 'deg) scale(' + s + ')', filter: 'brightness(' + light + ')' };
+        }
+        var frames = [
+          pose(0, 0, 0, 1, 1),
+          pose(0, -12, 0, 1.04, 1),
+          pose(dx, under + 26, 0, 1, 1),
+          pose(dx, flatY, 84, 1, 0.9),
+          pose(dx, flatY, 84, 1, 0.9),
+          pose(dx, flatY - 26, 84, 1, 0.25)
+        ];
+        var at = [0, 0.12, 0.42, 0.66, 0.74, 1];
+        var ease = ['cubic-bezier(0.3, 0, 0.3, 1)', 'cubic-bezier(0.45, 0, 0.25, 1)', 'cubic-bezier(0.4, 0, 0.2, 1)', 'linear', 'cubic-bezier(0.5, 0, 0.75, 0)'];
+        frames.forEach(function (f, i) { f.offset = at[i]; if (ease[i]) f.easing = ease[i]; });
+        var anim = fly.animate(frames, { duration: 1700, fill: 'forwards' });
 
         anim.onfinish = function () {
           mask.remove();

@@ -1185,8 +1185,8 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
 /* Insertion: the flying copy lives inside a mask whose top edge is the
    slot line, so whatever passes above it is simply cut off (works in
    every browser, unlike animating clip-path); it darkens as it goes in. */
-.cart-mask { position: absolute; z-index: 5; left: 0; right: 0; bottom: 0; overflow: hidden; pointer-events: none; }
-.cart-fly { position: absolute; z-index: 1; pointer-events: none; margin: 0; will-change: transform; }
+.cart-mask { position: absolute; z-index: 5; left: 0; right: 0; bottom: 0; overflow: hidden; pointer-events: none; perspective: 700px; perspective-origin: 50% 0; }
+.cart-fly { position: absolute; z-index: 1; pointer-events: none; margin: 0; will-change: transform, filter; transform-origin: 50% 50%; backface-visibility: hidden; }
 @media (max-width: 640px) {
   /* Nearly edge to edge, with a thin bezel. */
   .console-unit { width: calc(100% + 1.25rem); max-width: none; margin: 0 -0.625rem; }
