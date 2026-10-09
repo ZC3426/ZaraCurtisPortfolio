@@ -1070,7 +1070,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   aspect-ratio: 2 / 1; border-radius: 4px; padding: 1rem; font-style: normal;
   background: repeating-linear-gradient(-45deg, #f5ecd2 0 14px, #efe3c4 14px 28px);
 }
-.shot-duo .shot.coming-soon .media-placeholder { aspect-ratio: 16 / 10; }
+.shot-duo .shot.coming-soon .media-placeholder { aspect-ratio: 2 / 1; }
 .soon-label {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.5rem 1.1rem; border-radius: 100px; background: var(--surface);
@@ -1196,7 +1196,8 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   background: var(--accent-soft); vertical-align: 0.1em;
 }
 .shot .ver.pm { background: var(--yellow-soft); }
-.shot .ver.final { background: var(--green-soft); }
+.shot .ver.v2 { background: var(--green-soft); }
+.shot .ver.final { background: var(--outline); color: #fff; }
 
 /* Each page studied in "Making dense data readable" gets its own
    divided block, so five pages' worth of images and text read as five
