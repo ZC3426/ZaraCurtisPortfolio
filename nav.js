@@ -417,7 +417,7 @@
   // Dense UI screenshots stay hard to read even at full content width on
   // a phone, so any large case-study screenshot opens full-screen.
   function initLightbox() {
-    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img');
+    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img');
     if (!imgs.length) return;
     var box = null, lastFocus = null;
 

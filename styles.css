@@ -1061,7 +1061,8 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
    screenshot will take, so the page reads as finished rather than
    gappy, and it can be swapped for the real image with no layout change. */
 .shot-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
-.shot-duo .shot { padding: 0.75rem; }
+.shot-duo .shot { padding: 0.75rem; display: flex; flex-direction: column; }
+.shot-duo .shot figcaption { margin-top: auto; }
 .shot-stack + .shot-duo, .shot-duo + .shot-stack { margin-top: 1.75rem; }
 @media (max-width: 700px) { .shot-duo { grid-template-columns: 1fr; } .shot-duo .shot { padding: 0.5rem; } }
 .shot-stack .shot figcaption, .shot-duo .shot figcaption { border-top: none; padding: 0.7rem 0.15rem 0.05rem; font-size: 0.88rem; line-height: 1.5; }
@@ -1163,7 +1164,7 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .shot-pair .shot.phone img { margin: 0 auto; }
 
 /* Click/tap any large screenshot to open it full-screen (nav.js). */
-.shot-stack .shot img, .shot-pair .shot img { cursor: zoom-in; }
+.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img { cursor: zoom-in; }
 .lightbox {
   position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
   padding: 2rem; background: rgba(20, 18, 15, 0.86); cursor: zoom-out;
@@ -1182,8 +1183,8 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 @media (max-width: 700px) { .lightbox { padding: 0.75rem; } }
 .shot-stack + .shot-pair, .shot-pair + .shot-stack, .shot-stack + .shot-stack { margin-top: 1.75rem; }
 .shot-stack .shot, .shot-pair .shot { padding: 0.75rem; }
-.shot-stack .shot img, .shot-pair .shot img { border-radius: 4px; }
-.shot-stack .shot:not(.phone) img, .shot-pair .shot:not(.phone) img { outline: 1px solid var(--outline); }
+.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img { border-radius: 4px; }
+.shot-stack .shot:not(.phone) img, .shot-pair .shot:not(.phone) img, .shot-duo .shot img { outline: 1px solid var(--outline); }
 .shot-stack .shot figcaption, .shot-pair .shot figcaption,
 [data-theme="business"] .shot-stack .shot figcaption, [data-theme="business"] .shot-pair .shot figcaption {
   border-top: none; padding: 0.7rem 0.15rem 0.05rem; font-size: 0.88rem; line-height: 1.5;
@@ -1570,9 +1571,11 @@ html[data-theme="business"] .style-toggle .style-thumb { top: 4px; bottom: 4px; 
 [data-theme="business"] .shot-pair .shot,
 [data-theme="business"] .shot-duo .shot { padding: calc(0.75rem + 2px); }
 [data-theme="business"] .shot-stack .shot img,
-[data-theme="business"] .shot-pair .shot img { border-radius: 0; }
+[data-theme="business"] .shot-pair .shot img,
+[data-theme="business"] .shot-duo .shot img { border-radius: 0; }
 [data-theme="business"] .shot-stack .shot:not(.phone) img,
-[data-theme="business"] .shot-pair .shot:not(.phone) img { outline: 1px solid var(--card-line); }
+[data-theme="business"] .shot-pair .shot:not(.phone) img,
+[data-theme="business"] .shot-duo .shot img { outline: 1px solid var(--card-line); }
 [data-theme="business"] .portal-thumb-img { border: 1px solid var(--card-line); border-radius: 0; box-shadow: none; }
 [data-theme="business"] .portal-thumb:hover .portal-thumb-img { transform: translateY(-2px); box-shadow: none; border-color: var(--ink); }
 [data-theme="business"] .portal-thumb.active .portal-thumb-img { border-color: var(--outline); box-shadow: 0 0 0 2px var(--outline); }
