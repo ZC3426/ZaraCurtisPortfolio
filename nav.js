@@ -501,15 +501,14 @@
         consoleEl.appendChild(mask);
         setInserted(cart);
 
-        // Like laying a sheet of paper down on a table: lift it out,
-        // carry it over upright, lay it down flat (pivoting on its bottom
-        // edge, so it foreshortens in perspective), then slide it forward
-        // into the slot.
+        // Lift it out, carry it over upright to just under the slot, lean
+        // it back a little (pivoting on its bottom edge), then push it up
+        // so the top edge goes into the black first and the rest follows.
         var dx = (to.left + to.width / 2) - (from.left + from.width / 2);
         var under = -(from.top - box.top - slotLine);   // upright: top edge at the slot line
         var h = from.height;
-        var LAY = 62;                                   // degrees back from upright
-        var rest = under + 6;                           // upright, just under the slot
+        var LAY = 24;                                   // a gentle lean back
+        var rest = under + 3;                           // upright, top edge just under the slot
         function pose(x, y, tilt, s, light) {
           return { transform: 'translate(' + x + 'px, ' + y + 'px) rotateX(' + tilt + 'deg) scale(' + s + ')', filter: 'brightness(' + light + ')' };
         }
@@ -517,12 +516,13 @@
           pose(0, 0, 0, 1, 1),
           pose(0, -12, 0, 1.04, 1),
           pose(dx, rest, 0, 1, 1),
-          pose(dx, rest, LAY, 1, 0.95),
-          pose(dx, rest, LAY, 1, 0.95),
-          pose(dx, rest - h - 12, LAY, 1, 0.3)
+          pose(dx, rest, LAY, 1, 1),
+          pose(dx, rest, LAY, 1, 1),
+          pose(dx, rest - h * 0.35, LAY, 1, 0.7),
+          pose(dx, rest - h - 14, LAY, 1, 0.3)
         ];
-        var at = [0, 0.12, 0.42, 0.62, 0.68, 1];
-        var ease = ['cubic-bezier(0.3, 0, 0.3, 1)', 'cubic-bezier(0.45, 0, 0.25, 1)', 'cubic-bezier(0.4, 0, 0.3, 1)', 'linear', 'cubic-bezier(0.45, 0, 0.6, 1)'];
+        var at = [0, 0.12, 0.4, 0.55, 0.62, 0.8, 1];
+        var ease = ['cubic-bezier(0.3, 0, 0.3, 1)', 'cubic-bezier(0.45, 0, 0.25, 1)', 'cubic-bezier(0.4, 0, 0.3, 1)', 'linear', 'cubic-bezier(0.5, 0, 1, 1)', 'linear'];
         frames.forEach(function (f, i) { f.offset = at[i]; if (ease[i]) f.easing = ease[i]; });
         var anim = fly.animate(frames, { duration: 1800, fill: 'forwards' });
 
