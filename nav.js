@@ -388,7 +388,7 @@
     if (!carts.length || !screenImg || !slot) return;
     var busy = false;
     var canAnimate = typeof Element.prototype.animate === 'function';
-    var LAY = 24, INSERT_MS = 1800, EJECT_MS = 1200, BLACK = 140, HOLD = 450, ON = 160;
+    var LAY = 24, INSERT_MS = 1050, EJECT_MS = 700, SIDE_INSERT_MS = 1300, SIDE_EJECT_MS = 900, BLACK = 110, HOLD = 250, ON = 140;
 
     // Decode every cartridge label and screen image up front, so the
     // first insert is as smooth as the rest (no decode stall mid-flight).
@@ -481,19 +481,31 @@
       var bay = c.parentNode.getBoundingClientRect();     // the cartridge's resting box
       var to = slot.getBoundingClientRect();
       var slotLine = to.top + to.height / 2 - box.top;
+      var bayCx = bay.left + bay.width / 2;
       return {
-        box: box, bay: bay, slotLine: slotLine,
+        box: box, bay: bay, to: to, slotLine: slotLine,
         left: bay.left - box.left, top0: bay.top - box.top - slotLine,
-        dx: (to.left + to.width / 2) - (bay.left + bay.width / 2),
-        w: bay.width, h: bay.height
+        dx: (to.left + to.width / 2) - bayCx,
+        w: bay.width, h: bay.height,
+        // Cartridges in a column beside the screen (laptops and up) come
+        // down past the right of the slot, then slide in under it.
+        side: bay.left > to.right,
+        beside: (to.right + 24 + bay.width / 2) - bayCx
       };
     }
-    // A masked moving copy of a cartridge; everything above the mask's
-    // top edge (the slot line) is cut off.
+    // A masked moving copy of a cartridge. The mask covers the console
+    // (and reaches below it) and cuts away only the column directly above
+    // the slot line, so the copy can travel anywhere else freely but
+    // disappears as it goes up into the slot.
     function makeFly(c, g) {
       var mask = document.createElement('div');
       mask.className = 'cart-mask';
-      mask.style.top = g.slotLine + 'px';
+      mask.style.bottom = (-(g.h + 60)) + 'px';
+      var sx0 = g.to.left - g.box.left + 12, sx1 = g.to.right - g.box.left + 12, sy = g.slotLine;
+      var notch = 'polygon(0 0, ' + sx0 + 'px 0, ' + sx0 + 'px ' + sy + 'px, ' + sx1 + 'px ' + sy + 'px, ' + sx1 + 'px 0, 100% 0, 100% 100%, 0 100%)';
+      mask.style.webkitClipPath = notch;
+      mask.style.clipPath = notch;
+      mask.style.perspectiveOrigin = ((sx0 + sx1) / 2) + 'px ' + sy + 'px';
       var fly = c.cloneNode(true);
       fly.removeAttribute('aria-label');
       fly.removeAttribute('aria-pressed');
@@ -503,7 +515,7 @@
       fly.classList.add('cart-fly');
       fly.style.setProperty('--cart-c', getComputedStyle(c).getPropertyValue('--cart-c'));
       fly.style.left = (g.left + 12) + 'px';   // the mask reaches 12px past the console each side
-      fly.style.top = g.top0 + 'px';
+      fly.style.top = (g.top0 + g.slotLine) + 'px';
       fly.style.width = g.w + 'px';
       fly.style.height = g.h + 'px';
       var shade = document.createElement('span');
@@ -535,12 +547,19 @@
       var rest = -g.top0 + 3;                // upright, top edge just under the slot
       var inside = rest - g.h - 14;          // fully inside the slot
       var f = makeFly(c, g);
-      return play(f, g, [
+      var path = g.side ? [
+        [0,    g.dx,     inside, LAY, 1, 'cubic-bezier(0.3, 0.4, 0.35, 1)'],
+        [0.34, g.dx,     rest,   LAY, 1, 'ease-in-out'],
+        [0.44, g.dx,     rest,   0,   1, 'cubic-bezier(0.45, 0, 0.9, 0.6)'],
+        [0.58, g.beside, rest,   0,   1, 'cubic-bezier(0.1, 0.45, 0.3, 1)'],
+        [1,    0,        0,      0,   1]
+      ] : [
         [0,    g.dx, inside, LAY, 1,    'cubic-bezier(0.3, 0.4, 0.35, 1)'],
         [0.36, g.dx, rest,   LAY, 1,    'ease-in-out'],
         [0.46, g.dx, rest,   0,   1,    'cubic-bezier(0.45, 0, 0.2, 1)'],
         [1,    0,    0,      0,   1]
-      ], EJECT_MS).then(function () {
+      ];
+      return play(f, g, path, g.side ? SIDE_EJECT_MS : EJECT_MS).then(function () {
         setIn(c, false);                     // the real one reappears where the copy landed
         f.mask.remove();
       });
@@ -550,17 +569,26 @@
       var rest = -g.top0 + 3;
       var f = makeFly(c, g);
       setIn(c, true);                        // hide the bay copy on the same frame
-      return play(f, g, [
+      var path = g.side ? [
+        [0,    0,        0,               0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
+        [0.1,  -10,      -6,              0,   1.04, 'cubic-bezier(0.45, 0, 0.9, 0.6)'],
+        [0.4,  g.beside, rest,            0,   1,    'cubic-bezier(0.1, 0.45, 0.3, 1)'],
+        [0.54, g.dx,     rest,            0,   1,    'cubic-bezier(0.45, 0, 0.3, 1)'],
+        [0.62, g.dx,     rest,            LAY, 1,    'ease-in-out'],
+        [0.68, g.dx,     rest + 3,        LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
+        [1,    g.dx,     rest - g.h - 14, LAY, 1]
+      ] : [
         [0,    0,    0,                0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
         [0.12, 0,    -12,              0,   1.04, 'cubic-bezier(0.45, 0, 0.25, 1)'],
         [0.42, g.dx, rest,             0,   1,    'cubic-bezier(0.4, 0, 0.3, 1)'],
         [0.55, g.dx, rest,             LAY, 1,    'ease-in-out'],
         [0.62, g.dx, rest + 3,         LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
         [1,    g.dx, rest - g.h - 14,  LAY, 1]
-      ], INSERT_MS).then(function () {
+      ];
+      return play(f, g, path, g.side ? SIDE_INSERT_MS : INSERT_MS).then(function () {
         f.mask.remove();
         var unit = consoleEl.querySelector('.console-unit');
-        if (unit) unit.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 180, easing: 'ease-out' });
+        if (unit) unit.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 140, easing: 'ease-out' });
       });
     }
 

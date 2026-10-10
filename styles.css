@@ -996,8 +996,11 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
    grid child), so it can't throw off the tiles' :nth-child/:last-child
    count — which the mobile odd-one-out rule below depends on. */
 .version-tiles {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem;
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.25rem;
 }
+/* Grid cards may shrink below their longest word, so a narrow (tablet)
+   row wraps the text instead of pushing the last card off the page. */
+.version-tiles > *, .list-cards > *, .two-col > *, .trend-cards > * { min-width: 0; }
 .version-tiles .card-mini {
   position: relative; z-index: 1;
   transition: transform 0.22s ease-out, box-shadow 0.22s ease-out;
@@ -1112,7 +1115,19 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
    (nav.js: initConsole), the screen switches off and on, and the
    previously inserted cartridge drops back into its bay. */
 .console { position: relative; display: flex; flex-direction: column; align-items: center; }
-.console-unit { width: 100%; max-width: 880px; }
+.console-unit { width: 100%; max-width: max(300px, min(880px, calc((100vh - 360px) * 1.6))); }
+/* Laptops and up: cartridges in a column to the right of the screen, and
+   the screen sized to the window's height, so the screen and all three
+   cartridges are in view together even on a short laptop display. */
+@media (min-width: 900px) {
+  html[data-theme="personal"] .console {
+    display: grid; grid-template-columns: minmax(0, min(820px, calc((100vh - 230px) * 1.6))) 150px;
+    justify-content: center; align-items: start; column-gap: 1.75rem;
+  }
+  html[data-theme="personal"] .console-unit { max-width: none; }
+  html[data-theme="personal"] .cartridges { flex-direction: column; justify-content: flex-start; gap: 1rem; margin-top: 0; padding-top: 4rem; } /* clear the floating style toggle */
+  html[data-theme="personal"] .cart-bay { flex: none; width: 100%; }
+}
 .console-bezel {
   padding: 16px; background: #d8d1bd; border: 3px solid var(--ink); border-radius: 14px;
   box-shadow: 6px 6px 0 0 var(--shadow);
@@ -1190,7 +1205,7 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
 /* Insertion: the flying copy lives inside a mask whose top edge is the
    slot line, so whatever passes above it is simply cut off (works in
    every browser, unlike animating clip-path); it darkens as it goes in. */
-.cart-mask { position: absolute; z-index: 5; left: -12px; right: -12px; bottom: -16px; padding: 0 12px; overflow: hidden; pointer-events: none; perspective: 650px; perspective-origin: 50% 0; }
+.cart-mask { position: absolute; z-index: 5; top: 0; left: -12px; right: -12px; bottom: -16px; padding: 0 12px; pointer-events: none; perspective: 650px; }
 .cart-fly { position: absolute; z-index: 1; pointer-events: none; margin: 0; will-change: transform; transform-origin: 50% 100%; backface-visibility: hidden; overflow: hidden; }
 /* The slot's shadow falling on the cartridge just below its mouth. */
 .cart-shade {
@@ -1831,7 +1846,7 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
    Same markup as My Style's console, laid out as thumbnails beside a
    large viewer (a row underneath on phones); picking one cross-fades
    the viewer, with no cartridge animation (nav.js). */
-[data-theme="business"] .console { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+[data-theme="business"] .console { display: grid; grid-template-columns: 150px minmax(0, min(100%, calc((100vh - 200px) * 1.6))); justify-content: center; gap: 1.25rem; align-items: start; }
 [data-theme="business"] .console-unit { grid-column: 2; grid-row: 1; max-width: none; }
 [data-theme="business"] .console-bezel { padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; }
 [data-theme="business"] .console-display { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); background: #fff; }
