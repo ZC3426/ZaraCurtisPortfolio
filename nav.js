@@ -388,7 +388,7 @@
     if (!carts.length || !screenImg || !slot) return;
     var busy = false;
     var canAnimate = typeof Element.prototype.animate === 'function';
-    var LAY = 24, INSERT_MS = 1050, EJECT_MS = 700, SIDE_INSERT_MS = 1300, SIDE_EJECT_MS = 900, BLACK = 110, HOLD = 250, ON = 140;
+    var LAY = 24, INSERT_MS = 1050, EJECT_MS = 700, BLACK = 110, HOLD = 250, ON = 140;
 
     // Decode every cartridge label and screen image up front, so the
     // first insert is as smooth as the rest (no decode stall mid-flight).
@@ -476,36 +476,49 @@
 
     // Geometry shared by insert and eject: everything is measured in the
     // console's own coordinates, so scrolling mid-animation can't break it.
+    // The slot is vertical beside the screen on laptops (the CD slides in
+    // sideways) and horizontal under it on phones (the CD goes in upwards).
+    // Paths are written along the slot's axis ("along" = towards the slot,
+    // "across" = sideways to line up with it) and mapped onto x/y here.
     function geometry(c) {
       var box = consoleEl.getBoundingClientRect();
-      var bay = c.parentNode.getBoundingClientRect();     // the cartridge's resting box
+      var bay = c.parentNode.getBoundingClientRect();     // the CD's resting box
       var to = slot.getBoundingClientRect();
-      var slotLine = to.top + to.height / 2 - box.top;
-      var bayCx = bay.left + bay.width / 2;
-      return {
-        box: box, bay: bay, to: to, slotLine: slotLine,
-        left: bay.left - box.left, top0: bay.top - box.top - slotLine,
-        dx: (to.left + to.width / 2) - bayCx,
-        w: bay.width, h: bay.height,
-        // Cartridges in a column beside the screen (laptops and up) come
-        // down past the right of the slot, then slide in under it.
-        side: bay.left > to.right,
-        beside: (to.right + 24 + bay.width / 2) - bayCx
-      };
+      var v = to.height > to.width;
+      var g = { box: box, bay: bay, to: to, v: v, w: bay.width, h: bay.height,
+                left: bay.left - box.left, top: bay.top - box.top };
+      if (v) {
+        g.line = to.left + to.width / 2 - box.left;      // clip line, console x
+        g.rest = (to.left + to.width / 2 + 3) - bay.left; // leading edge just past the line
+        g.across = (to.top + to.height / 2) - (bay.top + bay.height / 2);
+        g.size = bay.width;
+      } else {
+        g.line = to.top + to.height / 2 - box.top;       // clip line, console y
+        g.rest = (to.top + to.height / 2 + 3) - bay.top;
+        g.across = (to.left + to.width / 2) - (bay.left + bay.width / 2);
+        g.size = bay.height;
+      }
+      return g;
     }
-    // A masked moving copy of a cartridge. The mask covers the console
-    // (and reaches below it) and cuts away only the column directly above
-    // the slot line, so the copy can travel anywhere else freely but
-    // disappears as it goes up into the slot.
+    // A masked moving copy of a CD. The mask covers the console (and
+    // reaches below it) and cuts away only the slot's far side, so the
+    // copy can travel anywhere else freely but disappears into the slot.
     function makeFly(c, g) {
       var mask = document.createElement('div');
-      mask.className = 'cart-mask';
+      mask.className = 'cart-mask' + (g.v ? ' v' : '');
       mask.style.bottom = (-(g.h + 60)) + 'px';
-      var sx0 = g.to.left - g.box.left + 12, sx1 = g.to.right - g.box.left + 12, sy = g.slotLine;
-      var notch = 'polygon(0 0, ' + sx0 + 'px 0, ' + sx0 + 'px ' + sy + 'px, ' + sx1 + 'px ' + sy + 'px, ' + sx1 + 'px 0, 100% 0, 100% 100%, 0 100%)';
-      mask.style.webkitClipPath = notch;
-      mask.style.clipPath = notch;
-      mask.style.perspectiveOrigin = ((sx0 + sx1) / 2) + 'px ' + sy + 'px';
+      var clip;
+      if (g.v) {
+        var lx = g.line + 12, y0 = g.to.top - g.box.top - 2, y1 = g.to.bottom - g.box.top + 2;
+        clip = 'polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 ' + y1 + 'px, ' + lx + 'px ' + y1 + 'px, ' + lx + 'px ' + y0 + 'px, 0 ' + y0 + 'px)';
+        mask.style.perspectiveOrigin = lx + 'px ' + ((y0 + y1) / 2) + 'px';
+      } else {
+        var sx0 = g.to.left - g.box.left + 12, sx1 = g.to.right - g.box.left + 12, sy = g.line;
+        clip = 'polygon(0 0, ' + sx0 + 'px 0, ' + sx0 + 'px ' + sy + 'px, ' + sx1 + 'px ' + sy + 'px, ' + sx1 + 'px 0, 100% 0, 100% 100%, 0 100%)';
+        mask.style.perspectiveOrigin = ((sx0 + sx1) / 2) + 'px ' + sy + 'px';
+      }
+      mask.style.webkitClipPath = clip;
+      mask.style.clipPath = clip;
       var fly = c.cloneNode(true);
       fly.removeAttribute('aria-label');
       fly.removeAttribute('aria-pressed');
@@ -513,9 +526,12 @@
       fly.setAttribute('tabindex', '-1');
       fly.classList.remove('is-in', 'returning');
       fly.classList.add('cart-fly');
-      fly.style.setProperty('--cart-c', getComputedStyle(c).getPropertyValue('--cart-c'));
+      var cs = getComputedStyle(c);
+      fly.style.setProperty('--cart-c', cs.getPropertyValue('--cart-c'));
+      fly.style.setProperty('--tape', cs.getPropertyValue('--tape'));
+      fly.style.transformOrigin = g.v ? '100% 50%' : '50% 100%';   // pivot on the trailing edge
       fly.style.left = (g.left + 12) + 'px';   // the mask reaches 12px past the console each side
-      fly.style.top = (g.top0 + g.slotLine) + 'px';
+      fly.style.top = g.top + 'px';
       fly.style.width = g.w + 'px';
       fly.style.height = g.h + 'px';
       var shade = document.createElement('span');
@@ -525,16 +541,21 @@
       consoleEl.appendChild(mask);
       return { mask: mask, fly: fly, shade: shade };
     }
-    // Plays a path of [offset, x, y, tilt, scale, easing-to-next] on the
-    // copy, with the slot's shadow kept on the slot line throughout.
+    // Plays a path of [offset, along, across, tilt, scale, easing-to-next]
+    // on the copy. Tilt leans the leading edge away from the viewer; the
+    // slot's shadow stays on the slot line throughout.
     function play(f, g, path, ms) {
+      function xy(p) { return g.v ? [p[1], p[2]] : [p[2], p[1]]; }
       var frames = path.map(function (p) {
-        var k = { offset: p[0], transform: 'translate(' + p[1] + 'px, ' + p[2] + 'px) rotateX(' + p[3] + 'deg) scale(' + p[4] + ')' };
+        var t = xy(p);
+        var k = { offset: p[0], transform: 'translate(' + t[0] + 'px, ' + t[1] + 'px) ' +
+          (g.v ? 'rotateY(' + (-p[3]) + 'deg)' : 'rotateX(' + p[3] + 'deg)') + ' scale(' + p[4] + ')' };
         if (p[5]) k.easing = p[5];
         return k;
       });
       var shadeFrames = path.map(function (p) {
-        var k = { offset: p[0], transform: 'translateY(' + (-(g.top0 + p[2])) + 'px)', opacity: p[3] > 0 ? 1 : 0 };
+        var d = g.line - (g.v ? g.left : g.top) - p[1];
+        var k = { offset: p[0], transform: g.v ? 'translateX(' + d + 'px)' : 'translateY(' + d + 'px)', opacity: p[3] > 0 ? 1 : 0 };
         if (p[5]) k.easing = p[5];
         return k;
       });
@@ -544,51 +565,37 @@
 
     function eject(c) {
       var g = geometry(c);
-      var rest = -g.top0 + 3;                // upright, top edge just under the slot
-      var inside = rest - g.h - 14;          // fully inside the slot
+      var inside = g.rest - g.size - 14;     // fully inside the slot
       var f = makeFly(c, g);
-      var path = g.side ? [
-        [0,    g.dx,     inside, LAY, 1, 'cubic-bezier(0.3, 0.4, 0.35, 1)'],
-        [0.34, g.dx,     rest,   LAY, 1, 'ease-in-out'],
-        [0.44, g.dx,     rest,   0,   1, 'cubic-bezier(0.45, 0, 0.9, 0.6)'],
-        [0.58, g.beside, rest,   0,   1, 'cubic-bezier(0.1, 0.45, 0.3, 1)'],
-        [1,    0,        0,      0,   1]
-      ] : [
-        [0,    g.dx, inside, LAY, 1,    'cubic-bezier(0.3, 0.4, 0.35, 1)'],
-        [0.36, g.dx, rest,   LAY, 1,    'ease-in-out'],
-        [0.46, g.dx, rest,   0,   1,    'cubic-bezier(0.45, 0, 0.2, 1)'],
-        [1,    0,    0,      0,   1]
+      var path = [
+        [0,    inside, g.across, LAY, 1, 'cubic-bezier(0.3, 0.4, 0.35, 1)'],
+        [0.36, g.rest, g.across, LAY, 1, 'ease-in-out'],
+        [0.46, g.rest, g.across, 0,   1, 'cubic-bezier(0.45, 0, 0.2, 1)'],
+        [1,    0,      0,        0,   1]
       ];
-      return play(f, g, path, g.side ? SIDE_EJECT_MS : EJECT_MS).then(function () {
+      return play(f, g, path, EJECT_MS).then(function () {
         setIn(c, false);                     // the real one reappears where the copy landed
         f.mask.remove();
       });
     }
     function insert(c) {
       var g = geometry(c);
-      var rest = -g.top0 + 3;
       var f = makeFly(c, g);
       setIn(c, true);                        // hide the bay copy on the same frame
-      var path = g.side ? [
-        [0,    0,        0,               0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
-        [0.1,  -10,      -6,              0,   1.04, 'cubic-bezier(0.45, 0, 0.9, 0.6)'],
-        [0.4,  g.beside, rest,            0,   1,    'cubic-bezier(0.1, 0.45, 0.3, 1)'],
-        [0.54, g.dx,     rest,            0,   1,    'cubic-bezier(0.45, 0, 0.3, 1)'],
-        [0.62, g.dx,     rest,            LAY, 1,    'ease-in-out'],
-        [0.68, g.dx,     rest + 3,        LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
-        [1,    g.dx,     rest - g.h - 14, LAY, 1]
-      ] : [
-        [0,    0,    0,                0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
-        [0.12, 0,    -12,              0,   1.04, 'cubic-bezier(0.45, 0, 0.25, 1)'],
-        [0.42, g.dx, rest,             0,   1,    'cubic-bezier(0.4, 0, 0.3, 1)'],
-        [0.55, g.dx, rest,             LAY, 1,    'ease-in-out'],
-        [0.62, g.dx, rest + 3,         LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
-        [1,    g.dx, rest - g.h - 14,  LAY, 1]
+      var path = [
+        [0,    0,                   0,        0,   1,    'cubic-bezier(0.3, 0, 0.3, 1)'],
+        [0.12, -12,                 0,        0,   1.04, 'cubic-bezier(0.45, 0, 0.25, 1)'],
+        [0.42, g.rest,              g.across, 0,   1,    'cubic-bezier(0.4, 0, 0.3, 1)'],
+        [0.55, g.rest,              g.across, LAY, 1,    'ease-in-out'],
+        [0.62, g.rest + 3,          g.across, LAY, 1,    'cubic-bezier(0.55, 0, 0.85, 0.35)'],
+        [1,    g.rest - g.size - 14, g.across, LAY, 1]
       ];
-      return play(f, g, path, g.side ? SIDE_INSERT_MS : INSERT_MS).then(function () {
+      return play(f, g, path, INSERT_MS).then(function () {
         f.mask.remove();
-        var unit = consoleEl.querySelector('.console-unit');
-        if (unit) unit.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 140, easing: 'ease-out' });
+        // The drive gives a small click as the disc seats.
+        var base = slot.parentNode;
+        var nudge = g.v ? 'translateX(-2px)' : 'translateY(2px)';
+        base.animate([{ transform: 'none' }, { transform: nudge }, { transform: 'none' }], { duration: 140, easing: 'ease-out' });
       });
     }
 
@@ -600,7 +607,7 @@
       if (!c) return;
       var g = geometry(c), f = makeFly(c, g);
       f.mask.style.opacity = '0';
-      play(f, g, [[0, 0, 0, 0, 1], [1, g.dx, -g.top0, LAY, 1]], 120).then(function () { f.mask.remove(); });
+      play(f, g, [[0, 0, 0, 0, 1], [1, g.rest, g.across, LAY, 1]], 120).then(function () { f.mask.remove(); });
     }
     if ('requestIdleCallback' in window) requestIdleCallback(function () { setTimeout(warmUp, 300); });
     else setTimeout(warmUp, 1200);

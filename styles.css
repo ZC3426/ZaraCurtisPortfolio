@@ -1109,24 +1109,48 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
   [data-theme="business"] .soon-label::before { animation: none; }
 }
 
-/* ---------- old portal: a screen and three cartridges ----------
-   The old portal plays on a monitor; its three pages sit below as
-   cartridges. Picking one flies it up into the slot under the screen
-   (nav.js: initConsole), the screen switches off and on, and the
-   previously inserted cartridge drops back into its bay. */
+/* ---------- old portal: a screen, a CD drive and three mini CDs ----------
+   The old portal plays on a monitor; its three pages are labelled CDs
+   (still .cartridge in the markup). Picking one carries it into the
+   drive's slot (nav.js: initConsole), the screen goes black and comes
+   back on, and the previously loaded CD comes out and back to its bay. */
 .console { position: relative; display: flex; flex-direction: column; align-items: center; }
 .console-unit { width: 100%; max-width: max(300px, min(880px, calc((100vh - 360px) * 1.6))); }
-/* Laptops and up: cartridges in a column to the right of the screen, and
-   the screen sized to the window's height, so the screen and all three
-   cartridges are in view together even on a short laptop display. */
+/* Laptops and up (My Style): (screen) (CD slot) (three CDs). The drive
+   stands beside the screen with a vertical slot, and the CD column runs
+   the full height of the screen, top and bottom aligned. The screen is
+   sized from the window's height and the console's own width (container
+   units), and the CD size follows the screen, so all of it stays in view
+   together even on a short laptop display. */
 @media (min-width: 900px) {
   html[data-theme="personal"] .console {
-    display: grid; grid-template-columns: minmax(0, min(820px, calc((100vh - 230px) * 1.6))) 150px;
-    justify-content: center; align-items: start; column-gap: 1.75rem;
+    --tower: 54px; --cg: 18px; --cdgap: 14px; --cdw: 150px;
+    --scr: min(820px, calc((100vh - 230px) * 1.6), calc(100cqw - var(--tower) - var(--cdw) - 2 * var(--cg)));
+    --cd: min(var(--cdw), calc(((var(--scr) - 38px) / 1.6 + 38px - 2 * var(--cdgap)) / 3));
+    container-type: inline-size;
+    display: grid; grid-template-columns: auto auto auto; justify-content: center; align-items: stretch;
+    column-gap: var(--cg);
   }
-  html[data-theme="personal"] .console-unit { max-width: none; }
-  html[data-theme="personal"] .cartridges { flex-direction: column; justify-content: flex-start; gap: 1rem; margin-top: 0; padding-top: 4rem; } /* clear the floating style toggle */
-  html[data-theme="personal"] .cart-bay { flex: none; width: 100%; }
+  html[data-theme="personal"] .console-unit { display: contents; }
+  html[data-theme="personal"] .console-bezel { grid-column: 1; grid-row: 1; width: var(--scr); }
+  html[data-theme="personal"] .console-now { grid-column: 1; grid-row: 2; }
+  /* The drive: a tower the height of the screen, slot in the middle. */
+  html[data-theme="personal"] .console-base {
+    grid-column: 2; grid-row: 1; z-index: auto; width: var(--tower); margin: 0; padding: 16px 0;
+    flex-direction: column; justify-content: space-between;
+    background: #d8d1bd; border: 3px solid var(--ink); border-radius: 14px; box-shadow: 6px 6px 0 0 var(--shadow);
+  }
+  html[data-theme="personal"] .console-base > * { position: relative; z-index: 6; }
+  html[data-theme="personal"] .console-slot {
+    width: 14px; height: calc(var(--cd) + 18px);
+    background: linear-gradient(90deg, #050505 0%, #14120f 70%, #2b2722 100%);
+    box-shadow: inset 4px 0 4px rgba(0, 0, 0, 0.7), 1px 0 0 rgba(255, 255, 255, 0.35);
+  }
+  html[data-theme="personal"] .cartridges {
+    grid-column: 3; grid-row: 1; width: var(--cd); margin: 0;
+    flex-direction: column; justify-content: space-between; gap: var(--cdgap);
+  }
+  html[data-theme="personal"] .cartridges > .cart-bay { flex: none; width: var(--cd); }
 }
 .console-bezel {
   padding: 16px; background: #d8d1bd; border: 3px solid var(--ink); border-radius: 14px;
@@ -1201,6 +1225,42 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
 .cartridge.is-in { opacity: 0; transform: translateY(-24px); pointer-events: none; }
 .cartridge.returning { animation: cart-return 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
 @keyframes cart-return { from { opacity: 0; transform: translateY(-36px); } to { opacity: 1; transform: none; } }
+/* My Style: the three pages are mini CDs with a strip of tape naming
+   each one. The disc is drawn on ::before (masked to cut the centre
+   hole); the button itself only carries the round comic shadow. */
+html[data-theme="personal"] .cart-bay { flex: 0 1 150px; aspect-ratio: 1; }
+html[data-theme="personal"] .cart-bay::before { border-radius: 50%; }
+html[data-theme="personal"] .cart-bay:nth-child(1) .cartridge { --tape: rgba(170, 196, 243, 0.94); }
+html[data-theme="personal"] .cart-bay:nth-child(2) .cartridge { --tape: rgba(244, 172, 158, 0.94); }
+html[data-theme="personal"] .cart-bay:nth-child(3) .cartridge { --tape: rgba(160, 216, 185, 0.94); }
+html[data-theme="personal"] .cartridge {
+  display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 1;
+  padding: 0; background: transparent; border: none; border-radius: 50%; -webkit-tap-highlight-color: transparent;
+  box-shadow: 4px 4px 0 0 var(--shadow);
+}
+html[data-theme="personal"] .cartridge::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 3px solid var(--ink);
+  background:
+    radial-gradient(circle closest-side, transparent 0 7%, var(--ink) 7% 8.6%, rgba(255, 255, 255, 0.78) 8.6% 19%, rgba(40, 40, 40, 0.28) 19% 20.2%, rgba(255, 255, 255, 0.55) 20.2% 21.5%, transparent 21.5%),
+    repeating-radial-gradient(circle closest-side, rgba(255, 255, 255, 0) 0 3px, rgba(255, 255, 255, 0.16) 3px 4px),
+    conic-gradient(from 200deg, #dde2ea, #f6f7fa 7%, #c4d3f3 15%, #f3c6de 23%, #f6efc4 31%, #c9eed8 39%, #dde2ea 50%, #f6f7fa 57%, #c4d3f3 65%, #f3c6de 73%, #f6efc4 81%, #c9eed8 89%, #dde2ea);
+  background-origin: border-box;
+  -webkit-mask: radial-gradient(circle closest-side, transparent 0 calc(7% - 0.5px), #000 7%);
+  mask: radial-gradient(circle closest-side, transparent 0 calc(7% - 0.5px), #000 7%);
+}
+html[data-theme="personal"] .cartridge::after { display: none; }
+html[data-theme="personal"] .cart-label { display: none; }
+/* The tape label: torn ends, a slight hand-placed angle. */
+html[data-theme="personal"] .cart-name {
+  position: relative; z-index: 1; width: 84%; margin: 0; padding: 0.4rem 0.55rem;
+  background: var(--tape, rgba(243, 227, 168, 0.94)); color: var(--ink); text-align: center; text-shadow: none;
+  font-family: "Space Mono", monospace; font-weight: 700; font-size: 0.78rem; line-height: 1.15;
+  transform: rotate(-5deg);
+  clip-path: polygon(0 6%, 3% 0, 97% 4%, 100% 0, 98% 22%, 100% 45%, 97% 70%, 100% 100%, 4% 96%, 0 100%, 2% 74%, 0 50%, 3% 27%);
+}
+html[data-theme="personal"] .cartridge:hover, html[data-theme="personal"] .cartridge:focus-visible { transform: translate(-2px, -3px); box-shadow: 6px 7px 0 0 var(--shadow); }
+html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
 /* The flying copy (nav.js animates it with transforms only). */
 /* Insertion: the flying copy lives inside a mask whose top edge is the
    slot line, so whatever passes above it is simply cut off (works in
@@ -1211,6 +1271,10 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
 .cart-shade {
   position: absolute; left: 0; right: 0; top: 0; height: 22px; z-index: 3; pointer-events: none; opacity: 0;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0) 100%);
+}
+.cart-mask.v .cart-shade {
+  top: 0; bottom: 0; left: 0; right: auto; width: 26px; height: auto;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0) 100%);
 }
 @media (max-width: 640px) {
   /* Nearly edge to edge, with a thin bezel. */
@@ -1223,6 +1287,10 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
   .cartridge { padding: 7px 7px 18px; border-width: 2.5px; }
   .cartridge::after { left: 9px; right: 9px; bottom: 5px; height: 6px; }
   .cart-name { font-size: 0.72rem; margin-top: 6px; }
+  html[data-theme="personal"] .cart-bay { flex: 1 1 0; }
+  html[data-theme="personal"] .cartridge { box-shadow: 3px 3px 0 0 var(--shadow); }
+  html[data-theme="personal"] .cartridge::before { border-width: 2.5px; }
+  html[data-theme="personal"] .cart-name { width: 88%; margin: 0; padding: 0.3rem 0.35rem; font-size: 0.6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cartridge.returning { animation: none; }
