@@ -1323,6 +1323,8 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
   .page-study { margin-top: 2.25rem; padding-top: 1.75rem; }
 }
 
+.hero-shot { margin-top: 2rem; }
+
 /* ---------- plain device showcase (no card chrome) ---------- */
 .device-row {
   display: flex; align-items: flex-end; justify-content: space-between;
