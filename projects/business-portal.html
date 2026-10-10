@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="../assets/brand/dino.png" />
-<link rel="stylesheet" href="../styles.css?v=20261010q" />
+<link rel="stylesheet" href="../styles.css?v=20261010r" />
 </head>
 <body>
 
@@ -58,8 +58,11 @@
         <div class="item"><div class="label">Tools</div><div class="value">Claude Code, Figma, Git, Jira, Miro, Confluence, the company community hub</div></div>
       </div>
 
-      <figure class="shot hero-shot">
-        <img src="../assets/business-portal/dashboard-final.webp" alt="Final redesigned portal dashboard: a welcome header with an illustrated skyline, outstanding balance and overdue readings cards, and a what's new carousel" width="1984" height="1031" loading="eager" />
+      <figure class="shot hero-shot hero-video">
+        <video class="walkthrough" autoplay muted loop playsinline preload="auto" poster="../assets/business-portal/dashboard-walkthrough-poster.webp" width="1440" height="744" aria-label="Walkthrough of the final dashboard: switching between the light, dark and green themes and the day and night headers, then scrolling down to last month's usage, invoices and sites needing attention">
+          <source src="../assets/business-portal/dashboard-walkthrough.mp4" type="video/mp4" /><source src="../assets/business-portal/dashboard-walkthrough.webm" type="video/webm" />
+        </video>
+        <button type="button" class="video-toggle" aria-label="Pause video"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5.5v13l10.5-6.5z"/></svg></button>
       </figure>
     </div>
   </section>
@@ -262,7 +265,7 @@
         <figure class="shot"><img src="../assets/business-portal/dashboard-v2.webp" alt="My second dashboard: outstanding balance with a Direct Debit prompt, manual reads needed, and carbon footprint cards beside a usage-this-month chart against the contracted level, with over-contract days in amber, an unusual spike in red, and a warning about days above contract" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v2">V2</span>My second try: the upsells gone, replaced by what stakeholders asked for, with usage this month set against the contracted level and unusual spikes flagged.</figcaption></figure>
       </div>
       <div class="shot-duo">
-        <figure class="shot coming-soon"><div class="media-placeholder" role="img" aria-label="Screenshot coming soon"><span class="soon-label">Coming soon...</span></div><figcaption><span class="ver final">Final</span>Dashboard, version one.</figcaption></figure>
+        <figure class="shot"><video controls muted playsinline preload="none" poster="../assets/business-portal/dashboard-walkthrough-poster.webp" width="1440" height="744" aria-label="Walkthrough of the final dashboard, version one"><source src="../assets/business-portal/dashboard-walkthrough.mp4" type="video/mp4" /><source src="../assets/business-portal/dashboard-walkthrough.webm" type="video/webm" /></video><figcaption><span class="ver final">Final</span>Dashboard, version one: light, dark and green themes, a day and night header, then usage, invoices and sites needing attention further down.</figcaption></figure>
         <figure class="shot coming-soon"><div class="media-placeholder" role="img" aria-label="Screenshot coming soon"><span class="soon-label">Coming soon...</span></div><figcaption><span class="ver final">Final</span>Dashboard, version two.</figcaption></figure>
       </div>
     </div>
@@ -333,6 +336,6 @@
 
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
-<script src="../nav.js?v=20261010q" defer></script>
+<script src="../nav.js?v=20261010r" defer></script>
 </body>
 </html>

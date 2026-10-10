@@ -377,6 +377,37 @@
   // bay copy hides on the frame the moving one appears, and reappears on
   // the frame the moving one lands. Professional shows the same markup
   // as a plain gallery that just cross-fades.
+  // The hero walkthrough video autoplays muted on a loop; a button pauses
+  // it, reduced-motion users get it paused, and it pauses off-screen.
+  function initWalkthrough() {
+    var fig = document.querySelector('.hero-video');
+    if (!fig) return;
+    var v = fig.querySelector('video'), btn = fig.querySelector('.video-toggle');
+    if (!v || !btn) return;
+    var userPaused = prefersReducedMotion();
+    function sync() {
+      var paused = v.paused;
+      btn.classList.toggle('is-paused', paused);
+      btn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+    }
+    function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () { sync(); }); }
+    if (userPaused) { v.removeAttribute('autoplay'); v.pause(); }
+    v.addEventListener('play', sync);
+    v.addEventListener('pause', sync);
+    btn.addEventListener('click', function () {
+      if (v.paused) { userPaused = false; tryPlay(); } else { userPaused = true; v.pause(); }
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { if (!userPaused && v.paused) tryPlay(); }
+          else if (!v.paused) v.pause();
+        });
+      }, { threshold: 0.15 }).observe(v);
+    }
+    sync();
+  }
+
   function initConsole() {
     var consoleEl = document.querySelector('.console');
     if (!consoleEl) return;
@@ -696,7 +727,7 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); initWalkthrough(); });
   } else {
     init();
     initStyleToggle();
@@ -706,5 +737,6 @@
     initConsole();
     initLightbox();
     initMotion();
+    initWalkthrough();
   }
 })();
