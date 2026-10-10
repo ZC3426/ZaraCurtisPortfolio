@@ -377,35 +377,75 @@
   // bay copy hides on the frame the moving one appears, and reappears on
   // the frame the moving one lands. Professional shows the same markup
   // as a plain gallery that just cross-fades.
-  // The hero walkthrough video autoplays muted on a loop; a button pauses
-  // it, reduced-motion users get it paused, and it pauses off-screen.
-  function initWalkthrough() {
-    var fig = document.querySelector('.hero-video');
-    if (!fig) return;
-    var v = fig.querySelector('video'), btn = fig.querySelector('.video-toggle');
-    if (!v || !btn) return;
-    var userPaused = prefersReducedMotion();
-    function sync() {
-      var paused = v.paused;
-      btn.classList.toggle('is-paused', paused);
-      btn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
-    }
-    function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () { sync(); }); }
-    if (userPaused) { v.removeAttribute('autoplay'); v.pause(); }
-    v.addEventListener('play', sync);
-    v.addEventListener('pause', sync);
-    btn.addEventListener('click', function () {
-      if (v.paused) { userPaused = false; tryPlay(); } else { userPaused = true; v.pause(); }
+  // Video players: a bar with play/pause, a scrubber, the time and a
+  // 1x/2x speed toggle. The hero one autoplays muted on a loop, but stays
+  // paused for reduced-motion users and pauses while off-screen.
+  function initVideoPlayers() {
+    Array.prototype.forEach.call(document.querySelectorAll('.vid-player'), function (fig) {
+      var v = fig.querySelector('video'), play = fig.querySelector('.vid-play'), seek = fig.querySelector('.vid-seek');
+      var cur = fig.querySelector('.vid-time'), dur = fig.querySelector('.vid-dur'), speed = fig.querySelector('.vid-speed');
+      if (!v || !play || !seek) return;
+      var auto = fig.hasAttribute('data-autoplay');
+      var userPaused = !auto || prefersReducedMotion();
+      var dragging = false, raf = 0;
+      function fmt(t) { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2); }
+      function paint() {
+        var d = isFinite(v.duration) ? v.duration : +seek.max;
+        var t = dragging ? +seek.value : v.currentTime;
+        if (!dragging) seek.value = t;
+        seek.style.setProperty('--p', d ? Math.min(100, t / d * 100) + '%' : '0%');
+        if (cur) cur.textContent = fmt(t);
+        seek.setAttribute('aria-valuetext', fmt(t) + ' of ' + fmt(d));
+      }
+      function loop() { paint(); raf = v.paused ? 0 : requestAnimationFrame(loop); }
+      function meta() {
+        if (isFinite(v.duration) && v.duration > 0) { seek.max = v.duration; if (dur) dur.textContent = fmt(v.duration); }
+        paint();
+      }
+      function sync() {
+        var paused = v.paused;
+        play.classList.toggle('is-paused', paused);
+        play.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+        if (!paused && !raf) raf = requestAnimationFrame(loop);
+        paint();
+      }
+      function tryPlay() { var p = v.play(); if (p && p.catch) p.catch(function () { sync(); }); }
+      function toggle() { if (v.paused) { userPaused = false; tryPlay(); } else { userPaused = true; v.pause(); } }
+      if (auto && userPaused) { v.removeAttribute('autoplay'); v.pause(); }
+      v.addEventListener('loadedmetadata', meta);
+      v.addEventListener('durationchange', meta);
+      v.addEventListener('play', sync);
+      v.addEventListener('pause', sync);
+      v.addEventListener('seeked', paint);
+      v.addEventListener('timeupdate', function () { if (v.paused) paint(); });
+      v.addEventListener('click', toggle);
+      play.addEventListener('click', toggle);
+      seek.addEventListener('input', function () { dragging = true; v.currentTime = +seek.value; paint(); });
+      seek.addEventListener('change', function () { dragging = false; v.currentTime = +seek.value; paint(); });
+      seek.addEventListener('keydown', function (e) {        // arrows jump 5 seconds
+        var step = e.key === 'ArrowRight' || e.key === 'ArrowUp' ? 5 : e.key === 'ArrowLeft' || e.key === 'ArrowDown' ? -5 : 0;
+        if (!step) return;
+        e.preventDefault();
+        v.currentTime = Math.max(0, Math.min(+seek.max, v.currentTime + step));
+        paint();
+      });
+      if (speed) speed.addEventListener('click', function () {
+        var fast = v.playbackRate < 2;
+        v.defaultPlaybackRate = v.playbackRate = fast ? 2 : 1;
+        speed.textContent = fast ? '2\u00d7' : '1\u00d7';
+        speed.setAttribute('aria-pressed', fast ? 'true' : 'false');
+      });
+      if (auto && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { if (!userPaused && v.paused) tryPlay(); }
+            else if (!v.paused) v.pause();
+          });
+        }, { threshold: 0.15 }).observe(v);
+      }
+      if (v.readyState >= 1) meta();
+      sync();
     });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { if (!userPaused && v.paused) tryPlay(); }
-          else if (!v.paused) v.pause();
-        });
-      }, { threshold: 0.15 }).observe(v);
-    }
-    sync();
   }
 
   function initConsole() {
@@ -727,7 +767,7 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); initWalkthrough(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); initVideoPlayers(); });
   } else {
     init();
     initStyleToggle();
@@ -737,6 +777,6 @@
     initConsole();
     initLightbox();
     initMotion();
-    initWalkthrough();
+    initVideoPlayers();
   }
 })();
