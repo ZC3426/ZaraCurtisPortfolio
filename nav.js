@@ -717,11 +717,15 @@
   // Dense UI screenshots stay hard to read even at full content width on
   // a phone, so any large case-study screenshot opens full-screen.
   function initLightbox() {
-    var imgs = document.querySelectorAll('.shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img, .shot-trio .shot img, .console-display img');
+    var imgs = document.querySelectorAll('.mosaic .shot > img, .shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img, .shot-trio .shot img, .console-display img');
     if (!imgs.length) return;
-    var box = null, lastFocus = null;
+    var box = null, lastFocus = null, list = [], idx = 0, touchX = null;
 
-    function onKey(e) { if (e.key === 'Escape') close(); }
+    function onKey(e) {
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+    }
     function close() {
       if (!box) return;
       var b = box; box = null;
@@ -730,30 +734,77 @@
       setTimeout(function () { b.remove(); }, 200);
       if (lastFocus) lastFocus.focus();
     }
-    function open(img) {
+    // Shows list[idx]: the image, its caption (version chip included) and,
+    // in a run of several, where it sits in that run.
+    function show() {
+      var img = list[idx];
+      var fig = box.querySelector('.lightbox-fig');
+      var big = fig.querySelector('img'), cap = fig.querySelector('.lightbox-cap');
+      big.src = img.currentSrc || img.src;
+      big.alt = img.alt;
+      big.className = img.closest('.shot.phone') ? 'phone' : '';
+      box.setAttribute('aria-label', img.alt || 'Enlarged screenshot');
+      var fc = img.closest('figure') && img.closest('figure').querySelector('figcaption');
+      cap.innerHTML = fc ? fc.innerHTML : '';
+      if (list.length > 1) {
+        var n = document.createElement('span');
+        n.className = 'lightbox-count';
+        n.textContent = (idx + 1) + ' / ' + list.length;
+        cap.appendChild(n);
+      }
+      cap.hidden = !cap.childNodes.length;
       lastFocus = img;
+    }
+    function step(d) {
+      if (!box || list.length < 2) return;
+      idx = (idx + d + list.length) % list.length;
+      show();
+    }
+    function button(cls, label, text, fn) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = cls;
+      btn.setAttribute('aria-label', label);
+      btn.textContent = text;
+      btn.addEventListener('click', function (e) { e.stopPropagation(); fn(); });
+      return btn;
+    }
+    function open(img) {
+      var run = img.closest('.mosaic');
+      list = run ? Array.prototype.slice.call(run.querySelectorAll('.shot > img')) : [img];
+      idx = Math.max(0, list.indexOf(img));
       box = document.createElement('div');
       box.className = 'lightbox';
       box.setAttribute('role', 'dialog');
       box.setAttribute('aria-modal', 'true');
-      box.setAttribute('aria-label', img.alt || 'Enlarged screenshot');
-      var big = document.createElement('img');
-      big.src = img.currentSrc || img.src;
-      big.alt = img.alt;
-      if (img.closest('.shot.phone')) big.className = 'phone';
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'lightbox-close';
-      btn.setAttribute('aria-label', 'Close');
-      btn.textContent = '×';
-      box.appendChild(big);
-      box.appendChild(btn);
+      var fig = document.createElement('figure');
+      fig.className = 'lightbox-fig';
+      fig.appendChild(document.createElement('img'));
+      var cap = document.createElement('figcaption');
+      cap.className = 'lightbox-cap';
+      fig.appendChild(cap);
+      fig.addEventListener('click', function (e) { if (e.target.tagName !== 'IMG') e.stopPropagation(); });
+      box.appendChild(fig);
+      var closeBtn = button('lightbox-close', 'Close', '\u00d7', close);
+      box.appendChild(closeBtn);
+      if (list.length > 1) {
+        box.appendChild(button('lightbox-nav prev', 'Previous image', '\u2039', function () { step(-1); }));
+        box.appendChild(button('lightbox-nav next', 'Next image', '\u203a', function () { step(1); }));
+      }
       box.addEventListener('click', close);
+      box.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+      box.addEventListener('touchend', function (e) {
+        if (touchX === null) return;
+        var dx = e.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(dx) > 45) { e.preventDefault(); step(dx < 0 ? 1 : -1); }
+      });
       document.addEventListener('keydown', onKey);
       document.body.appendChild(box);
+      show();
       var opened = box;
       requestAnimationFrame(function () { opened.classList.add('open'); });
-      btn.focus();
+      closeBtn.focus();
     }
 
     Array.prototype.forEach.call(imgs, function (img) {
@@ -765,6 +816,7 @@
       });
     });
   }
+
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); initVideoPlayers(); });
