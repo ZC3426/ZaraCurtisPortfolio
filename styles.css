@@ -1377,24 +1377,23 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 .shot .ver.v5 { background: var(--outline); color: #fff; }
 
 /* ---------- iteration mosaics ----------
-   Runs of screenshots sit side by side as uniform cards: every desktop
-   screenshot card in the case study is the same size (a 2:1 frame, three
-   to a row), and every phone screenshot card is the same size (a 1:2
-   frame, half a desktop card wide). Screenshots that aren't quite 2:1 are
-   cropped from the top; the full image opens on click (nav.js:
-   initLightbox). Captions get a fixed four-line area so cards line up.
-   Phones get a sideways swipe row of the same uniform cards. */
+   Runs of screenshots sit side by side as uniform cards: every
+   screenshot card in the case study is the same size, with a 2:1 image
+   frame, three to a row. Desktop screenshots that aren't quite 2:1 are
+   cropped from the top; phone screenshots sit whole in the middle of the
+   frame. The full image opens on click (nav.js: initLightbox). Captions
+   get a fixed four-line area so cards line up. Phones get a sideways
+   swipe row of the same uniform cards. */
 .mosaic {
-  --g: 0.9rem; --tp: 0.6rem; --dw: calc((100% - 2 * var(--g)) / 3); --pw: calc(var(--dw) * 0.5);
+  --g: 0.9rem; --tp: 0.6rem; --dw: calc((100% - 2 * var(--g)) / 3);
   display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: var(--g); margin-top: 1.5rem;
 }
 .mosaic + .mosaic { margin-top: var(--g); }
 .mosaic > .shot { flex: 0 0 var(--dw); min-width: 0; display: flex; flex-direction: column; padding: var(--tp); }
-.mosaic > .shot.phone { flex-basis: var(--pw); }
 .mosaic > .shot > img, .mosaic > .shot .vid-frame video, .mosaic > .shot .media-placeholder {
   width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; object-position: top center;
 }
-.mosaic > .shot.phone > img { aspect-ratio: 1 / 2; }
+.mosaic > .shot.phone > img { object-fit: contain; object-position: center; }
 .mosaic > .shot .vid-frame { width: 100%; }
 .mosaic > .shot > img { display: block; border-radius: 4px; cursor: zoom-in; }
 .mosaic > .shot:not(.phone) > img { outline: 1px solid var(--outline); }
@@ -1424,7 +1423,7 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 @media (max-width: 999px) { .mosaic { --dw: calc((100% - var(--g)) / 2); } }
 @media (max-width: 640px) {
   .mosaic {
-    --dw: 80vw; --pw: 42vw; --tp: 0.45rem;
+    --dw: 80vw; --tp: 0.45rem;
     flex-wrap: nowrap; justify-content: flex-start; gap: 0.7rem;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
     margin-left: -1rem; margin-right: -1rem; padding: 0.25rem 1rem 0.6rem; scroll-padding: 0 1rem;
@@ -2117,9 +2116,9 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
 /* Phones: wide screenshots are small, so say they open full-size. */
 @media (max-width: 700px) {
   .shot-stack .shot:has(> img), .shot-pair .shot:not(.phone):has(> img),
-  .shot-duo .shot:has(> img), .mosaic > .shot:not(.phone):has(> img) { position: relative; }
+  .shot-duo .shot:has(> img), .mosaic > .shot:has(> img) { position: relative; }
   .shot-stack .shot:has(> img)::before, .shot-pair .shot:not(.phone):has(> img)::before,
-  .shot-duo .shot:has(> img)::before, .mosaic > .shot:not(.phone):has(> img)::before {
+  .shot-duo .shot:has(> img)::before, .mosaic > .shot:has(> img)::before {
     content: "Tap to enlarge"; position: absolute; top: 0.8rem; right: 0.8rem; z-index: 2; pointer-events: none;
     padding: 0.32rem 0.5rem; border-radius: 3px; background: rgba(26, 26, 26, 0.78); color: #fff;
     font-family: "Space Mono", monospace; font-size: 0.66rem; font-weight: 700; line-height: 1;
@@ -2128,7 +2127,7 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
   html[data-theme="business"] .shot-stack .shot:has(> img)::before,
   html[data-theme="business"] .shot-pair .shot:not(.phone):has(> img)::before,
   html[data-theme="business"] .shot-duo .shot:has(> img)::before,
-  html[data-theme="business"] .mosaic > .shot:not(.phone):has(> img)::before { font-family: var(--mono) !important; border-radius: 0; }
+  html[data-theme="business"] .mosaic > .shot:has(> img)::before { font-family: var(--mono) !important; border-radius: 0; }
 }
 
 /* ---------- soot sprites (My Style homepage, phones; soot.js) ---------- */
