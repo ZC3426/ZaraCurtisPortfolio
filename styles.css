@@ -1377,46 +1377,60 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 .shot .ver.v5 { background: var(--outline); color: #fff; }
 
 /* ---------- iteration mosaics ----------
-   Each run of screenshots is one justified row: every tile grows in
-   proportion to its image's aspect ratio (--ar), so all images in a row
-   share one height, and each run usually fits a single row instead of
-   a long stack. Click or tap a tile to step through the run full size
-   (nav.js: initLightbox). Phones get a sideways swipe row instead. */
+   Runs of screenshots sit side by side as uniform cards: every desktop
+   screenshot card in the case study is the same size (a 2:1 frame, three
+   to a row), and every phone screenshot card is the same size (a 1:2
+   frame, half a desktop card wide). Screenshots that aren't quite 2:1 are
+   cropped from the top; the full image opens on click (nav.js:
+   initLightbox). Captions get a fixed four-line area so cards line up.
+   Phones get a sideways swipe row of the same uniform cards. */
 .mosaic {
-  --tp: 0.6rem; --tb: 3px; --pad: calc(2 * var(--tp) + 2 * var(--tb)); --h: 150px;
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem; margin-top: 1.5rem;
+  --g: 0.9rem; --tp: 0.6rem; --dw: calc((100% - 2 * var(--g)) / 3); --pw: calc(var(--dw) * 0.5);
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: var(--g); margin-top: 1.5rem;
 }
-.mosaic + .mosaic { margin-top: 0.9rem; }
-.mosaic > .shot {
-  flex: var(--ar) 1 calc(var(--ar) * var(--h) + var(--pad));
-  max-width: calc(var(--ar) * 340px + var(--pad)); min-width: 0;
-  display: flex; flex-direction: column; padding: var(--tp);
+.mosaic + .mosaic { margin-top: var(--g); }
+.mosaic > .shot { flex: 0 0 var(--dw); min-width: 0; display: flex; flex-direction: column; padding: var(--tp); }
+.mosaic > .shot.phone { flex-basis: var(--pw); }
+.mosaic > .shot > img, .mosaic > .shot .vid-frame video, .mosaic > .shot .media-placeholder {
+  width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; object-position: top center;
 }
-.mosaic > .shot > img, .mosaic > .shot .vid-frame, .mosaic > .shot .media-placeholder { width: 100%; }
-.mosaic > .shot > img { height: auto; display: block; border-radius: 4px; cursor: zoom-in; }
+.mosaic > .shot.phone > img { aspect-ratio: 1 / 2; }
+.mosaic > .shot .vid-frame { width: 100%; }
+.mosaic > .shot > img { display: block; border-radius: 4px; cursor: zoom-in; }
 .mosaic > .shot:not(.phone) > img { outline: 1px solid var(--outline); }
-.mosaic > .shot.coming-soon .media-placeholder { aspect-ratio: var(--ar); }
 .mosaic > .shot figcaption {
-  margin-bottom: auto; border-top: none; padding: 0.55rem 0.1rem 0.05rem; font-size: 0.8rem; line-height: 1.45;
+  border-top: none; padding: 0.55rem 0.1rem 0.05rem; font-size: 0.8rem; line-height: 1.45;
+  height: calc(4 * 1.45em + 0.6rem); overflow: hidden;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4;
+}
+.mosaic > .shot figcaption .ver { line-height: 1.2; vertical-align: 0.05em; }
+/* Phones: the video's control bar sits under it, so its caption area
+   gives up the bar's height to keep the card the same size. */
+@media (max-width: 640px) {
+  .mosaic > .shot .vid-bar { box-sizing: border-box; height: var(--barh, 40px); }
+  .mosaic > .shot.vid-player figcaption { height: calc(4 * 1.45em + 0.6rem - var(--barh, 40px)); -webkit-line-clamp: 2; line-clamp: 2; }
+}
+@media (max-width: 640px) {
+  .mosaic { --barh: 36px; }
+  .mosaic > .shot .vid-bar { padding: 2px 6px; }
+  .mosaic > .shot .vid-bar button, .mosaic > .shot .vid-seek { height: 32px; min-width: 32px; }
 }
 .mosaic > .shot:hover > img { outline-color: var(--accent); }
-[data-theme="business"] .mosaic { --tb: 1px; --tp: calc(0.6rem + 2px); }
-@media (max-width: 1060px) { .mosaic { --h: 105px; } }
+[data-theme="business"] .mosaic { --tp: calc(0.6rem + 2px); }
 [data-theme="business"] .mosaic > .shot > img { border-radius: 8px; }
 [data-theme="business"] .mosaic > .shot:not(.phone) > img { outline: 1px solid var(--card-line); }
 [data-theme="business"] .mosaic > .shot:hover > img { outline-color: var(--outline); }
+/* Tablets: two desktop cards to a row. */
+@media (max-width: 999px) { .mosaic { --dw: calc((100% - var(--g)) / 2); } }
 @media (max-width: 640px) {
   .mosaic {
-    flex-wrap: nowrap; justify-content: flex-start; align-items: flex-start; gap: 0.7rem;
+    --dw: 80vw; --pw: 42vw; --tp: 0.45rem;
+    flex-wrap: nowrap; justify-content: flex-start; gap: 0.7rem;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
     margin-left: -1rem; margin-right: -1rem; padding: 0.25rem 1rem 0.6rem; scroll-padding: 0 1rem;
   }
   .mosaic::-webkit-scrollbar { display: none; }
-  .mosaic > .shot {
-    flex: 0 0 auto; width: min(80vw, calc(var(--ar) * 380px + var(--pad))); max-width: none;
-    scroll-snap-align: start; --tp: 0.45rem;
-  }
-  .mosaic > .shot:only-child { width: 100%; }
+  .mosaic > .shot { scroll-snap-align: start; }
 }
 
 /* The lightbox as a gallery: caption, counter, previous/next. */
