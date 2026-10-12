@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="../assets/brand/dino.png" />
-<link rel="stylesheet" href="../styles.css?v=20261011f" />
+<link rel="stylesheet" href="../styles.css?v=20261012a" />
 </head>
 <body>
 
@@ -47,16 +47,35 @@
     <div class="wrap">
       <a class="back" href="../case-studies.html">← All case studies</a>
       <div class="title-box plain"><h1>Business Customer Portal Redesign</h1></div>
-      <p class="lede" style="margin-top:1rem;">Rebuilding self-service for gas and power customers.</p>
+      <p class="lede" style="margin-top:1rem;">Turning a self-service portal that customers avoided into one they can rely on, so routine tasks don't need a phone call.</p>
 
       <div class="overview-grid">
-        <div class="item"><div class="label">Role</div><div class="value">Product Designer (end-to-end)</div></div>
-        <div class="item"><div class="label">Timeline</div><div class="value">3 months</div></div>
-        <div class="item"><div class="label">Team</div><div class="value">Project Manager, Engineer, QA</div></div>
-        <div class="item"><div class="label">Status</div><div class="value">Launching in Late October TBC; impact metrics to follow</div></div>
-        <div class="item"><div class="label">Scope</div><div class="value">17 pages plus a design system, and a first iteration of a Managing Agent portal (deprioritised)</div></div>
-        <div class="item"><div class="label">Tools</div><div class="value">Claude Code, Figma, Git, Jira, Miro, Confluence, the company community hub</div></div>
+        <div class="item"><div class="label">Role</div><div class="value">Product Designer (sole designer, end to end)</div></div>
+        <div class="item"><div class="label">Timeline</div><div class="value">3 months, 2026</div></div>
+        <div class="item"><div class="label">Team</div><div class="value">PM, engineer, QA. Worked with customer service, metering, credit control and legal.</div></div>
+        <div class="item"><div class="label">Status</div><div class="value">Launching late October 2026. Live impact data to follow.</div></div>
+        <div class="item"><div class="label">Scope</div><div class="value">17 pages and a design system. A Managing Agent portal was designed, then paused.</div></div>
+        <div class="item"><div class="label">Tools</div><div class="value">Figma, Claude Code, Git, Jira, Miro, Confluence</div></div>
       </div>
+
+      <div class="list-cards cols-2 cs-summary">
+        <div class="card-mini"><h4>The problem</h4><p>Only around 30 customers a month used the old portal<!-- CONFIRM: out of roughly X business customers -->. It crashed, hid invoices and often failed to send meter readings, so most customers phoned instead.</p></div>
+        <div class="card-mini"><h4>My role</h4><p>Sole designer, end to end: research, interaction and visual design, usability testing, the design system, accessibility and QA support.</p></div>
+        <div class="card-mini"><h4>What I did</h4><p>Used customer service call data to find the main reasons customers were calling, then redesigned the portal around those tasks. Tested each page in rounds of 5, with 30 participants in total, and iterated whenever 3 or more struggled.</p></div>
+        <div class="card-mini"><h4>Results so far</h4><p>Meter reading completion rose from 15% to 100% in testing<!-- CONFIRM: n (number of participants) -->. Live impact data will follow after launch.</p></div>
+      </div>
+
+      <details class="glossary">
+        <summary>Energy terms used in this case study</summary>
+        <dl>
+          <div><dt>MPAN</dt><dd>Electricity meter point number.</dd></div>
+          <div><dt>MPRN</dt><dd>Gas meter point number.</dd></div>
+          <div><dt>MPXN</dt><dd>Umbrella term covering both.</dd></div>
+          <div><dt>Register</dt><dd>One set of readings on a meter. Some meters have separate day and night registers.</dd></div>
+          <div><dt>Managing agent</dt><dd>A company managing energy for many properties on behalf of owners.</dd></div>
+          <div><dt>Consolidated billing</dt><dd>One bill covering several sites.</dd></div>
+        </dl>
+      </details>
 
       <figure class="shot hero-shot vid-player" data-autoplay>
         <div class="vid-frame">
@@ -71,15 +90,16 @@
 
   <section class="cs-section">
     <div class="wrap">
-      <span class="kicker">Results so far</span>
-      <h2>Self-service that testers could actually use</h2>
+      <span class="kicker">Usability testing results</span>
+      <h2>Self-service that people could actually use</h2>
+      <p>Pre-launch testing with 30 staff from across the business. Live customer data will be added after launch.</p>
       <div class="metrics-paper">
         <table class="metrics-table">
           <tbody>
-            <tr><td class="num">95%</td><td class="desc">of testers answered the key invoice questions after iteration</td></tr>
-            <tr><td class="num">15% → 100%</td><td class="desc">testers who could submit a meter reading, before vs after iteration</td></tr>
-            <tr><td class="num">95%</td><td class="desc">of testers found all usage information in 3 seconds or less</td></tr>
-            <tr><td class="num">WCAG</td><td class="desc">audit completed, with fixes to colour contrast and text size, and legal requirements built into the final designs</td></tr>
+            <tr><td class="num">95%<!-- CONFIRM: replace with "X of Y" --></td><td class="desc">of participants answered the key invoice questions after iteration</td></tr>
+            <tr><td class="num">15% → 100%</td><td class="desc">of participants could submit a meter reading, first version vs final<!-- CONFIRM: n --></td></tr>
+            <tr><td class="num">95%<!-- CONFIRM: replace with "X of Y" --></td><td class="desc">of participants found all usage information in 3 seconds or less<!-- CONFIRM: how this was measured (timed task, first-click, 5-second test?) --></td></tr>
+            <tr><td class="num">WCAG<!-- CONFIRM: level audited against, e.g. 2.2 AA --></td><td class="desc">audit completed: fixed colour contrast and text size, and built legal requirements into the final designs</td></tr>
           </tbody>
         </table>
       </div>
@@ -119,17 +139,42 @@
           </div>
         </div>
       </div>
-      <p>The old portal was used by only around 30 customers a month. It technically let people do everything they needed, but the site often crashed, invoices and documents were hard to find, and meter readings regularly failed to send. Most customers phoned customer service instead. Most calls were about meter reads, VAT queries and invoice queries.</p>
-      <p>Our goal was to let customers help themselves, so the company wouldn't need to keep hiring in metering, customer service and credit as it grew.</p>
+      <p>The old portal technically let customers do everything they needed. In practice it often crashed, invoices and documents were hard to find, and meter readings regularly failed to send. Only around 30 customers a month used it<!-- CONFIRM: out of roughly X business customers -->.</p>
+      <p>So most customers phoned instead. The top reasons were meter readings, VAT and invoices. Much of this was failure demand: contact caused by the service not working, not by customers needing to speak to someone.</p>
+      <p>The business needed to grow without hiring at the same rate in metering, customer service and credit control. Customers needed to get routine tasks done without waiting on the phone. A portal that worked would serve both.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">The wider service</span>
+      <h2>The portal is one part of a bigger service</h2>
+      <p>A meter reading doesn't end when a customer presses submit. It moves on to the teams behind the portal, and when something goes wrong it can come back as a query or another call.</p>
+      <!-- CONFIRM: is this chain accurate? If so, it can replace the neutral sentence above:
+           "It moves through the metering team, into billing, onto an invoice, and sometimes into a call to
+           customer service or credit control. When a reading failed to send, the customer got an estimated
+           bill, which led to queries, corrections and more calls." -->
+      <p>So I looked at each page in terms of the whole journey: what the customer is trying to do, which team handles it behind the scenes, and where it was breaking down.</p>
+      <!-- CONFIRM: journey map / service blueprint / stakeholder map from Miro, or a reconstructed meter
+           reading blueprint (customer actions, portal, metering / billing / customer service / credit control,
+           pain points) captioned "Reconstructed after the project from call data and stakeholder conversations".
+           Only steps Zara confirms. -->
     </div>
   </section>
 
   <section class="cs-section">
     <div class="wrap">
       <span class="kicker">Research</span>
-      <h2>Who we designed for</h2>
-      <p>Our primary customers were businesses buying gas and power directly, not through a broker. I started from customer service call data, which showed what they needed most: submitting readings, tracking usage, viewing site information, changing tenancy, requesting VAT changes, paying invoices and downloading documents. The PM and I then met stakeholders to learn what they wanted, which industry terms to keep, and which were internal-only and would confuse users.</p>
-      <p>Managing Agents and brokers have much larger portfolios, so I designed a first iteration of a Managing Agent portal. It was then deprioritised to focus on direct customers, and the design system and layouts were built so it can be picked up later.</p>
+      <h2>Who we designed for, and how we found out</h2>
+      <p><strong>Users.</strong> Our primary users were businesses buying gas and power directly, not through a broker. Most have a few accounts, each with a few sites.</p>
+      <p><strong>Methods.</strong></p>
+      <ul class="method-list">
+        <li><strong>Call data analysis.</strong> Customer service data showed what customers needed most: submitting meter readings, tracking usage, viewing site information, changing tenancy, requesting VAT changes, paying invoices and downloading documents.</li>
+        <li><strong>Stakeholder sessions.</strong> The PM and I met customer service, metering, credit control and legal to understand their goals and constraints.</li>
+        <li><strong>Language review.</strong> We agreed which industry terms customers know and should keep, and which were internal jargon that would confuse them.</li>
+        <li><strong>Usability testing.</strong> Task-based testing on working prototypes (see <a href="#testing">Testing</a>).</li>
+      </ul>
+      <p><strong>Managing agents and brokers</strong> manage much larger portfolios, so I designed a first version of a separate Managing Agent portal. It was paused when priorities changed, and I built the design system and layouts so it can be picked up later.</p>
     </div>
   </section>
 
@@ -138,9 +183,9 @@
       <span class="kicker">Constraints</span>
       <h2>Dense data, a short timeline and low trust</h2>
       <div class="list-cards cols-3">
-        <div class="card-mini"><h4>Dense data</h4><p>Sites, meter reads, invoices and usage all needed a lot of information on screen.</p></div>
-        <div class="card-mini"><h4>Three months</h4><p>Development started early: the engineer began building before my designs were finished, so I worked in priority order and stayed in close contact.</p></div>
-        <div class="card-mini"><h4>Stakeholder trust</h4><p>The business had been through several product and delivery teams in recent years. I couldn't test with real customers yet, so I relied on stakeholders and customer service, who handle customer queries every day.</p></div>
+        <div class="card-mini"><h4>Dense data</h4><p>Sites, meter readings, invoices and usage all needed a lot of information on screen.</p></div>
+        <div class="card-mini"><h4>Three months</h4><p>The engineer started building before my designs were finished, so I designed in priority order and stayed in close contact to keep design and build in step.</p></div>
+        <div class="card-mini"><h4>Low trust, no customer access</h4><p>The business had been through several product and delivery teams in recent years, so trust in new work was low. I also couldn't test with real customers before launch. Instead I worked closely with customer service and metering staff, who deal with customer queries every day.</p></div>
       </div>
     </div>
   </section>
@@ -149,12 +194,12 @@
     <div class="wrap">
       <span class="kicker">Process</span>
       <h2>How we worked</h2>
-      <p>The PM built rough functional prototypes in Claude to show what each page needed to do, so stakeholders could react to something working instead of a document. They were good for agreeing functionality but not for usability. My job was to turn them into something people could actually use, and I built and refined every design in Claude Code.</p>
-      <p>I used AI to generate code and layout options, and made the decisions myself: what to build, what to test, and what to throw away. The versions are:</p>
+      <p>The PM built rough functional prototypes in Claude so stakeholders could react to something working rather than a document. They were useful for agreeing what each page should do, but not for usability. <strong>From V3 onwards, the design is mine</strong>: I turned those prototypes into something people could use, and built and refined every design in Claude Code.</p>
+      <p>I used AI to generate code and layout options. I made the decisions: what to build, what to test and what to throw away. The versions are:</p>
       <div class="version-row">
         <div class="version-tiles">
           <div class="card-mini"><h4>V1</h4><p>The PM's prototype, built from research and requirements.</p></div>
-          <div class="card-mini"><h4>V2</h4><p>Updated for changed requirements.</p></div>
+          <div class="card-mini"><h4>V2</h4><p>Updated by the PM for changed requirements.</p></div>
           <div class="card-mini"><h4>V3</h4><p>My first iteration.</p></div>
           <div class="card-mini"><h4>V4</h4><p>My second iteration, after testing.</p></div>
           <div class="card-mini"><h4>V5</h4><p>The final design, matching the new company website.</p></div>
@@ -163,91 +208,94 @@
     </div>
   </section>
 
-  <section class="cs-section">
+  <section class="cs-section" id="testing">
     <div class="wrap">
       <span class="kicker">Testing &amp; iteration</span>
       <h2>Making dense data readable</h2>
-      <p>This was the hardest part of the project. I tested each page in rounds of 5 people, and whenever 3 or more struggled with a task, I went back and iterated. In total I tested with 30 people from across the business, from HR to Credit Control. Most had never used the portal, which gave me honest usability data.</p>
-      <p>Earlier rounds ran on working prototypes, so testers could really enter readings and pay invoices, not just react to screens. I also tested all functionality on the live host the engineer built, using live data, so I could check how pages worked and where the built UI differed from my designs.</p>
+      <p>This was the hardest part of the project. Participants did real tasks on working prototypes: submitting a meter reading, finding and paying an invoice, answering a VAT question, checking usage against their contract.<!-- CONFIRM: methods, e.g. think-aloud; number of test rounds --></p>
+      <p>I tested each page in rounds of 5. If 3 or more people struggled with a task, I iterated before moving on. In total I tested with 30 people from across the business, from HR to credit control.</p>
+      <p>Testing with staff rather than customers has limits, so I used the mix deliberately. People who had never used the portal showed whether it was easy to learn. Metering and customer service staff checked it matched how the service really works. I also tested every feature on the engineer's live build with live data, to catch where the build differed from my designs.</p>
 
       <div class="page-study">
         <h3>Invoices</h3>
-        <p>Customers typically have a few accounts with a few sites each, so the first version used a drop-down table. Stakeholders wanted the VAT question visible outside the table, while the team wanted it inside, where users already see VAT. We included both. VAT queries were one of the most common reasons for calling, which is why its placement mattered.</p>
+        <p>Customers typically have a few accounts with a few sites each, so the first version used an expandable table.</p>
+        <p>VAT queries were one of the most common reasons for calling, so where the VAT option sat mattered. Stakeholders wanted it visible above the table; the team wanted it inside, next to the VAT figures. I kept both: a clear route for customers arriving with a VAT question, and context for customers already checking an invoice.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.105;"><img src="../assets/business-portal/invoices-v1-pm.webp" alt="The PM's invoices prototype, with outstanding, paid and all tabs and a payment-methods insights panel" width="2000" height="950" loading="lazy" /><figcaption><span class="ver v1">V1</span>The PM's prototype.</figcaption></figure>
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/invoices-iter1-expanded.webp" alt="My first invoices iteration with an account row expanded, showing VAT inside the table and an unallocated payments panel" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v3">V3</span>My first iteration, with a row expanded: VAT sits inside the table, alongside unallocated payments.</figcaption></figure>
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/invoices-iter1-collapsed.webp" alt="My first invoices iteration collapsed, with outstanding invoices above an all-invoices table" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v3">V3</span>The same page collapsed, as testers first saw it. Few realised the rows could expand.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.105;"><img src="../assets/business-portal/invoices-v1-pm.webp" alt="The PM's invoices prototype, with outstanding, paid and all tabs and a payment-methods insights panel" width="2000" height="950" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/invoices-iter1-expanded.webp" alt="My first invoices iteration with an account row expanded, showing VAT inside the table and an unallocated payments panel" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration, with a row expanded: VAT sits inside the table, alongside unallocated payments.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/invoices-iter1-collapsed.webp" alt="My first invoices iteration collapsed, with outstanding invoices above an all-invoices table" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v3">V3</span> The same page collapsed, as participants first saw it. Few realised the rows could expand.</figcaption></figure>
         </div>
         <p>Testing showed that users didn't realise rows could expand, got stuck on outstanding invoices when trying to view all, and struggled to pay selected invoices.</p>
-        <p><strong>What I changed:</strong> I turned rows into cards so they looked clickable, moved outstanding invoices into their own simple table, and renamed the main button "Pay all" to encourage full payment, a key business requirement. I kept a separate payment button so customers in credit can still pay.</p>
+        <p><strong>What I changed:</strong> I turned rows into cards so they looked clickable, and moved outstanding invoices into their own simple table. I made "Pay all" the main action, because clearing the full balance was a key business need and the simplest route for most customers. I kept a separate "Make a payment" option so customers who need to pay a different amount aren't forced down one route.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.254;"><img src="../assets/business-portal/invoices-final-top.png" alt="Final billing page: outstanding balance with a make-a-payment button, and outstanding invoices in their own simple table with Pay All" width="1920" height="852" loading="lazy" /><figcaption><span class="ver v4">V4</span>Outstanding invoices in their own simple table, with "Pay all" as the main action.</figcaption></figure>
-          <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/billing-v2-colour.webp" alt="The billing page: outstanding balance with a make-a-payment button, outstanding invoices in their own table, and all invoices as rows grouped by account, under a colourful header and above a red and blue wave footer" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span>All invoices as clickable cards by account, now with the colourful header and footer.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.254;"><img src="../assets/business-portal/invoices-final-top.png" alt="Final billing page: outstanding balance with a make-a-payment button, and outstanding invoices in their own simple table with Pay All" width="1920" height="852" loading="lazy" /><figcaption><span class="ver v4">V4</span> Outstanding invoices in their own simple table, with "Pay all" as the main action.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/billing-v2-colour.webp" alt="The billing page: outstanding balance with a make-a-payment button, outstanding invoices in their own table, and all invoices as rows grouped by account, under a colourful header and above a red and blue wave footer" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> All invoices as clickable cards by account, now with the colourful header and footer.</figcaption></figure>
         </div>
-        <div class="outcome"><strong>Result:</strong> 95% of testers answered the key questions.</div>
+        <div class="outcome"><strong>Result:</strong> 95% of participants answered the key invoice questions.<!-- CONFIRM: replace with "X of Y participants" --></div>
       </div>
 
       <div class="page-study">
         <h3>Meter readings</h3>
-        <p>The first version was also a drop-down table, and it confused users in the same way. I had to cover long meters, day and night registers, and corrected meters.</p>
+        <p>The first version was also an expandable table, and it confused users in the same way. I had to cover long meters, day and night registers (separate readings for different times of day), and corrected meters.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.006;"><img src="../assets/business-portal/meter-readings-v1-pm.webp" alt="The PM's meter readings prototype, sites grouped by account with an expandable step-by-step reading form" width="2000" height="997" loading="lazy" /><figcaption><span class="ver v1">V1</span>The PM's prototype, grouped by account.</figcaption></figure>
-          <figure class="shot" style="--ar: 2.008;"><img src="../assets/business-portal/meter-readings-iter1-a.webp" alt="My first meter readings iteration, with a submitted-percentage progress bar and one meter expanded into a step-by-step form" width="2000" height="996" loading="lazy" /><figcaption><span class="ver v3">V3</span>My first iteration: progress at the top, one meter at a time below.</figcaption></figure>
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/meter-readings-iter1-b.webp" alt="My first meter readings iteration with a site expanded, showing the previous reading digit by digit above the new reading" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v3">V3</span>A later round, showing the previous reading digit by digit above the new one.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.006;"><img src="../assets/business-portal/meter-readings-v1-pm.webp" alt="The PM's meter readings prototype, sites grouped by account with an expandable step-by-step reading form" width="2000" height="997" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype, grouped by account.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.008;"><img src="../assets/business-portal/meter-readings-iter1-a.webp" alt="My first meter readings iteration, with a submitted-percentage progress bar and one meter expanded into a step-by-step form" width="2000" height="996" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration: progress at the top, one meter at a time below.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/meter-readings-iter1-b.webp" alt="My first meter readings iteration with a site expanded, showing the previous reading digit by digit above the new reading" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v3">V3</span> A later round, showing the previous reading digit by digit above the new one.</figcaption></figure>
         </div>
-        <p>I avoided a full table at first because I thought it would look cluttered. But our customers understood meter readings far better than I did, and they entered readings quickly in a full table. So I went with that.</p>
+        <p>I avoided a full table at first because I thought it would look cluttered. But participants who knew meter readings well<!-- CONFIRM: the metering team, or participants who submit readings regularly? --> understood them far better than I did, and entered them fastest in a full table. For people who know their meters, the "cluttered" option was the quickest, so I went with it.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/meter-readings-final.webp" alt="Final submit readings page: a full table of meters with register, date, last and current reading fields, photo upload and status" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v4">V4</span>A full table, with every register and a photo option on one row.</figcaption></figure>
-          <figure class="shot phone" style="--ar: 0.549;"><img src="../assets/business-portal/meter-readings-final-mobile.png" alt="V4 submit readings page on a phone, with overdue meters as cards" width="495" height="902" loading="lazy" /><figcaption><span class="ver v4">V4</span>On mobile.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/meter-readings-final.webp" alt="Final submit readings page: a full table of meters with register, date, last and current reading fields, photo upload and status" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v4">V4</span> A full table, with every register and a photo option on one row.</figcaption></figure>
+          <figure class="shot phone" style="--ar: 0.549;"><img src="../assets/business-portal/meter-readings-final-mobile.png" alt="V4 submit readings page on a phone, with overdue meters as cards" width="495" height="902" loading="lazy" /><figcaption><span class="ver v4">V4</span> On mobile.</figcaption></figure>
         </div>
-        <p>Stakeholders were against designing for mobile at first. I advocated for it for three reasons. Customers use the portal out on their sites, so they need to submit readings remotely, standing at the meter rather than back at a desk. A phone's camera lets them photograph the meter instead of copying a long string of digits by hand, so fewer readings come in wrong. And WCAG's reflow guideline expects pages to work at narrow widths without sideways scrolling, which also helps anyone zoomed in on a desktop.</p>
+        <p>Stakeholders were against designing for mobile at first. I advocated for it for three reasons. Customers use the portal out on their sites, so they need to submit readings remotely, standing at the meter rather than back at a desk. A phone's camera lets them photograph the meter instead of copying a long string of digits by hand, so fewer readings come in wrong. And WCAG's reflow guideline expects pages to work at narrow widths without sideways scrolling, which also helps anyone zoomed in on a desktop. Fewer wrong readings also means fewer estimated or corrected bills, and fewer calls later in the journey.</p>
         <div class="mosaic">
-          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-top.png" alt="Final submit readings page on a phone: 3 reads remaining with 2 overdue, a progress bar, buttons for multiple readings and entering readings, and a note that smart meters send readings automatically" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span>On mobile: what's left to submit, and what's overdue.</figcaption></figure>
-          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-list.png" alt="Final meter list on a phone, filtered to needs readings or all meters, each meter with its next due date, a smart-eligible tag and a photo button" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span>Each meter shows when it's next due, with a photo option.</figcaption></figure>
-          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-smart.png" alt="Final meter list on a phone where every meter is a smart meter, each marked as sent automatically with nothing to do" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span>With smart meters, there's nothing to submit.</figcaption></figure>
+          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-top.png" alt="Final submit readings page on a phone: 3 reads remaining with 2 overdue, a progress bar, buttons for multiple readings and entering readings, and a note that smart meters send readings automatically" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> On mobile: what's left to submit, and what's overdue.</figcaption></figure>
+          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-list.png" alt="Final meter list on a phone, filtered to needs readings or all meters, each meter with its next due date, a smart-eligible tag and a photo button" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> Each meter shows when it's next due, with a photo option.</figcaption></figure>
+          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-smart.png" alt="Final meter list on a phone where every meter is a smart meter, each marked as sent automatically with nothing to do" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> With smart meters, there's nothing to submit.</figcaption></figure>
         </div>
-        <div class="outcome"><strong>Result:</strong> at first only 15% of testers could submit readings. After iterating, 100% could.</div>
+        <div class="outcome"><strong>Result:</strong> at first only 15% of participants could submit meter readings. After iterating, 100% could.<!-- CONFIRM: n --></div>
       </div>
 
       <div class="page-study">
         <h3>Usage</h3>
         <p>The original scattered data across the page with no clear message about how usage was going.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/usage-v1-pm.webp" alt="The PM's usage prototype: usage over time chart, cost vs forecast ring, sites needing attention, top sites and a usage target" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span>The PM's prototype.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/usage-v1-pm.webp" alt="The PM's usage prototype: usage over time chart, cost vs forecast ring, sites needing attention, top sites and a usage target" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype.</figcaption></figure>
         </div>
+        <!-- CONFIRM: are business customers contracted for an expected volume? If so add: "Business customers are contracted for an expected volume, so I set usage against the contracted level and flagged days over contract in amber." -->
         <p>I combined cost vs forecast and target into one card and turned top sites into a pie chart. I removed sites needing attention, because it wasn't actionable here and the dashboard already surfaces it. I made the gas/power toggle and site selector sticky, and added a toggle between energy units and pounds so users can connect usage to cost.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.094;"><img src="../assets/business-portal/usage-v2-top.webp" alt="My redesigned usage page: a Power/Gas toggle and site selector, and a usage-over-time bar chart for the month against a dotted contracted line, with over-contract days in amber" width="1985" height="948" loading="lazy" /><figcaption><span class="ver v4">V4</span>My redesigned usage page: usage over time against what was contracted, with over-contract days in amber.</figcaption></figure>
-          <figure class="shot" style="--ar: 2.001;"><img src="../assets/business-portal/usage-final-scrolled.webp" alt="My redesigned usage page, scrolled: a Usage and Targets card with a target progress bar, top sites by usage as a pie chart, and a usage-by-day heatmap, under a sticky Power/Gas toggle and site selector" width="1985" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span>Scrolled: one Usage &amp; Targets card, top sites as a pie chart and usage by day, under a sticky toggle and site selector.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.094;"><img src="../assets/business-portal/usage-v2-top.webp" alt="My redesigned usage page: a Power/Gas toggle and site selector, and a usage-over-time bar chart for the month against a dotted contracted line, with over-contract days in amber" width="1985" height="948" loading="lazy" /><figcaption><span class="ver v4">V4</span> My redesigned usage page: usage over time against what was contracted, with over-contract days in amber.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.001;"><img src="../assets/business-portal/usage-final-scrolled.webp" alt="My redesigned usage page, scrolled: a Usage and Targets card with a target progress bar, top sites by usage as a pie chart, and a usage-by-day heatmap, under a sticky Power/Gas toggle and site selector" width="1985" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> Scrolled: one Usage &amp; Targets card, top sites as a pie chart and usage by day, under a sticky toggle and site selector.</figcaption></figure>
         </div>
-        <div class="outcome"><strong>Result:</strong> 95% of testers found all the information in 3 seconds or less.</div>
+        <div class="outcome"><strong>Result:</strong> 95% of participants found all the information in 3 seconds or less.<!-- CONFIRM: "X of Y" and how it was measured --></div>
       </div>
 
       <div class="page-study">
         <h3>Sites</h3>
         <p>Sites had to work grouped by account or individually, and stakeholders wanted everything visible.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/sites-v1-pm.webp" alt="The PM's sites prototype: a dense table grouped by account with status, site, site ref, MPAN and product columns" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span>The PM's prototype, a dense table.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/sites-v1-pm.webp" alt="The PM's sites prototype: a dense table grouped by account with status, site, site ref, MPAN and product columns" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype, a dense table.</figcaption></figure>
         </div>
-        <p>A table wasn't an option after the earlier testing, so I used cards.</p>
+        <p>Testing on invoices showed that expandable tables hid information, so I started with cards.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 1.939;"><img src="../assets/business-portal/sites-iter1.png" alt="My first sites iteration: each site as a card with account, site ref, MPAN, contract end and status" width="1920" height="990" loading="lazy" /><figcaption><span class="ver v3">V3</span>My first iteration, one card per site.</figcaption></figure>
-          <figure class="shot phone" style="--ar: 0.564;"><img src="../assets/business-portal/sites-mobile.png" alt="Sites on a phone, as stacked cards with status and contract-end badges" width="464" height="822" loading="lazy" /><figcaption><span class="ver v3">V3</span>On mobile.</figcaption></figure>
+          <figure class="shot" style="--ar: 1.939;"><img src="../assets/business-portal/sites-iter1.png" alt="My first sites iteration: each site as a card with account, site ref, MPAN, contract end and status" width="1920" height="990" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration, one card per site.</figcaption></figure>
+          <figure class="shot phone" style="--ar: 0.564;"><img src="../assets/business-portal/sites-mobile.png" alt="Sites on a phone, as stacked cards with status and contract-end badges" width="464" height="822" loading="lazy" /><figcaption><span class="ver v3">V3</span> On mobile.</figcaption></figure>
         </div>
         <p>Some feedback suggested users identify sites by account, so I added a group-by option.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/sites-v2-all.webp" alt="V4 sites page on the All Sites view: one line per site with account number, site ref, MPXN, contract end and status, under All Fuels, Power and Gas filters" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span>All sites, one line each and not grouped by account.</figcaption></figure>
-          <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/sites-final.png" alt="Final sites page with an All Sites / By Account toggle, sites grouped under each account with site ref, MPRN and status" width="1920" height="988" loading="lazy" /><figcaption><span class="ver v4">V4</span>Grouped by account, with each account's status summarised in its header.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/sites-v2-all.webp" alt="V4 sites page on the All Sites view: one line per site with account number, site ref, MPXN, contract end and status, under All Fuels, Power and Gas filters" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> All sites, one line each and not grouped by account.</figcaption></figure>
+          <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/sites-final.png" alt="Final sites page with an All Sites / By Account toggle, sites grouped under each account with site ref, MPRN and status" width="1920" height="988" loading="lazy" /><figcaption><span class="ver v4">V4</span> Grouped by account, with each account's status summarised in its header.</figcaption></figure>
         </div>
-        <p>Individual site pages have a sticky header so users always know where they are. Customers can also now do things that used to mean a phone call: report a change of tenancy, add site contacts, add property and site references, add site-level data to improve usage predictions, and view past meter readings. I expect these, together with clearer meter reading and invoice flows, to take pressure off the team.</p>
+        <p>Individual site pages have a sticky header so users always know where they are. Customers can also now do things that used to mean a phone call: report a change of tenancy, add site contacts, add property and site references, add site-level data to improve usage predictions, and view past meter readings. These move tasks from phone to self-service. After launch, I'll track whether calls about them go down.</p>
         <div class="mosaic">
-          <figure class="shot" style="--ar: 2.094;"><img src="../assets/business-portal/site-page-top.webp" alt="An individual site page: site details with status, product, contract end and payment, a meter name field, reference numbers, the meter asset manager and a property reference field, beside quick actions" width="1985" height="948" loading="lazy" /><figcaption><span class="ver v4">V4</span>An individual site page: details, reference numbers and the actions that used to need a phone call.</figcaption></figure>
-          <figure class="shot" style="--ar: 1.963;"><img src="../assets/business-portal/site-page-scrolled.webp" alt="The same site page scrolled, with the back button and Details, Contract, Profile, Billing and Contacts tabs pinned at the top over contract details, the site profile, billing address and site contacts" width="1900" height="968" loading="lazy" /><figcaption><span class="ver v4">V4</span>Scrolled: the sticky header keeps the back button and tabs in view.</figcaption></figure>
+          <figure class="shot" style="--ar: 2.094;"><img src="../assets/business-portal/site-page-top.webp" alt="An individual site page: site details with status, product, contract end and payment, a meter name field, reference numbers, the meter asset manager and a property reference field, beside quick actions" width="1985" height="948" loading="lazy" /><figcaption><span class="ver v4">V4</span> An individual site page: details, reference numbers and the actions that used to need a phone call.</figcaption></figure>
+          <figure class="shot" style="--ar: 1.963;"><img src="../assets/business-portal/site-page-scrolled.webp" alt="The same site page scrolled, with the back button and Details, Contract, Profile, Billing and Contacts tabs pinned at the top over contract details, the site profile, billing address and site contacts" width="1900" height="968" loading="lazy" /><figcaption><span class="ver v4">V4</span> Scrolled: the sticky header keeps the back button and tabs in view.</figcaption></figure>
         </div>
       </div>
 
       <div class="page-study">
-        <h3>Documents, Support, Consolidated Billing, Settings</h3>
+        <h3>Documents, support, billing and settings</h3>
         <p>These were more straightforward: grouping information logically and applying the design system so they matched the rest. Documents moved from a card-based page to a searchable, filterable list with counts, grouped by time period, so customers with many sites can find a specific letter quickly.</p>
         <div class="mosaic">
           <figure class="shot" style="--ar: 2.259;"><img src="../assets/business-portal/documents.png" alt="Documents page with category and site filters and a searchable document list grouped by time period" width="1920" height="850" loading="lazy" /><figcaption>Documents: searchable and filterable, grouped by time period.</figcaption></figure>
@@ -260,15 +308,14 @@
   <section class="cs-section">
     <div class="wrap">
       <span class="kicker">Dashboard</span>
-      <h2>The page with the most direction changes</h2>
-      <p>The dashboard started with upsells, but stakeholders didn't want any, so I removed them and added the information they asked for. They then decided the existing design system, created by the designer before me, didn't suit the brand, and asked for a new dashboard. With the freedom to leave that system behind, I matched the company website, using an edited version of its new design system, and produced two versions.</p>
+      <h2>Designing through changing direction</h2>
+      <p>The dashboard changed direction more than any other page. It started with upsells, which stakeholders then removed, so I replaced them with the information they asked for. Later, stakeholders decided the inherited design system didn't suit the brand and asked for a new dashboard. I used that as a chance to match the company website, adapting its new design system, and produced two versions.</p>
       <div class="mosaic">
-        <figure class="shot" style="--ar: 2.016;"><img src="../assets/business-portal/dashboard-iter1.webp" alt="My first dashboard iteration: outstanding balance, overdue reads, usage this month, contracts, and a Commercial Solar PV carousel" width="2000" height="992" loading="lazy" /><figcaption><span class="ver v3">V3</span>My first iteration, still carrying upsells like the Commercial Solar PV carousel.</figcaption></figure>
-        <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/dashboard-v2.webp" alt="My second dashboard: outstanding balance with a Direct Debit prompt, manual reads needed, and carbon footprint cards beside a usage-this-month chart against the contracted level, with over-contract days in amber, an unusual spike in red, and a warning about days above contract" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span>My second try: no upsells, just what stakeholders asked for, with usage set against the contracted level and spikes flagged.</figcaption></figure>
+        <figure class="shot" style="--ar: 2.016;"><img src="../assets/business-portal/dashboard-iter1.webp" alt="My first dashboard iteration: outstanding balance, overdue reads, usage this month, contracts, and a Commercial Solar PV carousel" width="2000" height="992" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration, still carrying upsells like the Commercial Solar PV carousel.</figcaption></figure>
+        <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/dashboard-v2.webp" alt="My second dashboard: outstanding balance with a Direct Debit prompt, manual reads needed, and carbon footprint cards beside a usage-this-month chart against the contracted level, with over-contract days in amber, an unusual spike in red, and a warning about days above contract" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> My second try: no upsells, just what stakeholders asked for, with usage set against the contracted level and spikes flagged.</figcaption></figure>
       </div>
       <div class="mosaic">
-        <figure class="shot vid-player" style="--ar: 1.935;"><div class="vid-frame"><video muted playsinline preload="metadata" poster="../assets/business-portal/dashboard-walkthrough-poster.webp" width="1440" height="744" aria-label="Walkthrough of the final dashboard, version one"><source src="../assets/business-portal/dashboard-walkthrough.mp4" type="video/mp4" /><source src="../assets/business-portal/dashboard-walkthrough.webm" type="video/webm" /></video><div class="vid-bar"><button type="button" class="vid-play is-paused" aria-label="Play video"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5.5v13l10.5-6.5z"/></svg></button><span class="vid-time" aria-hidden="true">0:00</span><input class="vid-seek" type="range" min="0" max="92.6" step="0.1" value="0" aria-label="Seek video" /><span class="vid-dur" aria-hidden="true">1:32</span><button type="button" class="vid-speed" aria-pressed="false" aria-label="Double speed">1×</button></div></div><figcaption><span class="ver v5">V5</span>Final dashboard A: light, dark and green themes.</figcaption></figure>
-        <figure class="shot coming-soon" style="--ar: 2;"><div class="media-placeholder" role="img" aria-label="Screenshot coming soon"><span class="soon-label">Coming soon...</span></div><figcaption><span class="ver v5">V5</span>Final dashboard B.</figcaption></figure>
+        <figure class="shot vid-player" style="--ar: 1.935;"><div class="vid-frame"><video muted playsinline preload="metadata" poster="../assets/business-portal/dashboard-walkthrough-poster.webp" width="1440" height="744" aria-label="Walkthrough of the final dashboard, version one"><source src="../assets/business-portal/dashboard-walkthrough.mp4" type="video/mp4" /><source src="../assets/business-portal/dashboard-walkthrough.webm" type="video/webm" /></video><div class="vid-bar"><button type="button" class="vid-play is-paused" aria-label="Play video"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5.5v13l10.5-6.5z"/></svg></button><span class="vid-time" aria-hidden="true">0:00</span><input class="vid-seek" type="range" min="0" max="92.6" step="0.1" value="0" aria-label="Seek video" /><span class="vid-dur" aria-hidden="true">1:32</span><button type="button" class="vid-speed" aria-pressed="false" aria-label="Double speed">1×</button></div></div><figcaption><span class="ver v5">V5</span> Final dashboard A: light, dark and green themes.</figcaption></figure>
       </div>
     </div>
   </section>
@@ -277,26 +324,22 @@
     <div class="wrap">
       <span class="kicker">Design system</span>
       <h2>Extending an inherited system, in code</h2>
-      <p>I inherited a design system from the designer before me. It was bland, so I extended it with more colour, new responsive components and new visuals. I started by maintaining the existing system in Figma, then moved to iterating on it myself in code, using Git, Claude and a repo hosted on the company's community hub. That hub meant the PM, engineer and stakeholders all worked from the same components. The engineer took the code and the designs, which is why handoff could start while I was still designing. The dashboard is the exception: it uses a modified version of the website's system.</p>
+      <p>I inherited a design system from the designer before me. It was functional but plain, and stakeholders felt the pages looked too alike. I extended it with more colour, new responsive components and new visuals. I started by maintaining the existing system in Figma, then moved to iterating on it myself in code, using Git, Claude and a shared repository the PM, engineer and stakeholders all used, so everyone worked from the same components. The engineer took the code and the designs, which is why handoff could start while I was still designing. The dashboard is the exception: it uses a modified version of the website's system.</p>
       <div class="mosaic">
-        <figure class="shot" style="--ar: 1.31;"><img src="../assets/business-portal/ds-inherited-overview.webp" alt="The inherited design system's overview page: a sidebar of brand foundations, components and forms, a purpose statement and quick-access cards" width="1205" height="920" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span>The original design system's overview.</figcaption></figure>
-        <figure class="shot" style="--ar: 1.31;"><img src="../assets/business-portal/ds-inherited-icons.webp" alt="The inherited design system's icons page: standard icon sizes, colour states and navigation icons" width="1205" height="920" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span>Its icon sizes, colour states and navigation icons.</figcaption></figure>
+        <figure class="shot" style="--ar: 1.31;"><img src="../assets/business-portal/ds-inherited-overview.webp" alt="The inherited design system's overview page: a sidebar of brand foundations, components and forms, a purpose statement and quick-access cards" width="1205" height="920" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span> The original design system's overview.</figcaption></figure>
+        <figure class="shot" style="--ar: 1.31;"><img src="../assets/business-portal/ds-inherited-icons.webp" alt="The inherited design system's icons page: standard icon sizes, colour states and navigation icons" width="1205" height="920" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span> Its icon sizes, colour states and navigation icons.</figcaption></figure>
       </div>
       <div class="mosaic">
-        <figure class="shot" style="--ar: 1.918;"><img src="../assets/business-portal/ds-inherited-website-colour.webp" alt="The inherited website design system's colour foundations: brand blue, blue, blue hover, navy and night swatches with their uses" width="1895" height="988" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span>The website design system's colour foundations.</figcaption></figure>
-        <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/ds-mine-colour.webp" alt="My customer portal design system's colour page: semantic green, amber and warn tokens, and gas and electricity fuel colours with tints and inks" width="1900" height="978" loading="lazy" /><figcaption><span class="ver v4">V4</span>My system, built in code: colours with meaning (paid, pending, overdue) and separate gas and electricity colours.</figcaption></figure>
+        <figure class="shot" style="--ar: 1.918;"><img src="../assets/business-portal/ds-inherited-website-colour.webp" alt="The inherited website design system's colour foundations: brand blue, blue, blue hover, navy and night swatches with their uses" width="1895" height="988" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span> The website design system's colour foundations.</figcaption></figure>
+        <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/ds-mine-colour.webp" alt="My customer portal design system's colour page: semantic green, amber and warn tokens, and gas and electricity fuel colours with tints and inks" width="1900" height="978" loading="lazy" /><figcaption><span class="ver v4">V4</span> My system, built in code: colours with meaning (paid, pending, overdue) and separate gas and electricity colours.</figcaption></figure>
       </div>
       <h3>Adding colour</h3>
       <p>Stakeholder feedback was that the pages felt too similar and plain. I added a colourful header and footer and redesigned the cards, so each page has its own look while staying one product.</p>
       <div class="mosaic">
-        <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/billing-v2-colour.webp" alt="The billing page with a colourful header graphic and a red and blue wave above a navy footer" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span>Midway: a colourful header and footer, in place of the original white header seen above.</figcaption></figure>
-        <figure class="shot coming-soon" style="--ar: 2;"><div class="media-placeholder" role="img" aria-label="Screenshot coming soon"><span class="soon-label">Coming soon...</span></div><figcaption><span class="ver v5">V5</span>After: the new dashboard.</figcaption></figure>
+        <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/billing-v2-colour.webp" alt="The billing page with a colourful header graphic and a red and blue wave above a navy footer" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> Midway: a colourful header and footer, in place of the original white header seen above.</figcaption></figure>
       </div>
       <h3>The final version: matching the new website</h3>
       <p>Near the end of the project, stakeholders asked for the portal to match the new company website, which was launching at the same time. They hadn't wanted that before, so I redesigned the system to match it for the final version.</p>
-      <div class="mosaic">
-        <figure class="shot coming-soon" style="--ar: 2;"><div class="media-placeholder" role="img" aria-label="Video coming soon"><span class="soon-label">Video coming soon...</span></div><figcaption><span class="ver v5">V5</span>The redesigned system, matching the new company website.</figcaption></figure>
-      </div>
     </div>
   </section>
 
@@ -304,11 +347,22 @@
     <div class="wrap">
       <span class="kicker">Delivery</span>
       <h2>Shipping it, and what comes next</h2>
-      <div class="list-cards cols-3">
-        <div class="card-mini"><h4>Accessibility &amp; compliance</h4><p>I audited the portal against WCAG and fixed issues with colour contrast and text size, among others, and worked with legal to build the required additions into the final designs.</p></div>
+      <div class="list-cards cols-2">
+        <div class="card-mini"><h4>Accessibility &amp; compliance</h4><p>I audited the portal against WCAG<!-- CONFIRM: level, e.g. 2.2 AA --> and fixed issues with colour contrast and text size, among others, and worked with legal to build the required additions into the final designs.</p></div>
         <div class="card-mini"><h4>Handoff &amp; QA</h4><p>Engineering handoff began before my designs were finished, because development moved so fast. QA happened at the end of the project, and I supported it by checking the built pages against my designs.</p></div>
-        <div class="card-mini"><h4>Measuring impact</h4><p>After launch I'll track monthly logins, self-service meter reading submissions, and call and email volume, then update this case study with real numbers.</p></div>
       </div>
+      <h3>Measuring impact</h3>
+      <p>After launch I'll measure:</p>
+      <ul class="method-list">
+        <li><strong>Digital take-up.</strong> Monthly active customers, against a baseline of around 30.</li>
+        <li><strong>Completion rate.</strong> Meter readings and payments completed online.</li>
+        <li><strong>Reading accuracy.</strong> Fewer rejected or estimated readings.</li>
+        <li><strong>Contact volume by reason.</strong> Calls and emails about meter readings, VAT and invoices.</li>
+        <li><strong>Satisfaction.</strong> A short feedback prompt after key tasks.</li>
+      </ul>
+      <p>I'll update this case study with real numbers.</p>
+      <!-- CONFIRM: does phone support stay available after launch? If so add a card:
+           "Keeping other channels open: Phone support stays available for customers who can't or don't want to use the portal." -->
     </div>
   </section>
 
@@ -321,6 +375,11 @@
         <div class="card-mini"><h4>Design system first</h4><p>I built it alongside the pages, reactively. Building it first would have saved rework, especially when brand direction changed.</p></div>
         <div class="card-mini"><h4>Stakeholders earlier</h4><p>Brand direction changed late, and earlier involvement would have caught it sooner.</p></div>
       </div>
+      <!-- CONFIRM (keep only if Zara agrees):
+           "Map the whole service first. I designed page by page. Mapping the full journey, from meter reading to bill
+           to query, at the start would have shown the backstage dependencies sooner."
+           "Test with customers as soon as possible. Staff were good proxies, but real customers will reveal needs we
+           missed. Testing with them after launch is my next priority." -->
     </div>
   </section>
 
@@ -338,6 +397,6 @@
 
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
-<script src="../nav.js?v=20261011f" defer></script>
+<script src="../nav.js?v=20261012a" defer></script>
 </body>
 </html>

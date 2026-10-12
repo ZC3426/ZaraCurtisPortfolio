@@ -531,6 +531,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
 }
 .carousel-captions .carousel-caption[data-depth="0"] { opacity: 1; pointer-events: auto; }
+.carousel-caption .caption-outcome { display: block; margin-bottom: 0.5rem; color: var(--ink); font-weight: 700; }
 
 .carousel {
   display: flex; align-items: center; justify-content: center; gap: 1.25rem;
@@ -824,6 +825,28 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .overview-grid .item .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); font-weight: 700; }
 .overview-grid .item .value { margin-top: 0.3rem; font-size: 0.98rem; }
 @media (max-width: 640px) { .overview-grid { grid-template-columns: 1fr; } }
+/* Case study summary: four cards under the overview for skim readers. */
+.cs-summary { margin-top: 1.25rem; }
+.cs-summary .card-mini h4 { font-size: 1.05rem; }
+.cs-summary .card-mini p { font-size: 0.92rem; line-height: 1.55; }
+/* A small collapsible glossary of domain terms. */
+.glossary {
+  margin-top: 1.25rem; padding: 0.85rem 1.1rem; background: var(--surface);
+  border: 2.5px solid var(--ink); border-radius: 8px; box-shadow: 3px 3px 0 0 var(--shadow);
+}
+.glossary summary { cursor: pointer; font-weight: 700; font-size: 0.95rem; }
+.glossary summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.glossary dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem 1.75rem; margin-top: 0.85rem; }
+.glossary dl > div { font-size: 0.9rem; line-height: 1.5; }
+.glossary dt { display: inline; font-weight: 700; margin-right: 0.35rem; }
+.glossary dd { display: inline; margin: 0; }
+.glossary dt::after { content: ":"; }
+@media (max-width: 640px) { .glossary dl { grid-template-columns: 1fr; } }
+[data-theme="business"] .glossary { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); padding: calc(0.85rem + 1.5px) calc(1.1rem + 1.5px); }
+/* Bulleted lists in case study body copy (methods, impact measures). */
+.method-list { margin: 0.6rem 0 1rem; padding-left: 1.3rem; max-width: 72ch; }
+.method-list li { margin-top: 0.5rem; line-height: 1.6; }
+.cs-section .list-cards + h3 { margin-top: 2rem; }
 
 .cs-section { padding: 3.25rem 0; border-bottom: 3px dashed var(--outline); }
 .cs-section:last-of-type { border-bottom: none; }
@@ -1362,7 +1385,7 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
   border-top: none; padding: 0.7rem 0.15rem 0.05rem; font-size: 0.88rem; line-height: 1.5;
 }
 .shot .ver {
-  display: inline-block; margin-right: 0.45rem; padding: 0.1rem 0.5rem; border-radius: 100px;
+  display: inline-block; margin-right: 0.2rem; padding: 0.1rem 0.5rem; border-radius: 100px;
   font-family: "Space Mono", monospace; font-weight: 700; font-size: 0.68rem;
   letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink);
   background: var(--accent-soft); vertical-align: 0.1em;
@@ -1438,7 +1461,7 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 .lightbox-cap {
   max-width: 62ch; margin-top: 0.85rem; color: #f4f1ea; font-size: 0.88rem; line-height: 1.5; text-align: center;
 }
-.lightbox-cap .ver { margin-right: 0.45rem; padding: 0.1rem 0.5rem; border-radius: 100px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; color: var(--ink); background: var(--accent-soft); }
+.lightbox-cap .ver { margin-right: 0.2rem; padding: 0.1rem 0.5rem; border-radius: 100px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; color: var(--ink); background: var(--accent-soft); }
 .lightbox-cap .ver.v1, .lightbox-cap .ver.inherited { background: var(--yellow-soft); }
 .lightbox-cap .ver.v4 { background: var(--green-soft); }
 .lightbox-cap .ver.v5 { background: var(--outline); color: #fff; }
