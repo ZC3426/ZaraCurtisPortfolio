@@ -1148,7 +1148,7 @@ html[data-theme="personal"] .page-equil .trend-3 { background: var(--surface); b
 @media (min-width: 900px) {
   html[data-theme="personal"] .console {
     --tower: 54px; --cg: 18px; --cdgap: 14px; --cdw: 150px;
-    --scr: min(calc((100vh - 150px) * 1.6), calc(100cqw - var(--tower) - var(--cdw) - 2 * var(--cg)));
+    --scr: min(820px, calc((100vh - 230px) * 1.6), calc(100cqw - var(--tower) - var(--cdw) - 2 * var(--cg)));
     --cd: min(var(--cdw), calc(((var(--scr) - 38px) / 1.6 + 38px - 2 * var(--cdgap)) / 3));
     container-type: inline-size;
     display: grid; grid-template-columns: auto auto auto; justify-content: center; align-items: stretch;
@@ -2067,7 +2067,7 @@ html[data-theme="business"] .style-toggle .style-thumb { border-radius: 999px; }
    Same markup as My Style's console, laid out as thumbnails beside a
    large viewer (a row underneath on phones); picking one cross-fades
    the viewer, with no cartridge animation (nav.js). */
-[data-theme="business"] .console { display: grid; grid-template-columns: 150px minmax(0, min(calc(100% - 150px - 1.25rem), calc((100vh - 150px) * 1.6))); justify-content: center; gap: 1.25rem; align-items: start; }
+[data-theme="business"] .console { display: grid; grid-template-columns: 150px minmax(0, min(100%, calc((100vh - 200px) * 1.6))); justify-content: center; gap: 1.25rem; align-items: start; }
 [data-theme="business"] .console-unit { grid-column: 2; grid-row: 1; max-width: none; }
 [data-theme="business"] .console-bezel { padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; }
 [data-theme="business"] .console-display { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); background: #fff; }
