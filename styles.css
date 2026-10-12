@@ -107,6 +107,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* My Style case studies: body copy in Space Grotesk (Space Mono's
+   proportional sister) so long text is easy to read; headings, labels,
+   pills, numbers and the notepad keep the mono and pixel faces. */
+html[data-theme="personal"] body:has(.cs-hero) main :is(p, li, figcaption, dd, dt, summary, .overview-grid .value, .gallery-thumb-label):not(.metrics-paper *, .paper-sheet *, .mosaic-paper *) {
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: normal;
+}
+html[data-theme="personal"] body:has(.cs-hero) main .cs-section p,
+html[data-theme="personal"] body:has(.cs-hero) main .method-list li { font-size: 1.04rem; line-height: 1.7; }
+
 a { color: inherit; }
 img { max-width: 100%; display: block; }
 
