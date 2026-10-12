@@ -716,10 +716,97 @@
 
   // Dense UI screenshots stay hard to read even at full content width on
   // a phone, so any large case-study screenshot opens full-screen.
+  // Galleries: a run of two or more desktop screenshots of the same page
+  // (its variations) becomes one large screen with thumbnails beside it to
+  // switch between them, like the old portal gallery. The original run
+  // stays in the page, hidden, as the source (and for the lightbox).
+  var openLightbox = null;
+  function initGalleries() {
+    Array.prototype.forEach.call(document.querySelectorAll('.mosaic'), function (run) {
+      var figs = Array.prototype.slice.call(run.children);
+      if (figs.length < 2 || !figs.every(function (f) {
+        return f.matches('figure.shot:not(.phone)') && f.querySelector(':scope > img');
+      })) return;
+      var items = figs.map(function (f) { return { img: f.querySelector(':scope > img'), cap: f.querySelector('figcaption') }; });
+
+      var gal = document.createElement('div');
+      gal.className = 'gallery';
+      var thumbs = document.createElement('div');
+      thumbs.className = 'gallery-thumbs';
+      thumbs.setAttribute('role', 'group');
+      thumbs.setAttribute('aria-label', 'Versions');
+      var main = document.createElement('figure');
+      main.className = 'gallery-main';
+      var big = document.createElement('img');
+      big.setAttribute('tabindex', '0');
+      big.setAttribute('role', 'button');
+      var cap = document.createElement('figcaption');
+      main.appendChild(big);
+      main.appendChild(cap);
+      var current = -1, buttons = [];
+
+      function select(i, animate) {
+        if (i === current) return;
+        current = i;
+        var it = items[i];
+        big.src = it.img.currentSrc || it.img.src;
+        big.alt = it.img.alt;
+        big.setAttribute('aria-label', 'Enlarge: ' + it.img.alt);
+        cap.innerHTML = it.cap ? it.cap.innerHTML : '';
+        buttons.forEach(function (b, k) {
+          b.classList.toggle('is-active', k === i);
+          b.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+        });
+        if (animate && big.animate && !prefersReducedMotion()) {
+          big.animate([{ opacity: 0.35 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+        }
+      }
+      items.forEach(function (it, i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'gallery-thumb';
+        var t = document.createElement('img');
+        t.src = it.img.getAttribute('src');
+        t.alt = '';
+        t.loading = 'lazy';
+        b.appendChild(t);
+        var label = document.createElement('span');
+        label.className = 'gallery-thumb-label';
+        label.innerHTML = it.cap ? it.cap.innerHTML : '';
+        b.appendChild(label);
+        b.setAttribute('aria-label', 'Show ' + (it.cap ? it.cap.textContent.trim() : it.img.alt));
+        b.addEventListener('click', function () { select(i, true); });
+        b.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var n = (i + d + items.length) % items.length;
+          buttons[n].focus();
+          select(n, true);
+        });
+        buttons.push(b);
+        thumbs.appendChild(b);
+      });
+      function enlarge() {
+        if (openLightbox) openLightbox(items[current].img, { focus: big, onChange: function (k) { select(k, false); } });
+      }
+      big.addEventListener('click', enlarge);
+      big.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enlarge(); }
+      });
+      gal.appendChild(thumbs);
+      gal.appendChild(main);
+      run.parentNode.insertBefore(gal, run);
+      run.classList.add('is-gallery-source');
+      run.setAttribute('hidden', '');
+      select(0, false);
+    });
+  }
+
   function initLightbox() {
     var imgs = document.querySelectorAll('.mosaic .shot > img, .shot-stack .shot img, .shot-pair .shot img, .shot-duo .shot img, .shot-trio .shot img, .console-display img');
     if (!imgs.length) return;
-    var box = null, lastFocus = null, list = [], idx = 0, touchX = null;
+    var box = null, lastFocus = null, list = [], idx = 0, touchX = null, opts = {};
 
     function onKey(e) {
       if (e.key === 'Escape') close();
@@ -753,7 +840,8 @@
         cap.appendChild(n);
       }
       cap.hidden = !cap.childNodes.length;
-      lastFocus = img;
+      lastFocus = opts.focus || img;
+      if (opts.onChange) opts.onChange(idx);
     }
     function step(d) {
       if (!box || list.length < 2) return;
@@ -769,7 +857,8 @@
       btn.addEventListener('click', function (e) { e.stopPropagation(); fn(); });
       return btn;
     }
-    function open(img) {
+    function open(img, options) {
+      opts = options || {};
       var run = img.closest('.mosaic');
       list = run ? Array.prototype.slice.call(run.querySelectorAll('.shot > img')) : [img];
       idx = Math.max(0, list.indexOf(img));
@@ -807,6 +896,7 @@
       closeBtn.focus();
     }
 
+    openLightbox = open;
     Array.prototype.forEach.call(imgs, function (img) {
       img.setAttribute('tabindex', '0');
       img.setAttribute('role', 'button');
@@ -819,7 +909,7 @@
 
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initLightbox(); initMotion(); initVideoPlayers(); });
+    document.addEventListener('DOMContentLoaded', function () { init(); initStyleToggle(); initPageHeadingTyping(); initWideCards(); initVersionSnake(); initConsole(); initGalleries(); initLightbox(); initMotion(); initVideoPlayers(); });
   } else {
     init();
     initStyleToggle();
@@ -827,6 +917,7 @@
     initWideCards();
     initVersionSnake();
     initConsole();
+    initGalleries();
     initLightbox();
     initMotion();
     initVideoPlayers();
