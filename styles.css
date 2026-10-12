@@ -843,6 +843,43 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
 .glossary dt::after { content: ":"; }
 @media (max-width: 640px) { .glossary dl { grid-template-columns: 1fr; } }
 [data-theme="business"] .glossary { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); padding: calc(0.85rem + 1.5px) calc(1.1rem + 1.5px); }
+/* The customer journey in five phases, with the portal's place marked. */
+.journey { margin: 1.5rem 0 0; }
+.journey-strip { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.4rem; }
+.journey-strip li {
+  position: relative; display: flex; flex-direction: column; gap: 0.3rem; padding: 1rem;
+  background: var(--surface); border: 2.5px solid var(--ink); border-radius: 8px; box-shadow: 3px 3px 0 0 var(--shadow);
+  font-size: 0.86rem; line-height: 1.45;
+}
+.journey-strip li + li::before {
+  content: ""; position: absolute; left: calc(-1.4rem + 3px); top: 50%; width: calc(1.4rem - 8px); height: 2.5px;
+  background: var(--ink); transform: translateY(-50%);
+}
+.journey-strip li + li::after {
+  content: ""; position: absolute; left: -9px; top: 50%; border: 5px solid transparent; border-left: 6px solid var(--ink); transform: translateY(-50%);
+}
+.journey-strip strong { color: var(--ink); font-size: 0.92rem; line-height: 1.3; }
+.journey-strip span:not(.journey-num) { color: var(--ink-soft); }
+.journey-num {
+  display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  background: var(--ink); color: #fff; font-weight: 700; font-size: 0.8rem;
+}
+.journey-strip li.is-portal { background: var(--green-soft); border-color: var(--outline); }
+.journey-strip li.is-portal .journey-num { background: var(--outline); }
+.journey-strip em { margin-top: 0.3rem; font-style: normal; font-weight: 700; color: var(--outline); }
+.journey figcaption { margin-top: 0.75rem; font-size: 0.85rem; color: var(--ink-soft); }
+[data-theme="business"] .journey-strip li { border: 1px solid var(--card-line); border-radius: 14px; box-shadow: var(--soft-shadow); padding: calc(1rem + 1.5px); }
+[data-theme="business"] .journey-strip li.is-portal { border-color: var(--outline); }
+[data-theme="business"] .journey-strip li + li::before { height: 1.5px; background: var(--card-line); }
+[data-theme="business"] .journey-strip li + li::after { border-left-color: var(--ink-soft); }
+@media (max-width: 900px) {
+  .journey-strip { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+  .journey-strip li + li::before { left: 1.5rem; top: calc(-1.1rem + 3px); width: 2.5px; height: calc(1.1rem - 8px); transform: none; }
+  .journey-strip li + li::after { left: calc(1.5rem - 4px); top: -9px; border: 5px solid transparent; border-top: 6px solid var(--ink); transform: none; }
+  [data-theme="business"] .journey-strip li + li::before { width: 1.5px; }
+  [data-theme="business"] .journey-strip li + li::after { border-top-color: var(--ink-soft); border-left-color: transparent; }
+}
+
 /* Bulleted lists in case study body copy (methods, impact measures). */
 .method-list { margin: 0.6rem 0 1rem; padding-left: 1.3rem; }
 .method-list li { margin-top: 0.5rem; line-height: 1.6; }

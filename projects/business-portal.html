@@ -149,13 +149,20 @@
     <div class="wrap">
       <span class="kicker" id="wider-service">The wider service</span>
       <h2>The portal is one part of a bigger service</h2>
-      <p>A meter reading doesn't end when a customer presses submit. It moves on to the teams behind the portal, and when something goes wrong it can come back as a query or another call.</p>
-      <!-- CONFIRM: is this chain accurate? If so, it can replace the neutral sentence above:
-           "It moves through the metering team, into billing, onto an invoice, and sometimes into a call to
-           customer service or credit control. When a reading failed to send, the customer got an estimated
-           bill, which led to queries, corrections and more calls." -->
-      <p>So I mapped the whole gas and power customer journey, not just the portal. I then looked at each page in terms of that journey: what the customer is trying to do, which team handles it behind the scenes, and where it was breaking down.</p>
-      <!-- TODO: add Zara's customer journey map image here when supplied (anonymised). -->
+      <p>The portal is the last part of a much longer journey. Before a business customer ever logs in, their contract has passed through brokers, contract services, account managers, credit risk, trading, metering and billing.</p>
+      <p>So I mapped the whole gas and power customer journey, front and back stage, from a broker's tender to billing and renewal. I built the maps from an account manager walkthrough and checked them against how the sales systems actually behave, which added rework loops, statuses and teams the first version had missed.</p>
+      <figure class="journey">
+        <ol class="journey-strip">
+          <li><span class="journey-num">1</span><strong>Nominate and qualify</strong><span>Tender in, site data checked</span></li>
+          <li><span class="journey-num">2</span><strong>Quote, price and credit</strong><span>Quote built, priced, credit decided</span></li>
+          <li><span class="journey-num">3</span><strong>Win and sign</strong><span>Offer out, accepted, contract signed</span></li>
+          <li><span class="journey-num">4</span><strong>Check and hand off</strong><span>Validated, accepted, sent to billing</span></li>
+          <li class="is-portal"><span class="journey-num">5</span><strong>Go live and retain</strong><span>Metered, billed, renewed</span><em>The portal sits here: statements, payments, meter readings and renewals</em></li>
+        </ol>
+        <figcaption>The power journey, summarised from my map: 14 stages, 9 decision points and 6 teams. The gas journey follows the same backbone.</figcaption>
+      </figure>
+      <p>Mapping it also showed upstream problems that customers would otherwise meet in the portal. For example, documents were filed under the customer's name, so after a change of tenancy older documents could no longer be found.</p>
+      <p>I then looked at each page in terms of that journey: what the customer is trying to do, which team handles it behind the scenes, and where it was breaking down.</p>
     </div>
   </section>
 
@@ -168,7 +175,7 @@
       <ul class="method-list">
         <li><strong>Call data analysis.</strong> Customer service data showed what customers needed most: submitting meter readings, tracking usage, viewing site information, changing tenancy, requesting VAT changes, paying invoices and downloading documents.</li>
         <li><strong>Stakeholder sessions.</strong> The PM and I met customer service, metering, credit control and legal to understand their goals and constraints.</li>
-        <li><strong>Customer journey mapping.</strong> I mapped the whole gas and power customer journey, so I could see where the portal fits within it (see <a href="#wider-service">The wider service</a>).</li>
+        <li><strong>Customer journey mapping.</strong> I mapped the whole gas and power customer journey, from a broker's tender to billing and renewal, so I could see where the portal fits within it (see <a href="#wider-service">The wider service</a>).</li>
         <li><strong>Language review.</strong> We agreed which industry terms customers know and should keep, and which were internal jargon that would confuse them.</li>
         <li><strong>Usability testing.</strong> Task-based testing on working prototypes (see <a href="#testing">Testing</a>).</li>
       </ul>
