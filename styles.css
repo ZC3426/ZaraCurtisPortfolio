@@ -1400,59 +1400,57 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 .shot .ver.v5 { background: var(--outline); color: #fff; }
 
 /* ---------- iteration mosaics ----------
-   Runs of screenshots sit side by side as uniform cards: every
-   screenshot card in the case study is the same size, with a 2:1 image
-   frame, three to a row. Desktop screenshots that aren't quite 2:1 are
-   cropped from the top; phone screenshots sit whole in the middle of the
-   frame. The full image opens on click (nav.js: initLightbox). Captions
-   get a fixed four-line area so cards line up. Phones get a sideways
-   swipe row of the same uniform cards. */
+   Runs of screenshots, side by side and all the same size: a 2:1 image
+   frame, two to a row, with the version pill and caption directly under
+   each image (no card around them). On laptops the rows reach a little
+   wider than the text column so the screenshots are big enough to read.
+   Desktop screenshots that aren't quite 2:1 are cropped from the top;
+   phone screenshots sit whole in the middle of the frame. The full image
+   opens on click (nav.js: initLightbox). Phones get a sideways swipe row. */
 .mosaic {
-  --g: 0.9rem; --tp: 0.6rem; --dw: calc((100% - 2 * var(--g)) / 3);
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: var(--g); margin-top: 1.5rem;
+  --g: 1.75rem; --dw: calc((100% - var(--g)) / 2);
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
+  gap: 2rem var(--g); margin-top: 1.75rem;
 }
-.mosaic + .mosaic { margin-top: var(--g); }
-.mosaic > .shot { flex: 0 0 var(--dw); min-width: 0; display: flex; flex-direction: column; padding: var(--tp); }
+.mosaic + .mosaic { margin-top: 2rem; }
+@media (min-width: 1100px) {
+  .mosaic { --mw: min(1240px, 100vw - 4rem); width: var(--mw); margin-left: calc((100% - var(--mw)) / 2); margin-right: calc((100% - var(--mw)) / 2); }
+}
+.mosaic > .shot, [data-theme="business"] .mosaic > .shot {
+  flex: 0 0 var(--dw); min-width: 0; display: flex; flex-direction: column;
+  padding: 0; background: none; border: none; border-radius: 0; box-shadow: none; overflow: visible;
+}
 .mosaic > .shot > img, .mosaic > .shot .vid-frame video, .mosaic > .shot .media-placeholder {
   width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; object-position: top center;
 }
 .mosaic > .shot.phone > img { object-fit: contain; object-position: center; }
 .mosaic > .shot .vid-frame { width: 100%; }
-.mosaic > .shot > img { display: block; border-radius: 4px; cursor: zoom-in; }
-.mosaic > .shot:not(.phone) > img { outline: 1px solid var(--outline); }
-.mosaic > .shot figcaption {
-  border-top: none; padding: 0.55rem 0.1rem 0.05rem; font-size: 0.8rem; line-height: 1.45;
-  height: calc(4 * 1.45em + 0.6rem); overflow: hidden;
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4;
+.mosaic > .shot > img { display: block; cursor: zoom-in; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+/* The frame is on the image itself: comic outline in My Style, a soft
+   rounded edge in Professional. Phone mockups float without one. */
+.mosaic > .shot:not(.phone) > img, .mosaic > .shot .vid-frame {
+  border: 2.5px solid var(--ink); border-radius: 8px; box-shadow: 4px 4px 0 0 var(--shadow); overflow: hidden;
 }
-.mosaic > .shot figcaption .ver { line-height: 1.2; vertical-align: 0.05em; }
-/* Phones: the video's control bar sits under it, so its caption area
-   gives up the bar's height to keep the card the same size. */
-@media (max-width: 640px) {
-  .mosaic > .shot .vid-bar { box-sizing: border-box; height: var(--barh, 40px); }
-  .mosaic > .shot.vid-player figcaption { height: calc(4 * 1.45em + 0.6rem - var(--barh, 40px)); -webkit-line-clamp: 2; line-clamp: 2; }
+.mosaic > .shot .vid-frame video { display: block; }
+.mosaic > .shot:not(.phone) > img:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 var(--shadow); }
+[data-theme="business"] .mosaic > .shot:not(.phone) > img, [data-theme="business"] .mosaic > .shot .vid-frame {
+  border: 1px solid var(--card-line); border-radius: 14px; box-shadow: var(--soft-shadow);
 }
-@media (max-width: 640px) {
-  .mosaic { --barh: 36px; }
-  .mosaic > .shot .vid-bar { padding: 2px 6px; }
-  .mosaic > .shot .vid-bar button, .mosaic > .shot .vid-seek { height: 32px; min-width: 32px; }
+[data-theme="business"] .mosaic > .shot:not(.phone) > img:hover { transform: translateY(-2px); box-shadow: var(--soft-shadow-hover); }
+.mosaic > .shot figcaption,
+[data-theme="business"] .mosaic > .shot figcaption {
+  border-top: none; padding: 0.7rem 0.1rem 0; font-size: 0.88rem; line-height: 1.5;
 }
-.mosaic > .shot:hover > img { outline-color: var(--accent); }
-[data-theme="business"] .mosaic { --tp: calc(0.6rem + 2px); }
-[data-theme="business"] .mosaic > .shot > img { border-radius: 8px; }
-[data-theme="business"] .mosaic > .shot:not(.phone) > img { outline: 1px solid var(--card-line); }
-[data-theme="business"] .mosaic > .shot:hover > img { outline-color: var(--outline); }
-/* Tablets: two desktop cards to a row. */
-@media (max-width: 999px) { .mosaic { --dw: calc((100% - var(--g)) / 2); } }
 @media (max-width: 640px) {
   .mosaic {
-    --dw: 80vw; --tp: 0.45rem;
-    flex-wrap: nowrap; justify-content: flex-start; gap: 0.7rem;
+    --dw: 80vw; gap: 1rem;
+    flex-wrap: nowrap; justify-content: flex-start;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
-    margin-left: -1rem; margin-right: -1rem; padding: 0.25rem 1rem 0.6rem; scroll-padding: 0 1rem;
+    margin-left: -1rem; margin-right: -1rem; padding: 0.25rem 1rem 0.75rem; scroll-padding: 0 1rem;
   }
   .mosaic::-webkit-scrollbar { display: none; }
   .mosaic > .shot { scroll-snap-align: start; }
+  .mosaic > .shot figcaption { font-size: 0.82rem; }
 }
 
 /* The lightbox as a gallery: caption, counter, previous/next. */
