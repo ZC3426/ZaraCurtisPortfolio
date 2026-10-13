@@ -1519,6 +1519,15 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 }
 .mosaic > .shot.phone, [data-theme="business"] .mosaic > .shot.phone { flex-basis: var(--pw); }
 .mosaic > .shot.phone > img { aspect-ratio: 1 / 2; object-fit: contain; object-position: center top; }
+/* A phone shown beside its desktop screen sits right next to it at the
+   same height: the desktop image is half its card width tall (2:1), so
+   the phone card is that height times the phone's own aspect ratio. */
+@media (min-width: 641px) {
+  .mosaic:has(> .shot:not(.phone)) > .shot.phone,
+  [data-theme="business"] .mosaic:has(> .shot:not(.phone)) > .shot.phone { flex-basis: calc(var(--dw) / 2 * var(--ar)); }
+  .mosaic:has(> .shot:not(.phone)) > .shot.phone > img { aspect-ratio: var(--ar); }
+  .mosaic:has(> .shot:not(.phone)):has(> .shot.phone) { gap: 2rem 1rem; }
+}
 .mosaic > .shot .vid-frame { width: 100%; }
 .mosaic > .shot > img { display: block; cursor: zoom-in; transition: transform 0.2s ease, box-shadow 0.2s ease; }
 /* The frame is on the image itself: comic outline in My Style, a soft
