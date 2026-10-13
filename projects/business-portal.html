@@ -50,20 +50,19 @@
       <p class="lede" style="margin-top:1rem;">Turning a self-service portal that customers avoided into one they can rely on, so routine tasks don't need a phone call.</p>
 
       <div class="overview-grid">
-        <div class="item"><div class="label">Role</div><div class="value">Product Designer (sole designer from V2 onwards)</div></div>
+        <div class="item"><div class="label">Role</div><div class="value">Product Designer. Sole designer from V2 onwards, building on the PM's V1 prototypes and an inherited design system.</div></div>
         <div class="item"><div class="label">Timeline</div><div class="value">3 months, 2026</div></div>
         <div class="item"><div class="label">Team</div><div class="value">PM, engineer, QA. Worked with customer service, metering, credit control and legal.</div></div>
         <div class="item"><div class="label">Status</div><div class="value">Launching late October 2026. Live impact data to follow.</div></div>
-        <div class="item"><div class="label">Scope</div><div class="value">17 pages and two design systems. A Managing Agent portal was designed, then paused.</div></div>
+        <div class="item"><div class="label">Scope</div><div class="value">17 pages, an extended design system and a new one matched to the new company website. A Managing Agent portal was designed, then paused.</div></div>
         <div class="item"><div class="label">Tools</div><div class="value">Figma, Claude Code, Git, Jira, Miro, Confluence</div></div>
       </div>
 
-      <div class="list-cards cols-2 cs-summary">
-        <div class="card-mini"><h4>The problem</h4><p>An unreliable portal that only around 30 customers a month used<!-- CONFIRM: out of roughly X business customers -->. Most phoned instead.</p></div>
-        <div class="card-mini"><h4>My role</h4><p>Sole designer from V2 onwards: research, design, testing, design systems and QA support.</p></div>
-        <div class="card-mini"><h4>What I did</h4><p>Mapped the customer journey, used call data to find why customers called, and redesigned 17 pages around those tasks. Tested with 30 staff and 4 customers.</p></div>
-        <div class="card-mini"><h4>Results so far</h4><p>Every page passed usability testing, including with 4 real customers, and ended with ease ratings of 9–10 out of 10. Meter readings now take under 8 seconds to enter.</p></div>
-      </div>
+      <dl class="cs-summary-block">
+        <div><dt>Problem</dt><dd>Only around 30 business customers used the portal each month<!-- CONFIRM: out of roughly X business customers; X calls a month -->. Most phoned instead, mainly about meter readings, VAT and invoices.</dd></div>
+        <div><dt>What I did</dt><dd>Used call data, journey mapping and stakeholder sessions to find the tasks that mattered, redesigned 17 pages around them, and tested with 30 colleagues and 4 customers.</dd></div>
+        <div><dt>Result so far</dt><dd>Every page tested met the pass bar. Live impact data follows the late-October launch.</dd></div>
+      </dl>
 
       <details class="glossary">
         <summary>Energy terms used in this case study</summary>
@@ -91,20 +90,24 @@
   <section class="cs-section">
     <div class="wrap">
       <span class="kicker">Usability testing results</span>
-      <h2>Self-service that people could actually use</h2>
-      <p>Pre-launch testing with 30 staff from across the business and 4 customers. Live customer data will be added after launch.</p>
-      <div class="metrics-paper">
-        <table class="metrics-table">
+      <h2>What testing showed before launch</h2>
+      <p>I tested in task-based rounds with 30 colleagues and 4 customers. A page passed when at least 4 in 5 participants completed each task. Most participants were staff, so I treat these as usability results, not customer outcomes. Figures are from the final version.</p>
+      <div class="method-table-wrap">
+        <table class="method-table results-table" aria-label="Usability testing results, first version against final version">
+          <thead><tr><th scope="col">Measure</th><th scope="col">First version</th><th scope="col">Final tested</th></tr></thead>
           <tbody>
-            <tr><td class="num">95%<!-- CONFIRM: replace with "X of Y" --></td><td class="desc">of participants answered the key invoice questions after iteration</td></tr>
-            <tr><td class="num">15% → 100%</td><td class="desc">of participants could submit a meter reading, first version vs final<!-- CONFIRM: n --></td></tr>
-            <tr><td class="num">15s+ → &lt;8s</td><td class="desc">to enter all meter readings: at first participants hadn't finished after 15 seconds; by the final round everyone finished in under 8</td></tr>
-            <tr><td class="num">9–10 / 10</td><td class="desc">ease rating on every page by the final round, up from 2 for meter readings and 4 for invoices</td></tr>
-            <tr><td class="num">95%<!-- CONFIRM: replace with "X of Y" --></td><td class="desc">of participants found all usage information in 3 seconds or less<!-- CONFIRM: how this was measured (timed task, first-click, 5-second test?) --></td></tr>
-            <tr><td class="num">WCAG<!-- CONFIRM: level audited against, e.g. 2.2 AA --></td><td class="desc">audit completed: fixed colour contrast and text size, and built legal requirements into the final designs</td></tr>
+            <tr><th scope="row">Could submit a meter reading</th><td data-label="First version">15%</td><td class="final" data-label="Final tested">100%</td></tr>
+            <tr><th scope="row">Entering all meter readings</th><td data-label="First version">Not finished after 15 seconds</td><td class="final" data-label="Final tested">Under 8 seconds</td></tr>
+            <tr><th scope="row">Ease rating, meter readings</th><td data-label="First version">2/10</td><td class="final" data-label="Final tested">9/10</td></tr>
+            <tr><th scope="row">Ease rating, invoices</th><td data-label="First version">4/10</td><td class="final" data-label="Final tested">8.5/10</td></tr>
+            <tr><th scope="row">Answered key invoice questions</th><td data-label="First version">Not measured</td><td class="final" data-label="Final tested">95%</td></tr>
+            <tr><th scope="row">Found usage information within 3 seconds</th><td data-label="First version">Not measured</td><td class="final" data-label="Final tested">95%</td></tr>
+            <tr><th scope="row">Accessibility</th><td data-label="First version">Not measured</td><td class="final" data-label="Final tested">Audited against WCAG. Fixed contrast and text-size issues.</td></tr>
           </tbody>
         </table>
       </div>
+      <!-- CONFIRM: "x of y" counts for 15%, 100%, both 95% figures; number of meters in the timing task; WCAG level and number of issues fixed -->
+      <p>The 4 customers completed every task they set out to do.</p>
     </div>
   </section>
 
@@ -225,14 +228,14 @@
       <h3 id="how-i-tested">How I tested</h3>
       <div class="method-table-wrap">
         <table class="method-table" aria-labelledby="how-i-tested">
-          <thead><tr><th scope="col">Method</th><th scope="col">What it told me</th></tr></thead>
+          <thead><tr><th scope="col">Method</th><th scope="col">What it checked</th></tr></thead>
           <tbody>
             <tr><th scope="row">Task-based usability testing</th><td>Whether people could complete core tasks. A page passed when at least 4 in 5 participants completed each task.</td></tr>
-            <tr><th scope="row">Time on task</th><td>How quickly people completed each task. At first, participants hadn't finished entering meter readings after 15 seconds; by the final round, everyone finished in under 8.</td></tr>
-            <tr><th scope="row">Post-task ease ratings</th><td>How easy each task felt, out of 10. Ratings rose with each iteration, from 2 to 9 for meter readings and 4 to 8 for invoices, and ended at 9–10 on every page.</td></tr>
+            <tr><th scope="row">Time on task</th><td>How quickly people completed each task, and whether that improved between versions.</td></tr>
+            <tr><th scope="row">Post-task ease ratings</th><td>How easy each task felt, out of 10, and whether that improved with each iteration.</td></tr>
             <tr><th scope="row">Tree testing</th><td>Whether the navigation labels and structure matched where people expected to find things.</td></tr>
             <tr><th scope="row">First-click and 5-second tests</th><td>Whether the dashboard's purpose and key actions were clear at a glance.</td></tr>
-            <tr><th scope="row">Customer sessions</th><td>Whether real customers could do what they needed. All 4 completed everything they set out to do.</td></tr>
+            <tr><th scope="row">Customer sessions</th><td>Whether real customers could do what they needed.</td></tr>
             <tr><th scope="row">Live build checks</th><td>Where the built pages differed from my designs, tested with live data.</td></tr>
           </tbody>
         </table>
@@ -252,7 +255,7 @@
         <div class="mosaic">
           <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/billing-v2-colour.webp" alt="The billing page: outstanding balance with a make-a-payment button, outstanding invoices in their own table, and all invoices as rows grouped by account, under a colourful header and above a red and blue wave footer" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> Outstanding invoices in their own simple table, with "Pay all" as the main action, and all invoices as clickable cards by account, now with the colourful header and footer.</figcaption></figure>
         </div>
-        <div class="outcome"><strong>Result:</strong> 95% of participants answered the key invoice questions.<!-- CONFIRM: replace with "X of Y participants" --> The ease rating rose from 4 to 8 out of 10, and reached 9–10 by the final round.</div>
+        <div class="outcome"><strong>Result:</strong> 95% of participants answered the key invoice questions.<!-- CONFIRM: replace with "X of Y participants" --> The ease rating rose from 4 to 8.5 out of 10.</div>
       </div>
 
       <div class="page-study">
