@@ -724,6 +724,7 @@
   function initGalleries() {
     Array.prototype.forEach.call(document.querySelectorAll('.mosaic'), function (run) {
       var figs = Array.prototype.slice.call(run.children);
+      if (run.hasAttribute('data-no-gallery')) return;
       if (figs.length < 2 || !figs.every(function (f) {
         return f.matches('figure.shot') && f.querySelector(':scope > img');
       })) return;
