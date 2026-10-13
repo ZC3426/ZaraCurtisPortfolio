@@ -61,7 +61,7 @@
       <dl class="cs-summary-block">
         <div><dt>Problem</dt><dd>Only around 30 business customers used the portal each month<!-- CONFIRM: out of roughly X business customers; X calls a month -->. Most phoned instead, mainly about meter readings, VAT and invoices.</dd></div>
         <div><dt>What I did</dt><dd>Used call data, journey mapping and stakeholder sessions to find the tasks that mattered, redesigned 17 pages around them, and tested with 30 colleagues and 4 customers.</dd></div>
-        <div><dt>Result so far</dt><dd>Every page tested met the pass bar. Live impact data follows the late-October launch.</dd></div>
+        <div><dt>Result so far</dt><dd>In pre-launch testing, meter reading completion went from 15% to 100%, and answers to key invoice questions from 40% to 95%. Every page tested met the pass bar.</dd></div>
       </dl>
 
       <details class="glossary">
@@ -84,30 +84,6 @@
           <div class="vid-bar"><button type="button" class="vid-play" aria-label="Pause video"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5.5v13l10.5-6.5z"/></svg></button><span class="vid-time" aria-hidden="true">0:00</span><input class="vid-seek" type="range" min="0" max="224.6" step="0.1" value="0" aria-label="Seek video" /><span class="vid-dur" aria-hidden="true">3:44</span><button type="button" class="vid-speed" aria-pressed="false" aria-label="Double speed">1×</button></div>
         </div>
       </figure>
-    </div>
-  </section>
-
-  <section class="cs-section">
-    <div class="wrap">
-      <span class="kicker">Usability testing results</span>
-      <h2>What testing showed before launch</h2>
-      <p>I tested in task-based rounds with 30 colleagues and 4 customers. A page passed when at least 4 in 5 participants completed each task. Most participants were staff, so I treat these as usability results, not customer outcomes. Figures are from the final version.</p>
-      <div class="method-table-wrap">
-        <table class="method-table results-table" aria-label="Usability testing results, first version against final version">
-          <thead><tr><th scope="col">Measure</th><th scope="col">First version</th><th scope="col">Final tested</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Could submit a meter reading</th><td data-label="First version">15%</td><td class="final" data-label="Final tested">100%</td></tr>
-            <tr><th scope="row">Entering all meter readings</th><td data-label="First version">Not finished after 15 seconds</td><td class="final" data-label="Final tested">Under 8 seconds</td></tr>
-            <tr><th scope="row">Ease rating, meter readings</th><td data-label="First version">2/10</td><td class="final" data-label="Final tested">9/10</td></tr>
-            <tr><th scope="row">Ease rating, invoices</th><td data-label="First version">4/10</td><td class="final" data-label="Final tested">8.5/10</td></tr>
-            <tr><th scope="row">Answered key invoice questions</th><td data-label="First version">40%</td><td class="final" data-label="Final tested">95%</td></tr>
-            <tr><th scope="row">Found usage information within 3 seconds</th><td data-label="First version">90%</td><td class="final" data-label="Final tested">90%</td></tr>
-            <tr><th scope="row">Accessibility</th><td data-label="First version">Not measured</td><td class="final" data-label="Final tested">Audited against WCAG. Fixed contrast and text-size issues.</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- CONFIRM: "x of y" counts for 15%, 100%, both 95% figures; number of meters in the timing task; WCAG level and number of issues fixed -->
-      <p>The 4 customers completed every task they set out to do.</p>
     </div>
   </section>
 
@@ -347,6 +323,29 @@
           <figure class="shot phone" style="--ar: 0.464;"><img src="../assets/business-portal/login-v5-mobile.png" alt="Final sign-in page on a phone: email and password fields with a show-password option, remember me, forgotten password and a link to register" width="379" height="817" loading="lazy" /><figcaption><span class="ver v5">V5</span> Signing in on mobile, with show password, remember me and a route to register.</figcaption></figure>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="kicker">Usability testing results</span>
+      <h2>The whole picture from testing</h2>
+      <p>Each page above ends with its own result. Here they are together, comparing the first version I tested with the final one. I tested in task-based rounds with 30 colleagues and 4 customers. The minimum bar for a page to pass was 4 in 5 participants completing each task; the figures below are what the final version actually achieved.</p>
+      <div class="method-table-wrap">
+        <table class="method-table results-table" aria-label="Usability testing results, first version against final version">
+          <thead><tr><th scope="col">Measure</th><th scope="col">First version</th><th scope="col">Final tested</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Could submit a meter reading</th><td data-label="First version">15%</td><td class="final" data-label="Final tested">100%</td></tr>
+            <tr><th scope="row">Entering all meter readings</th><td data-label="First version">Not finished after 15 seconds</td><td class="final" data-label="Final tested">Under 8 seconds</td></tr>
+            <tr><th scope="row">Ease rating, meter readings</th><td data-label="First version">2/10</td><td class="final" data-label="Final tested">9/10</td></tr>
+            <tr><th scope="row">Ease rating, invoices</th><td data-label="First version">4/10</td><td class="final" data-label="Final tested">8.5/10</td></tr>
+            <tr><th scope="row">Answered key invoice questions</th><td data-label="First version">40%</td><td class="final" data-label="Final tested">95%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- CONFIRM: "x of y" counts for 15%, 100%, both 95% figures; number of meters in the timing task; WCAG level and number of issues fixed -->
+      <p>The 4 customers completed every task they set out to do. I also audited the portal against WCAG and fixed contrast and text-size issues.<!-- CONFIRM: WCAG level and number of issues fixed --></p>
+      <p>Most participants were staff, so I treat these as usability results, not customer outcomes. Live customer data will follow after launch.</p>
     </div>
   </section>
 
