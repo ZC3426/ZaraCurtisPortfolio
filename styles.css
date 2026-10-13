@@ -1445,6 +1445,7 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 .shot .ver.v1, .shot .ver.inherited { background: var(--yellow-soft); }
 .shot .ver.v4 { background: var(--green-soft); }
 .shot .ver.v5 { background: var(--outline); color: #fff; }
+.shot .ver.rejected { background: transparent; color: var(--ink-soft); box-shadow: inset 0 0 0 1.5px currentColor; }
 
 /* ---------- iteration mosaics ----------
    Runs of screenshots, side by side: every desktop screenshot is the
@@ -1573,6 +1574,7 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
 .lightbox-cap .ver.v1, .lightbox-cap .ver.inherited { background: var(--yellow-soft); }
 .lightbox-cap .ver.v4 { background: var(--green-soft); }
 .lightbox-cap .ver.v5 { background: var(--outline); color: #fff; }
+.lightbox-cap .ver.rejected { background: transparent; color: #f4f1ea; box-shadow: inset 0 0 0 1.5px currentColor; }
 .lightbox-count { display: block; margin-top: 0.35rem; font-size: 0.75rem; opacity: 0.7; font-variant-numeric: tabular-nums; }
 .lightbox-nav {
   position: absolute; top: 50%; width: 2.75rem; height: 2.75rem; margin-top: -1.375rem; border-radius: 50%;
