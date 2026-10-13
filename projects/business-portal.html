@@ -61,8 +61,8 @@
       <div class="list-cards cols-2 cs-summary">
         <div class="card-mini"><h4>The problem</h4><p>An unreliable portal that only around 30 customers a month used<!-- CONFIRM: out of roughly X business customers -->. Most phoned instead.</p></div>
         <div class="card-mini"><h4>My role</h4><p>Sole designer, end to end: research, design, testing, design systems and QA support.</p></div>
-        <div class="card-mini"><h4>What I did</h4><p>Mapped the customer journey, used call data to find why customers called, and redesigned 17 pages around those tasks. Tested with 30 participants in rounds of 5.</p></div>
-        <div class="card-mini"><h4>Results so far</h4><p>Every page passed usability testing, with at least 4 in 5 participants completing each core task. Meter reading completion rose from 15% to 100%. Live data to follow.</p></div>
+        <div class="card-mini"><h4>What I did</h4><p>Mapped the customer journey, used call data to find why customers called, and redesigned 17 pages around those tasks. Tested with 30 staff and 4 customers.</p></div>
+        <div class="card-mini"><h4>Results so far</h4><p>Every page passed usability testing, with at least 4 in 5 participants completing each core task, including 4 real customers. Meter reading completion rose from 15% to 100%. Live data to follow.</p></div>
       </div>
 
       <details class="glossary">
@@ -92,7 +92,7 @@
     <div class="wrap">
       <span class="kicker">Usability testing results</span>
       <h2>Self-service that people could actually use</h2>
-      <p>Pre-launch testing with 30 staff from across the business. Live customer data will be added after launch.</p>
+      <p>Pre-launch testing with 30 staff from across the business and 4 customers. Live customer data will be added after launch.</p>
       <div class="metrics-paper">
         <table class="metrics-table">
           <tbody>
@@ -190,7 +190,7 @@
       <div class="list-cards cols-3">
         <div class="card-mini"><h4>Dense data</h4><p>Sites, meter readings, invoices and usage all needed a lot of information on screen.</p></div>
         <div class="card-mini"><h4>Three months</h4><p>The engineer started building before my designs were finished, so I designed in priority order and stayed in close contact to keep design and build in step.</p></div>
-        <div class="card-mini"><h4>Low trust, no customer access</h4><p>The business had been through several product and delivery teams in recent years, so trust in new work was low. I also couldn't test with real customers before launch. Instead I worked closely with customer service and metering staff, who deal with customer queries every day.</p></div>
+        <div class="card-mini"><h4>Low trust, limited customer access</h4><p>The business had been through several product and delivery teams in recent years, so trust in new work was low. Access to customers was limited, so I tested mostly with staff who deal with customer queries every day, then with 4 customers at the end.</p></div>
       </div>
     </div>
   </section>
@@ -219,7 +219,22 @@
       <h2>Making dense data readable</h2>
       <p>This was the hardest part of the project. Participants did real tasks on working prototypes: submitting a meter reading, finding and paying an invoice, answering a VAT question, checking usage against their contract.<!-- CONFIRM: methods, e.g. think-aloud; number of test rounds --></p>
       <p>I tested each page in rounds of 5. If 3 or more people struggled with a task, I iterated before moving on. In total I tested with 30 people from across the business, from HR to credit control.</p>
-      <p>Testing with staff rather than customers has limits, so I used the mix deliberately. People who had never used the portal showed whether it was easy to learn. Metering and customer service staff checked it matched how the service really works. I also tested every feature on the engineer's live build with live data, to catch where the build differed from my designs.</p>
+      <p>Testing mostly with staff has limits, so I used the mix deliberately. People who had never used the portal showed whether it was easy to learn. Metering and customer service staff checked it matched how the service really works. At the end, I tested with 4 real customers, who completed everything they set out to do. I also tested every feature on the engineer's live build with live data, to catch where the build differed from my designs.</p>
+      <h3 id="how-i-tested">How I tested</h3>
+      <div class="method-table-wrap">
+        <table class="method-table" aria-labelledby="how-i-tested">
+          <thead><tr><th scope="col">Method</th><th scope="col">What it told me</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Task-based usability testing</th><td>Whether people could complete core tasks. A page passed when at least 4 in 5 participants completed each task.</td></tr>
+            <tr><th scope="row">Time on task</th><td>How quickly people completed each task, and whether that improved between versions.</td></tr>
+            <tr><th scope="row">Post-task ease ratings</th><td>How easy each task felt. Ratings improved with each iteration.</td></tr>
+            <tr><th scope="row">Tree testing</th><td>Whether the navigation labels and structure matched where people expected to find things.</td></tr>
+            <tr><th scope="row">First-click and 5-second tests</th><td>Whether the dashboard's purpose and key actions were clear at a glance.</td></tr>
+            <tr><th scope="row">Customer sessions</th><td>Whether real customers could do what they needed. All 4 completed everything they set out to do.</td></tr>
+            <tr><th scope="row">Live build checks</th><td>Where the built pages differed from my designs, tested with live data.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <div class="page-study">
         <h3>Invoices</h3>
@@ -381,9 +396,6 @@
         <div class="card-mini"><h4>Design system first</h4><p>I built it alongside the pages, reactively. Building it first would have saved rework, especially when brand direction changed.</p></div>
         <div class="card-mini"><h4>Stakeholders earlier</h4><p>Brand direction changed late, and earlier involvement would have caught it sooner.</p></div>
       </div>
-      <!-- CONFIRM (keep only if Zara agrees):
-           "Test with customers as soon as possible. Staff were good proxies, but real customers will reveal needs we
-           missed. Testing with them after launch is my next priority." -->
     </div>
   </section>
 

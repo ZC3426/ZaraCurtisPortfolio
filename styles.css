@@ -890,6 +890,29 @@ footer.site-footer { padding: 2.25rem 0; text-align: center; color: var(--ink-so
   [data-theme="business"] .journey-strip li + li::after { border-top-color: var(--ink-soft); border-left-color: transparent; }
 }
 
+/* "How I tested": methods and what each one told me. */
+.method-table-wrap { margin-top: 0.75rem; overflow-x: auto; }
+.method-table {
+  width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface);
+  border: 2.5px solid var(--ink); border-radius: 8px; box-shadow: 3px 3px 0 0 var(--shadow); overflow: hidden;
+  font-size: 0.92rem; line-height: 1.5;
+}
+.method-table th, .method-table td { padding: 0.75rem 1rem; text-align: left; vertical-align: top; border-bottom: 1.5px solid var(--card-line, rgba(0,0,0,.1)); }
+.method-table tbody tr:last-child > * { border-bottom: none; }
+.method-table thead th { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); background: var(--accent-soft); }
+.method-table tbody th { width: 32%; font-weight: 700; color: var(--ink); }
+.method-table td { color: var(--ink-soft); }
+html[data-theme="personal"] .method-table :is(th, td) { font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif; }
+html[data-theme="personal"] .method-table thead th { font-family: "Space Mono", monospace; }
+[data-theme="business"] .method-table { border: 1px solid var(--card-line); border-radius: var(--radius); box-shadow: var(--soft-shadow); }
+[data-theme="business"] .method-table thead th { background: rgba(31, 92, 63, 0.06); }
+@media (max-width: 640px) {
+  .method-table, .method-table tbody, .method-table tr, .method-table th, .method-table td { display: block; width: 100%; }
+  .method-table thead { display: none; }
+  .method-table tbody th { width: 100%; padding-bottom: 0.15rem; border-bottom: none; }
+  .method-table td { padding-top: 0; }
+}
+
 /* Bulleted lists in case study body copy (methods, impact measures). */
 .method-list { margin: 0.6rem 0 1rem; padding-left: 1.3rem; }
 .method-list li { margin-top: 0.5rem; line-height: 1.6; }
