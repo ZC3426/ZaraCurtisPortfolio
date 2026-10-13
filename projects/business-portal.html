@@ -236,6 +236,7 @@
             <tr><th scope="row">Tree testing</th><td>Whether the navigation labels and structure matched where people expected to find things.</td></tr>
             <tr><th scope="row">First-click and 5-second tests</th><td>Whether the dashboard's purpose and key actions were clear at a glance.</td></tr>
             <tr><th scope="row">Customer sessions</th><td>Whether real customers could do what they needed.</td></tr>
+            <tr><th scope="row">Cross-device testing</th><td>Whether every page worked on both iPhone and Android, across operating systems and screen sizes.</td></tr>
             <tr><th scope="row">Live build checks</th><td>Where the built pages differed from my designs, tested with live data.</td></tr>
           </tbody>
         </table>
@@ -273,6 +274,7 @@
           <figure class="shot phone" style="--ar: 0.549;"><img src="../assets/business-portal/meter-readings-final-mobile.png" alt="V4 submit readings page on a phone, with overdue meters as cards" width="495" height="902" loading="lazy" /><figcaption><span class="ver v4">V4</span> On mobile.</figcaption></figure>
         </div>
         <p>Mobile wasn't in scope at first. I made the case for it for three reasons. Customers use the portal out on their sites, so they need to submit readings remotely, standing at the meter rather than back at a desk. A phone's camera lets them photograph the meter instead of copying a long string of digits by hand, so fewer readings come in wrong. And WCAG's reflow guideline expects pages to work at narrow widths without sideways scrolling, which also helps anyone zoomed in on a desktop. Fewer wrong readings also means fewer estimated or corrected bills, and fewer calls later in the journey.</p>
+        <p>I tested the mobile designs on both iPhone and Android, to make sure every page worked across operating systems, not just on one device.</p>
         <div class="mosaic">
           <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-top.png" alt="Final submit readings page on a phone: 3 reads remaining with 2 overdue, a progress bar, buttons for multiple readings and entering readings, and a note that smart meters send readings automatically" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> On mobile: what's left to submit, and what's overdue.</figcaption></figure>
           <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/readings-final-mobile-list.png" alt="Final meter list on a phone, filtered to needs readings or all meters, each meter with its next due date, a smart-eligible tag and a photo button" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> Each meter shows when it's next due, with a photo option.</figcaption></figure>
@@ -293,6 +295,9 @@
         <div class="mosaic">
           <figure class="shot" style="--ar: 2.094;"><img src="../assets/business-portal/usage-v2-top.webp" alt="My redesigned usage page: a Power/Gas toggle and site selector, and a usage-over-time bar chart for the month against a dotted contracted line, with over-contract days in amber" width="1985" height="948" loading="lazy" /><figcaption><span class="ver v4">V4</span> My redesigned usage page: usage over time against what was contracted, with over-contract days in amber.</figcaption></figure>
           <figure class="shot" style="--ar: 2.001;"><img src="../assets/business-portal/usage-final-scrolled.webp" alt="My redesigned usage page, scrolled: a Usage and Targets card with a target progress bar, top sites by usage as a pie chart, and a usage-by-day heatmap, under a sticky Power/Gas toggle and site selector" width="1985" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> Scrolled: one Usage &amp; Targets card, top sites as a pie chart and usage by day, under a sticky toggle and site selector.</figcaption></figure>
+        </div>
+        <div class="mosaic">
+          <figure class="shot phone" style="--ar: 0.464;"><img src="../assets/business-portal/usage-v5-mobile.png" alt="Final usage targets on an Android phone: a power and gas toggle and site selector pinned at the top, a 56,000 kWh target marked on track with a progress bar against expected, a kWh or pounds toggle, and used, remaining, under-by and projected figures" width="379" height="817" loading="lazy" /><figcaption><span class="ver v5">V5</span> Targets on mobile: progress against the target, in kWh or pounds, under the sticky controls.</figcaption></figure>
         </div>
         <div class="outcome"><strong>Result:</strong> 90% of participants found all the information within 3 seconds, in every round.<!-- CONFIRM: "X of Y" and how it was measured --></div>
       </div>
@@ -322,11 +327,15 @@
       </div>
 
       <div class="page-study">
-        <h3>Documents, billing, settings and sign-in</h3>
+        <h3>Documents, support, settings and sign-in</h3>
         <p>These were more straightforward: grouping information logically and applying the design system so they matched the rest. Documents moved from a card-based page to a searchable, filterable list with counts, grouped by time period, so customers with many sites can find a specific letter quickly.</p>
         <div class="mosaic">
           <figure class="shot" style="--ar: 2.259;"><img src="../assets/business-portal/documents.png" alt="Documents page with category and site filters and a searchable document list grouped by time period" width="1920" height="850" loading="lazy" /><figcaption>Documents: searchable and filterable, grouped by time period.</figcaption></figure>
           <figure class="shot phone" style="--ar: 0.559;"><img src="../assets/business-portal/consolidated-billing-mobile.png" alt="Consolidated billing on a phone, a list of monthly statements with amounts and download buttons" width="447" height="800" loading="lazy" /><figcaption>Consolidated billing on mobile.</figcaption></figure>
+        </div>
+        <div class="mosaic">
+          <figure class="shot" style="--ar: 1.938;"><img src="../assets/business-portal/settings-v5.webp" alt="Final settings page on desktop: a settings menu beside People, showing 3 of 5 people who can sign in, each with a status, date added and last sign-in, and one person expanded to show their permissions as toggles" width="2000" height="1032" loading="lazy" /><figcaption><span class="ver v5">V5</span> Settings: up to 5 people can sign in, each with their own permissions.</figcaption></figure>
+          <figure class="shot" style="--ar: 1.938;"><img src="../assets/business-portal/support-v5.webp" alt="Final support page: a How can we help search with topic shortcuts, popular questions such as how to submit a meter reading or why a bill was estimated, and routes to raise a query or find contact details" width="2000" height="1032" loading="lazy" /><figcaption><span class="ver v5">V5</span> Support: search, topic shortcuts and popular questions, with routes to raise a query or find contact details.</figcaption></figure>
         </div>
         <div class="mosaic">
           <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/documents-v5-mobile.png" alt="Final documents page on a phone: All, Contracts, Site and Policies filters, a search box, and documents grouped by date, each with a download button" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> Documents on mobile: filtered by type, searchable and grouped by date.</figcaption></figure>
@@ -370,6 +379,10 @@
       </div>
       <h3>2. A new system to match the new website</h3>
       <p>Near the end of the project, stakeholders asked for the portal to match the new company website, which a contractor was still building. That was a new direction, and extending the old system was no longer enough. I designed a new system, with more rounded edges and curves, to match a website that was itself still in development.</p>
+      <div class="mosaic">
+        <figure class="shot" style="--ar: 2.041;"><img src="../assets/business-portal/ds-new-type.webp" alt="The new design system&#39;s type scale for the portal, from the 52px welcome heading and balance figures down to field labels and footer legal text, each with its size, weight and use" width="2000" height="980" loading="lazy" /><figcaption><span class="ver v5">V5</span> The new system&#39;s type scale for the portal, from the welcome heading to footer legal text.</figcaption></figure>
+        <figure class="shot" style="--ar: 2.041;"><img src="../assets/business-portal/ds-new-shadows.webp" alt="The new design system&#39;s shadow tokens, from cards and the header pill to menus, popovers, modals and the focus ring, each labelled with where the portal uses it" width="2000" height="980" loading="lazy" /><figcaption><span class="ver v5">V5</span> Its shadow tokens, each labelled with where the portal uses it.</figcaption></figure>
+      </div>
     </div>
   </section>
 
