@@ -243,13 +243,11 @@
         <div class="mosaic">
           <figure class="shot" style="--ar: 2.006;"><img src="../assets/business-portal/meter-readings-v1-pm.webp" alt="The PM's meter readings prototype, sites grouped by account with an expandable step-by-step reading form" width="2000" height="997" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype, grouped by account.</figcaption></figure>
           <figure class="shot" style="--ar: 2.008;"><img src="../assets/business-portal/meter-readings-iter1-a.webp" alt="My first meter readings iteration, with a submitted-percentage progress bar and one meter expanded into a step-by-step form" width="2000" height="996" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration: progress at the top, one meter at a time below.</figcaption></figure>
-        </div>
-        <p>I avoided a full table at first because I thought it would look cluttered. But it tested better: it made the fields people expected to see highly visible, and it followed a clear left-to-right order for entering a reading. So I went with it.</p>
-        <p>I also linked a guide on how to read and submit meters. Meter readings were a big source of calls for the customer service team, because the people submitting them, such as treasurers, didn't always take the readings themselves.</p>
-        <div class="mosaic">
           <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/meter-readings-final.webp" alt="Final submit readings page: a full table of meters with register, date, last and current reading fields, photo upload and status" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v4">V4</span> A full table, with every register and a photo option on one row.</figcaption></figure>
           <figure class="shot phone" style="--ar: 0.549;"><img src="../assets/business-portal/meter-readings-final-mobile.png" alt="V4 submit readings page on a phone, with overdue meters as cards" width="495" height="902" loading="lazy" /><figcaption><span class="ver v4">V4</span> On mobile.</figcaption></figure>
         </div>
+        <p>I avoided a full table at first because I thought it would look cluttered. But it tested better: it made the fields people expected to see highly visible, and it followed a clear left-to-right order for entering a reading. So I went with it.</p>
+        <p>I also linked a guide on how to read and submit meters. Meter readings were a big source of calls for the customer service team, because the people submitting them, such as treasurers, didn't always take the readings themselves.</p>
         <p>Mobile wasn't in scope at first. I made the case for it for three reasons. Customers use the portal out on their sites, so they need to submit readings remotely, standing at the meter rather than back at a desk. A phone's camera lets them photograph the meter instead of copying a long string of digits by hand, so fewer readings come in wrong. And WCAG's reflow guideline expects pages to work at narrow widths without sideways scrolling, which also helps anyone zoomed in on a desktop. Fewer wrong readings also means fewer estimated or corrected bills, and fewer calls later in the journey.</p>
         <p>I tested the mobile designs on both iPhone and Android, to make sure every page worked across operating systems, not just on one device.</p>
         <div class="mosaic">
@@ -263,13 +261,11 @@
       <div class="page-study">
         <h3>Usage</h3>
         <p>The original scattered data across the page with no clear message about how usage was going.</p>
-        <div class="mosaic">
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/usage-v1-pm.webp" alt="The PM's usage prototype: usage over time chart, cost vs forecast ring, sites needing attention, top sites and a usage target" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype.</figcaption></figure>
-        </div>
         <!-- CONFIRM: are business customers contracted for an expected volume? If so add: "Business customers are contracted for an expected volume, so I set usage against the contracted level and flagged days over contract in amber." -->
         <p>I combined cost vs forecast and target into one card, and turned top sites into a pie chart.<!-- CONFIRM: the reason for each of these --> I removed sites needing attention, because it wasn't actionable here and the dashboard already surfaces it.</p>
         <p>I made the gas and power toggle and the site selector sticky. That way, people looking at the heat map, the site comparison table or targets further down the page can still switch between sites and views without scrolling back to the top. I also added a toggle between energy units and pounds, so users can connect their usage to what it costs.</p>
         <div class="mosaic">
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/usage-v1-pm.webp" alt="The PM's usage prototype: usage over time chart, cost vs forecast ring, sites needing attention, top sites and a usage target" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype.</figcaption></figure>
           <figure class="shot" style="--ar: 2.094;"><img src="../assets/business-portal/usage-v2-top.webp" alt="My redesigned usage page: a Power/Gas toggle and site selector, and a usage-over-time bar chart for the month against a dotted contracted line, with over-contract days in amber" width="1985" height="948" loading="lazy" /><figcaption><span class="ver v4">V4</span> My redesigned usage page: usage over time against what was contracted, with over-contract days in amber.</figcaption></figure>
           <figure class="shot" style="--ar: 2.001;"><img src="../assets/business-portal/usage-final-scrolled.webp" alt="My redesigned usage page, scrolled: a Usage and Targets card with a target progress bar, top sites by usage as a pie chart, and a usage-by-day heatmap, under a sticky Power/Gas toggle and site selector" width="1985" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> Scrolled: one Usage &amp; Targets card, top sites as a pie chart and usage by day, under a sticky toggle and site selector.</figcaption></figure>
         </div>
@@ -283,19 +279,17 @@
       <div class="page-study">
         <h3>Sites</h3>
         <p>Sites had to work grouped by account or individually, and stakeholders wanted everything visible.</p>
-        <div class="mosaic">
-          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/sites-v1-pm.webp" alt="The PM's sites prototype: a dense table grouped by account with status, site, site ref, MPAN and product columns" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype, a dense table.</figcaption></figure>
-        </div>
         <p>Testing on invoices showed that expandable tables hid information, so I started with cards.</p>
-        <div class="mosaic">
-          <figure class="shot" style="--ar: 1.939;"><img src="../assets/business-portal/sites-iter1.png" alt="My first sites iteration: each site as a card with account, site ref, MPAN, contract end and status" width="1920" height="990" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration, one card per site.</figcaption></figure>
-          <figure class="shot phone" style="--ar: 0.564;"><img src="../assets/business-portal/sites-mobile.png" alt="Sites on a phone, as stacked cards with status and contract-end badges" width="464" height="822" loading="lazy" /><figcaption><span class="ver v3">V3</span> On mobile.</figcaption></figure>
-          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/sites-v5-mobile.png" alt="Final sites page on a phone: each site as a card with its account, site ref and meter number, a Live, Ceased or Pending status, and the contract end date or an Out of Contract or Deemed flag" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> The final design on mobile.</figcaption></figure>
-        </div>
         <p>Some feedback suggested users identify sites by account, so I added a group-by option.</p>
         <div class="mosaic">
+          <figure class="shot" style="--ar: 2.018;"><img src="../assets/business-portal/sites-v1-pm.webp" alt="The PM's sites prototype: a dense table grouped by account with status, site, site ref, MPAN and product columns" width="2000" height="991" loading="lazy" /><figcaption><span class="ver v1">V1</span> The PM's prototype, a dense table.</figcaption></figure>
+          <figure class="shot" style="--ar: 1.939;"><img src="../assets/business-portal/sites-iter1.png" alt="My first sites iteration: each site as a card with account, site ref, MPAN, contract end and status" width="1920" height="990" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration, one card per site.</figcaption></figure>
+          <figure class="shot phone" style="--ar: 0.564;"><img src="../assets/business-portal/sites-mobile.png" alt="Sites on a phone, as stacked cards with status and contract-end badges" width="464" height="822" loading="lazy" /><figcaption><span class="ver v3">V3</span> On mobile.</figcaption></figure>
           <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/sites-v2-all.webp" alt="V4 sites page on the All Sites view: one line per site with account number, site ref, MPXN, contract end and status, under All Fuels, Power and Gas filters" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> All sites, one line each and not grouped by account.</figcaption></figure>
           <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/sites-final.png" alt="Final sites page with an All Sites / By Account toggle, sites grouped under each account with site ref, MPRN and status" width="1920" height="988" loading="lazy" /><figcaption><span class="ver v4">V4</span> Grouped by account, with each account's status summarised in its header.</figcaption></figure>
+        </div>
+        <div class="mosaic">
+          <figure class="shot phone" style="--ar: 0.493;"><img src="../assets/business-portal/sites-v5-mobile.png" alt="Final sites page on a phone: each site as a card with its account, site ref and meter number, a Live, Ceased or Pending status, and the contract end date or an Out of Contract or Deemed flag" width="427" height="867" loading="lazy" /><figcaption><span class="ver v5">V5</span> The final design on mobile.</figcaption></figure>
         </div>
         <p>Individual site pages have a sticky header so users always know where they are. Customers can also now do things that used to mean a phone call: report a change of tenancy, add site contacts, add property and site references, add site-level data to improve usage predictions, and view past meter readings. These move tasks from phone to self-service. After launch, I'll track whether calls about them go down.</p>
         <div class="mosaic">
@@ -377,13 +371,11 @@
       <p>I worked with two design systems on this project. I extended the one I inherited, then replaced it with a new one when the brand direction changed.</p>
       <h3>1. Extending the inherited system</h3>
       <p>The system I inherited from the designer before me was built mostly from greys. It worked, but the pages looked plain and too alike. Rather than start again, I extended it.</p>
-      <div class="mosaic">
-        <figure class="shot" style="--ar: 1.31;"><img src="../assets/business-portal/ds-inherited-overview.webp" alt="The inherited design system's overview page: a sidebar of brand foundations, components and forms, a purpose statement and quick-access cards" width="1205" height="920" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span> The original design system's overview.</figcaption></figure>
-      </div>
       <p>I added more colour, new responsive components and new visuals, including a colourful header and footer and redesigned cards, so each page has its own look while staying one product.</p>
       <p>I started by maintaining the system in Figma, then moved to iterating on it in code, using Git, Claude and a shared repository the PM, engineer and stakeholders all used, so everyone worked from the same components. The engineer took the code and the designs, which is why handoff could start while I was still designing.</p>
       <div class="mosaic">
-        <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/ds-mine-colour.webp" alt="My customer portal design system's colour page: semantic green, amber and warn tokens, and gas and electricity fuel colours with tints and inks" width="1900" height="978" loading="lazy" /><figcaption><span class="ver v4">V4</span> The extended system, built in code: colours with meaning (paid, pending, overdue) and separate gas and electricity colours.</figcaption></figure>
+        <figure class="shot" style="--ar: 1.31;"><img src="../assets/business-portal/ds-inherited-overview.webp" alt="The inherited design system's overview page: a sidebar of brand foundations, components and forms, a purpose statement and quick-access cards" width="1205" height="920" loading="lazy" /><figcaption><span class="ver inherited">Inherited</span> The original design system's overview.</figcaption></figure>
+          <figure class="shot" style="--ar: 1.943;"><img src="../assets/business-portal/ds-mine-colour.webp" alt="My customer portal design system's colour page: semantic green, amber and warn tokens, and gas and electricity fuel colours with tints and inks" width="1900" height="978" loading="lazy" /><figcaption><span class="ver v4">V4</span> The extended system, built in code: colours with meaning (paid, pending, overdue) and separate gas and electricity colours.</figcaption></figure>
       </div>
       <h3>2. A new system to match the new website</h3>
       <p>Near the end of the project, stakeholders asked for the portal to match the new company website, which a contractor was still building. That was a new direction, and extending the old system was no longer enough. I designed a new system, with more rounded edges and curves, to match a website that was itself still in development.</p>

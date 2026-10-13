@@ -1600,6 +1600,8 @@ html[data-theme="personal"] .cartridge:focus-visible { outline: 3px solid var(--
   border: 2.5px solid var(--ink); border-radius: 8px; box-shadow: 4px 4px 0 0 var(--shadow); background: var(--surface);
 }
 .gallery-main img:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+/* A phone screen in a gallery sits whole in the middle of the frame. */
+.gallery-main img.is-phone, .gallery-thumb img.is-phone { object-fit: contain; object-position: center; }
 .gallery-main figcaption { padding: 0.75rem 0.1rem 0; font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); }
 [data-theme="business"] .gallery-thumb img { border: 1px solid var(--card-line); border-radius: 10px; }
 [data-theme="business"] .gallery-thumb.is-active img { box-shadow: 0 0 0 3px rgba(31, 92, 63, 0.35); border-color: var(--outline); }

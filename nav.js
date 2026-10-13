@@ -725,9 +725,12 @@
     Array.prototype.forEach.call(document.querySelectorAll('.mosaic'), function (run) {
       var figs = Array.prototype.slice.call(run.children);
       if (figs.length < 2 || !figs.every(function (f) {
-        return f.matches('figure.shot:not(.phone)') && f.querySelector(':scope > img');
+        return f.matches('figure.shot') && f.querySelector(':scope > img');
       })) return;
-      var items = figs.map(function (f) { return { img: f.querySelector(':scope > img'), cap: f.querySelector('figcaption') }; });
+      // Final (V5) phone screens stay side by side with their desktop
+      // screens; earlier versions, phones included, become a gallery.
+      if (run.querySelector('.shot.phone') && run.querySelector('.ver.v5')) return;
+      var items = figs.map(function (f) { return { img: f.querySelector(':scope > img'), cap: f.querySelector('figcaption'), phone: f.classList.contains('phone') }; });
 
       var gal = document.createElement('div');
       gal.className = 'gallery';
@@ -751,6 +754,7 @@
         var it = items[i];
         big.src = it.img.currentSrc || it.img.src;
         big.alt = it.img.alt;
+        big.classList.toggle('is-phone', it.phone);
         big.setAttribute('aria-label', 'Enlarge: ' + it.img.alt);
         cap.innerHTML = it.cap ? it.cap.innerHTML : '';
         buttons.forEach(function (b, k) {
@@ -769,6 +773,7 @@
         t.src = it.img.getAttribute('src');
         t.alt = '';
         t.loading = 'lazy';
+        if (it.phone) t.className = 'is-phone';
         b.appendChild(t);
         var label = document.createElement('span');
         label.className = 'gallery-thumb-label';
