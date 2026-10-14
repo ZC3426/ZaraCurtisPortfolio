@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&family=VT323&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="../assets/brand/dino.png" />
-<link rel="stylesheet" href="../styles.css?v=20261012b" />
+<link rel="stylesheet" href="../styles.css?v=20261014a" />
 </head>
 <body>
 
@@ -83,6 +83,8 @@
           </video>
           <div class="vid-bar"><button type="button" class="vid-play" aria-label="Pause video"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5.5v13l10.5-6.5z"/></svg></button><span class="vid-time" aria-hidden="true">0:00</span><input class="vid-seek" type="range" min="0" max="92.6" step="0.1" value="0" aria-label="Seek video" /><span class="vid-dur" aria-hidden="true">1:32</span><button type="button" class="vid-speed" aria-pressed="false" aria-label="Double speed">1×</button></div>
         </div>
+        <!-- CONFIRM: screen size inferred from the recording (1920 px wide, browser bar excluded) -->
+        <figcaption><span class="ver rejected">Rejected</span> <span class="ver">Desktop monitor, 1920 × 1080</span> A themed dashboard direction that stakeholders turned down because it didn't match the company's current brand. It comes first because it shows the most of my exploration in one place: three themes, day and night headers, and the full dashboard. <a href="#final-dashboard">See the final design</a>.</figcaption>
       </figure>
     </div>
   </section>
@@ -217,6 +219,8 @@
           </tbody>
         </table>
       </div>
+      <!-- CONFIRM: if portal analytics or customer service show most customers use desktops, add that figure here; evidence is stronger than reasoning -->
+      <p>Most screenshots here are at desktop monitor size. The portal's users manage energy for their business, mostly at a desk and often on a monitor, so I designed for that first. Many businesses use laptops too, so every page also works on laptop screens, as well as on phones.</p>
 
       <div class="page-study">
         <h3>Billing and invoices</h3>
@@ -356,7 +360,7 @@
         <figure class="shot" style="--ar: 2.016;"><img src="../assets/business-portal/dashboard-iter1.webp" alt="My first dashboard iteration: outstanding balance, overdue reads, usage this month, contracts, and a Commercial Solar PV carousel" width="2000" height="992" loading="lazy" /><figcaption><span class="ver v3">V3</span> My first iteration, still carrying upsells like the Commercial Solar PV carousel.</figcaption></figure>
         <figure class="shot" style="--ar: 2.004;"><img src="../assets/business-portal/dashboard-v2.webp" alt="My second dashboard: outstanding balance with a Direct Debit prompt, manual reads needed, and carbon footprint cards beside a usage-this-month chart against the contracted level, with over-contract days in amber, an unusual spike in red, and a warning about days above contract" width="1988" height="992" loading="lazy" /><figcaption><span class="ver v4">V4</span> My second try: no upsells, just what stakeholders asked for, with usage set against the contracted level and spikes flagged.</figcaption></figure>
       </div>
-      <h3>The final dashboard</h3>
+      <h3 id="final-dashboard">The final dashboard</h3>
       <p>For the final dashboard I explored three header ideas: an illustrated skyline, a map of the UK, and a map of the customer's own sites. Below the header, the cards answer the questions customers ask most: is anything due, are my meter readings sent, and what is my usage.</p>
       <div class="mosaic">
         <figure class="shot" style="--ar: 1.824;"><img src="../assets/business-portal/dashboard-v5-skyline.webp" alt="Final dashboard with an illustrated skyline and power lines in the header above Welcome back, Marcus, then account balance, meter readings and carbon emissions cards and last month's usage" width="1890" height="1036" loading="lazy" /><figcaption><span class="ver v5">V5</span> Header idea: an illustrated skyline with power lines.</figcaption></figure>
@@ -443,6 +447,6 @@
 
 <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
-<script src="../nav.js?v=20261012b" defer></script>
+<script src="../nav.js?v=20261014a" defer></script>
 </body>
 </html>

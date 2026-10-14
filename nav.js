@@ -435,6 +435,33 @@
         speed.textContent = fast ? '2\u00d7' : '1\u00d7';
         speed.setAttribute('aria-pressed', fast ? 'true' : 'false');
       });
+      // Full screen takes the whole frame so the bar comes with it. iPhone
+      // Safari can only put the video itself full screen, in its own player.
+      var frame = fig.querySelector('.vid-frame'), bar = fig.querySelector('.vid-bar');
+      var canFrame = frame && (frame.requestFullscreen || frame.webkitRequestFullscreen);
+      if (bar && (canFrame || v.webkitEnterFullscreen)) {
+        var full = document.createElement('button');
+        full.type = 'button';
+        full.className = 'vid-full';
+        full.setAttribute('aria-label', 'Full screen');
+        full.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-enter" d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><path class="i-exit" d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg>';
+        bar.appendChild(full);
+        var fsEl = function () { return document.fullscreenElement || document.webkitFullscreenElement; };
+        var toggleFull = function () {
+          if (fsEl() === frame) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+          else if (canFrame) (frame.requestFullscreen || frame.webkitRequestFullscreen).call(frame);
+          else v.webkitEnterFullscreen();
+        };
+        var syncFull = function () {
+          var on = fsEl() === frame;
+          full.classList.toggle('is-full', on);
+          full.setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+        };
+        full.addEventListener('click', toggleFull);
+        v.addEventListener('dblclick', toggleFull);
+        document.addEventListener('fullscreenchange', syncFull);
+        document.addEventListener('webkitfullscreenchange', syncFull);
+      }
       if (auto && 'IntersectionObserver' in window) {
         new IntersectionObserver(function (entries) {
           entries.forEach(function (e) {
