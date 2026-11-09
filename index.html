@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/png" href="assets/brand/dino.png" />
-<link rel="stylesheet" href="styles.css?v=20261014a" />
+<link rel="stylesheet" href="styles.css?v=20261109a" />
 </head>
 <body>
 
@@ -211,12 +211,17 @@
     stack.style.height = Math.ceil(maxH) + 'px';
   }
 
+  // Side by side (desktop), the caption box keeps the tallest caption's
+  // height so the deck never shifts. Stacked (phones), it fits the caption
+  // on show, so a short caption doesn't leave a gap above the dots.
+  var stackedQuery = window.matchMedia('(max-width: 760px)');
   function sizeCaptions() {
     if (!captionsBox || !captions.length) return;
+    var list = stackedQuery.matches ? [captions[frontIndex]] : captions;
     var maxH = 0;
-    captions.forEach(function (c) { c.style.position = 'static'; });
-    captions.forEach(function (c) { maxH = Math.max(maxH, c.getBoundingClientRect().height); });
-    captions.forEach(function (c) { c.style.position = ''; });
+    list.forEach(function (c) { c.style.position = 'static'; });
+    list.forEach(function (c) { maxH = Math.max(maxH, c.getBoundingClientRect().height); });
+    list.forEach(function (c) { c.style.position = ''; });
     captionsBox.style.minHeight = Math.ceil(maxH) + 'px';
   }
 
@@ -232,6 +237,7 @@
     captions.forEach(function (el, i) {
       el.setAttribute('data-depth', depthOf(i, frontIndex));
     });
+    sizeCaptions();
   }
 
   function forceNoTransition(el, fn) {
@@ -389,6 +395,8 @@
   })();
 
   window.addEventListener('resize', function () { sizeStack(); sizeCaptions(); });
+  // Web fonts change how text wraps, so measure again once they have loaded.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { sizeStack(); sizeCaptions(); });
   sizeStack();
   sizeCaptions();
   applyDepths();
@@ -738,6 +746,6 @@
 })();
 </script>
 
-<script src="nav.js?v=20261014a" defer></script>
+<script src="nav.js?v=20261109a" defer></script>
 </body>
 </html>

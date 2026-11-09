@@ -591,7 +591,10 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
 .carousel-dots .dot.active { background: var(--outline); }
 @media (max-width: 760px) {
   .carousel-layout { flex-direction: column; align-items: stretch; gap: 1.5rem; }
-  .carousel-captions { text-align: center; }
+  .carousel-captions { text-align: center; transition: min-height 0.35s ease; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .carousel-captions { transition: none; }
 }
 @media (max-width: 640px) {
   .carousel { gap: 0.6rem; }
