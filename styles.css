@@ -597,6 +597,7 @@ section.alt { background: var(--surface); border-top: 3px solid var(--outline); 
   .carousel-captions { transition: none; }
 }
 @media (max-width: 640px) {
+  .about-more { text-align: right; }
   .carousel { gap: 0.6rem; }
   .carousel-stack { max-width: min(420px, calc(100vw - 116px)); }
   .carousel-arrow { width: 40px; height: 40px; font-size: 1.1rem; }
